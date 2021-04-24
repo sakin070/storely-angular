@@ -1,0 +1,62 @@
+<div class="home-container">
+  <h1 class="home-heading">
+    Home
+    <div class="heading-border"></div>
+  </h1>
+  <div class="text inventory-sale-price">
+    <p> Inventory Sale Price</p>
+    <p> ${{inventorySalePrice}}</p>
+  </div>
+  <div class="text inventory-cost-price">
+    <p> Inventory Cost Price</p>
+    <p> ${{inventoryCostPrice}}</p>
+  </div>
+  <div class="text months-profit">
+    <p> Current Month's Profit</p>
+    <p> ${{monthsProfit}}</p>
+  </div>
+
+  <div class="to-buy-list">
+    <div class="to-buy-heading-container">
+      <h3>To Buy List</h3>
+      <button class="to-buy-download no-fill">Download</button>
+    </div>
+
+    <div class="form-group">
+      <label for="product">Product</label>
+      <input id="product" name="product" type="text" [(ngModel)]="product" >
+      <button> Add &#43;</button>
+    </div>
+
+    <div >
+      <table style="width:100%">
+        <tr>
+          <th>Name</th>
+          <th>Inventory Quantity</th>
+          <th>Remove</th>
+        </tr>
+        <tr>
+          <td>NamedProduct</td>
+          <td>50</td>
+          <td><button><img src="assets/close-icon.png" alt="remove item"></button></td>
+        </tr>
+        <tr>
+          <td>Eve</td>
+          <td>Jackson</td>
+          <td>94</td>
+        </tr>
+      </table>
+    </div>
+
+    <button>Clear</button>
+
+  </div>
+
+  <div class="revenue">
+    <div class="revenue-border"></div>
+    <h3>Revenue</h3>
+    <div>
+      <canvas #chartCanvas></canvas>
+    </div>
+  </div>
+</div>

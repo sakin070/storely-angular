@@ -1,0 +1,90 @@
+
+@font-face {
+  font-family: mulish;
+  src: url(assets/fonts/mulish/Mulish-Light.ttf);
+}
+
+@font-face {
+  font-family: mulish;
+  src: url(assets/fonts/mulish/Mulish-SemiBold.ttf);
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: mulish;
+  src: url(assets/fonts/mulish/Mulish-Bold.ttf);
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: mulish;
+  src: url(assets/fonts/mulish/Mulish-ExtraBold.ttf);
+  font-weight: 900;
+}
+
+:root {
+  box-sizing: border-box;
+  font-size: calc(1vw + 0.6em);
+  --primary-color: #408AF8;
+  --secondary-color:  #38ACB5;
+  --passive-color: #8AA0BD;
+  --danger-color: #EE3C3C;
+}
+@media (min-width: 50em) {
+  :root {
+    font-size: 1.125em;
+  }
+}
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+h1, h2, h3 {
+  font-family: mulish, serif;
+  /*font-weight: bold;*/
+}
+
+button{
+  font-family: mulish,serif;
+  font-weight: bold;
+  padding: .5em 1em;
+  border-style: none;
+  border-radius: 0.4em;
+  font-size: 1em;
+  color: white;
+  background-color: var(--primary-color);
+}
+button.no-fill{
+  background-color: white;
+  color: var(--passive-color);
+  border: .3em solid ;
+}
+button.no-fill:hover{
+  background-color: var(--passive-color);
+  color: white;
+  border: none ;
+}
+.form-group >label{
+  display: block;
+  text-align: left;
+  padding: .5em 0;
+  font-family: mulish,serif;
+}
+
+.form-group >input{
+  width: 100%;
+  height: 2.2em;
+  border-color: #9CA8B9;
+  border-radius: .2em;
+  border-style: solid;
+}
+
+.form-group >input:active{
+  border-color:var(--primary-color);
+}
+
+body{
+  background-color: #EDEFF2;
+}

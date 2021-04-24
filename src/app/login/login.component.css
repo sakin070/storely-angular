@@ -1,0 +1,37 @@
+.login-container{
+  display: flex;
+}
+.login-container >img{
+  flex: 2;
+  max-height: 100vh;
+  margin-top: -1em;
+  margin-bottom: -1em;
+  margin-left: -1em;
+}
+.login-form-container{
+  flex: 1;
+}
+.login-form{
+  margin: 20% 15% 0;
+}
+button{
+  margin: 1.5em 0;
+  width: 100%;
+}
+
+.login-form >a{
+  display: block;
+  color: var(--primary-color);
+  text-decoration: none;
+  padding: 0.4em 0 0;
+  text-align: right;
+  font-family: mulish,serif;
+}
+
+.logo{
+  padding: 0 30% 20%;
+}
+.alert-danger{
+  color: red;
+  font-family: mulish,serif;
+}

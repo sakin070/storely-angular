@@ -1,0 +1,16 @@
+.logo-container{
+  display: flex;
+}
+.letter{
+  font-family: mulish,serif;
+  font-weight: 900;
+  color: var(--primary-color);
+}
+.first{
+  font-size: 3em;
+}
+.others{
+  font-size:1.5em;
+  align-self: flex-end;
+  line-height: 1.9em;
+}
