@@ -1,3 +1,7 @@
+@font-face {
+  font-family: encode-sans;
+  src: url(assets/fonts/encode-sans/EncodeSans-Regular.ttf);
+}
 
 @font-face {
   font-family: mulish;
@@ -59,7 +63,7 @@ button{
 button.no-fill{
   background-color: white;
   color: var(--passive-color);
-  border: .3em solid ;
+  border: .1em solid ;
 }
 button.no-fill:hover{
   background-color: var(--passive-color);
@@ -87,4 +91,33 @@ button.no-fill:hover{
 
 body{
   background-color: #EDEFF2;
+}
+table {
+  display: block;
+  overflow: auto;
+  max-height: 70vh;
+  border-collapse: collapse;
+  text-align: left;
+  width: 100%;
+}
+
+th{
+  font-family: mulish,serif;
+  font-weight: 500;
+  background-color: #F8F8F8;
+  padding: 0.3em 0.5em;
+  border-bottom: 0.2em solid rgba(0, 0, 0, 0.25);
+}
+td{
+  font-family: encode-sans,sans-serif;
+  padding: 0.3em 0.5em;
+}
+td>button{
+  background-color: inherit;
+}
+tr.table-row td{
+  border-bottom: 0.2em solid #E5E5E5;
+}
+tr.table-row:hover{
+  background-color: #EFF7FF;
 }

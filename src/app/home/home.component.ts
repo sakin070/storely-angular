@@ -13,7 +13,8 @@ export class HomeComponent implements OnInit {
   inventoryCostPrice = '';
   monthsProfit = '';
   product: any;
-  toBuyItems: [any] = [null];
+  // @ts-ignore
+  toBuyItems: [any] = [];
   // @ts-ignore
   days: any = [];
   // @ts-ignore
@@ -27,9 +28,8 @@ export class HomeComponent implements OnInit {
     this.homeService.getInventoryCostPrice().subscribe(data => {this.inventoryCostPrice = data; });
     this.homeService.getInventorySellingPrice().subscribe(data => {this.inventorySalePrice = data; });
     this.homeService.getMonthsProfit().subscribe(data => {this.monthsProfit = data; });
-    this.homeService.getToBuyItems().subscribe(data => {this.toBuyItems = data; });
+    this.homeService.getToBuyItems().subscribe(data => { this.toBuyItems = data; });
     this.homeService.getLast7DaysOfSale().subscribe(data => {
-      console.log(data) ;
       data.map((value: string) => {
         const daySale: string[] = value.split(',');
         this.days.push(daySale[0]);
@@ -38,7 +38,14 @@ export class HomeComponent implements OnInit {
       this.drawChart();
     });
   }
-
+  clearToBuyItems(): void{
+    this.homeService.clearToBuyItems();
+  }
+  deleteToBuyItem(buyItemId: number): void{
+    this.homeService.deleteToBuyItem(buyItemId).subscribe(data => {
+      this.homeService.getToBuyItems().subscribe(toBuyItems => { this.toBuyItems = toBuyItems; });
+    });
+  }
   drawChart(): void{
     if (this.chart) {
       this.chart.destroy();

@@ -10,10 +10,15 @@ const AUTH_API = 'https://storley.herokuapp.com';
 })
 export class HomeService {
   httpOptions: any ;
+  textHttpOptions: any;
   constructor(private tokenStorageService: TokenStorageService, private http: HttpClient) {
     if (tokenStorageService.getToken()){
       this.httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: tokenStorageService.getToken()as string })
+      };
+      this.textHttpOptions = {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: tokenStorageService.getToken()as string }),
+        responseType: 'text'
       };
     }
   }
@@ -31,5 +36,11 @@ export class HomeService {
   }
   getToBuyItems(): Observable<any> {
     return this.http.get(AUTH_API + '/buy-item', this.httpOptions);
+  }
+  clearToBuyItems(): Observable<any> {
+    return this.http.delete(AUTH_API + '/buy-item', this.textHttpOptions);
+  }
+  deleteToBuyItem(buyItemId: number): Observable<any> {
+    return this.http.delete(AUTH_API + '/buy-item/' + buyItemId, this.textHttpOptions);
   }
 }

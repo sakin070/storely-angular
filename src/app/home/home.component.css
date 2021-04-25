@@ -37,7 +37,6 @@
   border-bottom-style: solid;
   border-bottom-width: 0.25em;
 }
-
 .inventory-sale-price{
   grid-area: inventorySalePrice;
 }
@@ -76,3 +75,32 @@
   display: flex;
   align-items: center;
 }
+.product-container{
+  display: flex;
+  align-items: center;
+}
+.product-container>label{
+  flex-basis: 25%;
+}
+.product-container>input{
+  flex-basis: 50%;
+  margin-right: 5%;
+}
+.product-container>button{
+  flex-basis: 20%;
+  font-size: 0.8em;
+  background-color: var(--secondary-color);
+}
+.clear-button{
+  font-size: 0.8em;
+  color: var(--danger-color);
+  margin-left: 80%;
+}
+.clear-button:hover{
+  background-color: var(--danger-color);
+}
+.table-div{
+  padding-top:1em;
+  margin-bottom: 1em;
+}
+
