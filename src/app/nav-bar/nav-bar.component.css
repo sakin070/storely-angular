@@ -1,0 +1,70 @@
+.nav-container{
+    background-color: white;
+    padding: 0 6%;
+}
+.menu-items{
+    display: flex;
+    font-family: mulish,serif;
+    list-style-type: none;
+    color: #9CA8B9;
+    align-items: center;
+    padding: 0;
+}
+.menu-items>li{
+    padding: 0.5em 1em;
+}
+.menu-items>li>a{
+    display: block;
+    cursor: pointer;
+}
+.menu-items>li>a:hover{
+    color: var(--primary-color);
+    filter: invert(53%) sepia(76%) saturate(3665%) hue-rotate(199deg) brightness(99%) contrast(97%);
+}
+.menu-items>li>a>img{
+    margin-right: .5em;
+}
+app-logo{
+    font-size: 0.75em;
+    padding: 0 ;
+}
+.logout{
+    margin-left: auto;
+}
+.dropdown{
+    position: relative;
+    display: none;
+}
+.submenu{
+    position: absolute;
+    width: 180%;
+    background-color: white;
+    top: 1.1em;
+    left: -0.4em;
+    margin: 0;
+    list-style-type: none;
+    padding: 0;
+    z-index: 1;
+}
+
+.submenu>li>a{
+    cursor: pointer;
+    padding: 0.3em 0.3em 0.3em 0.5em;
+    display: block;
+}
+.submenu>li:hover{
+    background-color: #F8F8F8;
+}
+.submenu>li>a:hover{
+    color: var(--primary-color);
+    filter: invert(53%) sepia(76%) saturate(3665%) hue-rotate(199deg) brightness(99%) contrast(97%);
+}
+.submenu-backdrop{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 1;
+}
