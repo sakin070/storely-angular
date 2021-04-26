@@ -1,10 +1,10 @@
 <div class="nav-container">
     <ul class="menu-items ">
         <li><app-logo></app-logo></li>
-        <li><a><img srcset="assets/home.svg">Home</a></li>
-       <li>
-           <a (click)="showSubMenu($event)"> <img srcset="assets/stock.svg"> Stock</a>
-           <div class="dropdown">
+        <li><a class="menu-item"><img srcset="assets/home.svg">Home</a></li>
+        <li>
+            <a class="menu-item" (click)="showSubMenu($event)"> <img srcset="assets/stock.svg"> Stock</a>
+            <div class="dropdown">
                <div class="submenu-backdrop" (click)="hideSubmenu($event)"></div>
                 <ul class="submenu">
                     <li> <a> New Stock </a></li>
@@ -14,11 +14,11 @@
             </div>
         </li>
 
-        <li><a><img srcset="assets/suppliers.svg"> Supplier</a></li>
-        <li><a><img srcset="assets/customers.svg">Customer</a></li>
-        <li><a><img srcset="assets/users.svg">User</a></li>
+        <li><a class="menu-item"><img srcset="assets/suppliers.svg"> Supplier</a></li>
+        <li><a class="menu-item"><img srcset="assets/customers.svg">Customer</a></li>
+        <li><a class="menu-item"><img srcset="assets/users.svg">User</a></li>
         <li>
-            <a (click)="showSubMenu($event)"> <img srcset="assets/sale.svg">Sale</a>
+            <a class="menu-item" (click)="showSubMenu($event)"> <img srcset="assets/sale.svg">Sale</a>
             <div class="dropdown">
                 <div class="submenu-backdrop" (click)="hideSubmenu($event)"></div>
                 <ul class="submenu">
