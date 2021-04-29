@@ -1,0 +1,52 @@
+<app-nav-bar [itemId]=5></app-nav-bar>
+<div class="make-sale-container">
+    <div class="make-sale-form">
+        <div class="form-group ">
+            <label for="sku" >SKU</label>
+            <input id="sku" name="sku" type="text" [(ngModel)]="sku" >
+        </div>
+        <div class="form-group ">
+            <label for="name" >Name</label>
+            <input id="name" name="name" type="text" [(ngModel)]="name" >
+        </div>
+        <div class="form-group ">
+            <label for="quantity" >Quantity</label>
+            <input id="quantity" name="quantity" type="text" [(ngModel)]="quantity" >
+        </div>
+        <button class="add-button" (click)="addSaleItem()"> Add &#43;</button>
+    </div>
+
+    <div class="make-sale-table">
+        <div class="table-div">
+            <table >
+                <tr >
+                    <th>Item</th>
+                    <th></th>
+                    <th>Total Price</th>
+                    <th>Remove</th>
+                </tr>
+
+                <tr class="table-row" >
+                    <td>Product</td>
+                    <td>1 X $2</td>
+                    <td> $2</td>
+                    <td><button ><img src="assets/close-icon.png" alt="remove item"></button></td>
+                </tr>
+
+                <tr class="table-row" *ngFor="let saleItem of sale.saleItems; index as i ">
+                    <td>{{saleItem.stock.name}}</td>
+                    <td>{{saleItem.quantity}} X ${{saleItem.stock.sellingPrice}}</td>
+                    <td>${{saleItem.quantity * saleItem.stock.sellingPrice}} </td>
+                    <td><button (click)="removeSaleItem(i)"><img src="assets/close-icon.png" alt="remove item"></button></td>
+                </tr>
+
+            </table>
+        </div>
+
+        <div class="button-containers">
+            <button (click)="pay()" >Pay</button>
+            <button class="no-fill clear-button" (click)="clearSaleItems()" >Clear</button>
+        </div>
+    </div>
+
+</div>
