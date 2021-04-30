@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {MakeSaleService} from '../_services/make-sale.service';
-import {element} from 'protractor';
 
 @Component({
   selector: 'app-make-sale',
@@ -14,6 +13,13 @@ export class MakeSaleComponent implements OnInit {
   sale: any = {
     saleItems: []
   };
+  loyaltyCard = '';
+  pointsAvailable = 0;
+  usePoints = 0;
+  discountCode = '';
+  total = 0;
+  cash = 0;
+  change = 0;
   constructor(private makeSaleService: MakeSaleService) { }
 
   ngOnInit(): void {
@@ -21,19 +27,26 @@ export class MakeSaleComponent implements OnInit {
 
   pay(): void {
   }
+  complete(): void {
+  }
+  back(): void {
+  }
   clearSaleItems(): void {
-    this.makeSaleService.clearSaleItems().subscribe(data => {
+    this.makeSaleService.clearSaleItems().subscribe(() => {
       this.sale.saleItems = [];
     });
   }
   removeSaleItem(index: number): void {
+    if (this.sale.saleItems[index].quantity === 1){
+      this.sale.saleItems.splice(index);
+    }else{
+      this.sale.saleItems[index].quantity = this.sale.saleItems[index].quantity - 1 ;
+    }
   }
   addSaleItem(): void{
     const saleItem = this.sale.saleItems.find( (element: any) => {
-      console.log(element);
-      console.log(element.stock.sku === this.sku);
       if (element.stock.sku === this.sku){
-        element.quantity = element.quantity + 1;
+        element.quantity = element.quantity + this.quantity;
       }
       return element.stock.sku === this.sku;
     });
@@ -46,11 +59,13 @@ export class MakeSaleComponent implements OnInit {
             name: data.name,
             sellingPrice: data.sellingPrice
           },
-          quantity: 1
+          quantity: this.quantity
         };
         this.sale.saleItems.push(tempSaleItem);
       });
     }
-
+    this.sku = '';
+    this.name = '';
+    this.quantity = 1;
   }
 }

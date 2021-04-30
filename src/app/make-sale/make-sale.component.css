@@ -3,6 +3,7 @@
     background-color: white;
     border-radius: .3em;
     min-height: 80vh;
+    margin: 0 7%;
 }
 .make-sale-form{
     flex: 1;
@@ -16,10 +17,7 @@
     overflow: auto;
     max-height: 70vh;
 }
-table{
-    /*display: table;*/
-    min-width: 100%;
-}
+
 .add-button{
     margin-top: 2em;
     background-color: var(--secondary-color);
@@ -33,4 +31,7 @@ table{
 }
 .button-containers{
     margin: 4% 0 0 30%;
+}
+.payment-flex{
+    display: flex;
 }
