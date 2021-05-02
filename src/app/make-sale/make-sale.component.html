@@ -1,59 +1,60 @@
 <app-nav-bar [itemId]=5></app-nav-bar>
-<!--<div class="make-sale-container">-->
-<!--    <form class="make-sale-form">-->
-<!--        <div class="form-group ">-->
-<!--            <label for="sku" >SKU</label>-->
-<!--            <input id="sku" name="sku" type="text" [(ngModel)]="sku" >-->
-<!--        </div>-->
-<!--        <div class="form-group ">-->
-<!--            <label for="name" >Name</label>-->
-<!--            <input id="name" name="name" type="text" [(ngModel)]="name" >-->
-<!--        </div>-->
-<!--        <div class="form-group ">-->
-<!--            <label for="quantity" >Quantity</label>-->
-<!--            <input id="quantity" name="quantity" type="text" [(ngModel)]="quantity" >-->
-<!--        </div>-->
-<!--        <button class="add-button" type=submit (click)="addSaleItem()"> Add &#43;</button>-->
-<!--    </form>-->
+<div class="make-sale-container">
+    <form class="make-sale-form">
+        <div class="form-group ">
+            <label for="sku" >SKU</label>
+            <input id="sku" class="loyalty-input" name="sku" type="text" [(ngModel)]="sku" >
+        </div>
+        <div class="form-group ">
+            <label for="name" >Name</label>
+            <input id="name" class="loyalty-input" name="name" type="text" [(ngModel)]="name" >
+        </div>
+        <div class="form-group ">
+            <label for="quantity" >Quantity</label>
+            <input id="quantity" name="quantity" type="text" [(ngModel)]="quantity" >
+        </div>
+        <button class="add-button" type=submit (click)="addSaleItem()"> Add &#43;</button>
+    </form>
 
-<!--    <div class="make-sale-table">-->
-<!--        <div class="table-div">-->
-<!--            <table >-->
-<!--                <tr >-->
-<!--                    <th>Item</th>-->
-<!--                    <th></th>-->
-<!--                    <th>Total Price</th>-->
-<!--                    <th>Remove</th>-->
-<!--                </tr>-->
+    <div class="make-sale-table">
+        <div class="table-div">
+            <table >
+                <tr >
+                    <th>Item</th>
+                    <th></th>
+                    <th>Total Price</th>
+                    <th>Remove</th>
+                </tr>
 
-<!--                <tr class="table-row" *ngFor="let saleItem of sale.saleItems; index as i ">-->
-<!--                    <td>{{saleItem.stock.name}}</td>-->
-<!--                    <td>{{saleItem.quantity}} X ${{saleItem.stock.sellingPrice}}</td>-->
-<!--                    <td>${{saleItem.quantity * saleItem.stock.sellingPrice}} </td>-->
-<!--                    <td><button (click)="removeSaleItem(i)"><img src="assets/close-icon.png" alt="remove item"></button></td>-->
-<!--                </tr>-->
+                <tr class="table-row" *ngFor="let saleItem of sale.saleItems; index as i ">
+                    <td>{{saleItem.stock.name}}</td>
+                    <td>{{saleItem.quantity}} X ${{saleItem.stock.sellingPrice}}</td>
+                    <td>${{saleItem.quantity * saleItem.stock.sellingPrice}} </td>
+                    <td><button (click)="removeSaleItem(i)"><img src="assets/close-icon.png" alt="remove item"></button></td>
+                </tr>
 
-<!--            </table>-->
-<!--        </div>-->
+            </table>
+        </div>
 
-<!--        <div class="button-containers">-->
-<!--            <button (click)="pay()" >Pay</button>-->
-<!--            <button class="no-fill clear-button" (click)="clearSaleItems()" >Clear</button>-->
-<!--        </div>-->
-<!--    </div>-->
+        <div class="button-containers">
+            <button (click)="pay()" >Pay</button>
+            <button class="no-fill clear-button" (click)="clearSaleItems()" >Clear</button>
+        </div>
+    </div>
 
-<!--</div>-->
+</div>
 
 <div class="pay-container">
     <div>
         <h2>Payment</h2>
+        <hr>
     </div>
     <div class="payment-flex">
         <div class="form-group ">
             <label for="loyaltyCard" >Loyalty Card</label>
-            <input id="loyaltyCard" name="loyaltyCard" type="text" [(ngModel)]="loyaltyCard" >
+            <input id="loyaltyCard" class="loyalty-input" name="loyaltyCard" type="text" [(ngModel)]="loyaltyCard" >
         </div>
-        <button> Add </button>
+        <button class="add-button" (click)="addLoyaltyCard()"> Add </button>
     </div>
 
     <div class="form-group ">
@@ -61,37 +62,41 @@
         <input id="pointsAvailable" name="pointsAvailable" type="number" [(ngModel)]="pointsAvailable" readonly>
     </div>
 
+    <hr>
+
     <div class="payment-flex">
-        <div>
+        <div class="discounts">
             <div class="form-group ">
                 <label for="usePoints" >Use Points</label>
                 <input id="usePoints" name="usePoints" type="number" [(ngModel)]="usePoints" >
             </div>
-            <button> Use Points </button>
+            <button class="add-button" (click)="redeemPoints()"> Use Points </button>
         </div>
-        <div>
+        <div class="discounts">
             <div class="form-group ">
                 <label for="discountCode" >Discount Code</label>
                 <input id="discountCode" name="discountCode" type="text" [(ngModel)]="discountCode" >
             </div>
-            <button> Use Points </button>
+            <button class="add-button" (click)="applyDiscount()"> Apply </button>
         </div>
     </div>
+
+    <hr>
 
     <div>
         <h3>Total ($): {{total}}</h3>
         <div class="form-group ">
-            <label for="cash" >Cash</label>
+            <label for="cash" >Cash ($)</label>
             <input id="cash" name="cash" type="number" [(ngModel)]="cash" >
         </div>
 
         <div class="form-group ">
-            <label for="change" >Change</label>
-            <input id="change" name="cash" type="number" [(ngModel)]="total-cash" readonly>
+            <label for="change" >Change ($)</label>
+            <input id="change" name="cash" type="number" [(ngModel)]="cash-total" readonly>
         </div>
         <div class="button-containers">
             <button (click)="complete()" >Complete</button>
-            <button class="no-fill" (click)="back()" >Back</button>
+            <button class="no-fill margin-3" (click)="back()" >Back</button>
         </div>
     </div>
 

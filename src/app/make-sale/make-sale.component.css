@@ -30,8 +30,53 @@
     background-color: var(--danger-color);
 }
 .button-containers{
-    margin: 4% 0 0 30%;
+    margin: 4% 0 0 25%;
 }
 .payment-flex{
     display: flex;
+    align-items: center;
+    gap: 10%;
+}
+.pay-container{
+    background-color: white;
+    margin: 0 25%;
+    border-radius: .3em;
+    padding: 0.1em 2em;
+    display: none;
+}
+.payment-flex > .form-group{
+    flex: 60%;
+}
+
+.form-group > input{
+    width: 12em;
+}
+
+.form-group > .loyalty-input {
+    width: 100%;
+}
+hr{
+    border: none;
+    border-top: .4em solid #EDEFF2;
+    margin: 1em -2em 0;
+}
+
+.discounts{
+    flex: 50%;
+}
+
+.discounts > button {
+    margin-top: 0.4em;
+}
+
+h2 {
+    margin: 0.5em 0 -.4em;
+}
+h3{
+    margin: 0.5em 0
+}
+
+.margin-3{
+    margin-left: 3em;
+    margin-bottom: 1em;
 }
