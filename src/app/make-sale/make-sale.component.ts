@@ -19,9 +19,10 @@ export class MakeSaleComponent implements OnInit {
   discountCode = '';
   total = 0;
   cash = 0;
-  change = 0;
+  loyaltyManager = {maxRedeemablePointsPerTransaction: 0};
   constructor(private makeSaleService: MakeSaleService) {
     this.makeSaleService.clearSaleItems().subscribe();
+    this.getLoyaltyManager();
   }
 
   ngOnInit(): void {}
@@ -49,7 +50,6 @@ export class MakeSaleComponent implements OnInit {
       this.discountCode = '';
       this.total = 0;
       this.cash = 0;
-      this.change = 0;
       this.back();
     });
   }
@@ -103,17 +103,48 @@ export class MakeSaleComponent implements OnInit {
   addLoyaltyCard(): void {
     this.makeSaleService.addLoyaltyCard(this.loyaltyCard).subscribe( data => {
       this.pointsAvailable = data.points;
+      this.usePoints = Math.min(data.points, this.loyaltyManager.maxRedeemablePointsPerTransaction);
     });
   }
   redeemPoints(): void {
     this.makeSaleService.usePoints(this.usePoints).subscribe(data => {
       this.total = data;
+      // @ts-ignore
+      document.getElementById('usePointsApply').style.display = 'none';
+      // @ts-ignore
+      document.getElementById('usePointsRemove').style.display = 'inline-block';
     });
   }
-
   applyDiscount(): void {
     this.makeSaleService.applyDiscount(this.discountCode).subscribe(data => {
       this.total = data;
+      // @ts-ignore
+      document.getElementById('applyDiscount').style.display = 'none';
+      // @ts-ignore
+      document.getElementById('applyDiscountRemove').style.display = 'inline-block';
+    });
+  }
+  getLoyaltyManager(): void {
+    this.makeSaleService.getLoyaltyManager().subscribe(data => {
+      this.loyaltyManager = data[0];
+    });
+  }
+  unRedeemPoints(): void {
+    this.makeSaleService.unRedeemPoints().subscribe(data => {
+      this.total = data;
+      // @ts-ignore
+      document.getElementById('usePointsRemove').style.display = 'none';
+      // @ts-ignore
+      document.getElementById('usePointsApply').style.display = 'inline-block';
+    });
+  }
+  removeDiscount(): void{
+    this.makeSaleService.removeDiscount().subscribe(data => {
+      this.total = data;
+      // @ts-ignore
+      document.getElementById('applyDiscountRemove').style.display = 'none';
+      // @ts-ignore
+      document.getElementById('applyDiscount').style.display = 'inline-block';
     });
   }
 }

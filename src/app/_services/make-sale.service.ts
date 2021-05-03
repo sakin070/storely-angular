@@ -3,8 +3,8 @@ import {Observable} from 'rxjs';
 import {TokenStorageService} from './token-storage.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-const AUTH_API = 'https://storley.herokuapp.com';
-// const AUTH_API = 'http://localhost:8080';
+// const AUTH_API = 'https://storley.herokuapp.com';
+const AUTH_API = 'http://localhost:8080';
 @Injectable({
   providedIn: 'root'
 })
@@ -43,5 +43,14 @@ export class MakeSaleService {
   }
   applyDiscount( discountCode: string): Observable<any>{
     return this.http.patch(AUTH_API + '/sale/add-discount?code=' + discountCode, {}, this.httpOptions);
+  }
+  getLoyaltyManager(): Observable<any>{
+    return this.http.get(AUTH_API + '/loyalty-manager', this.httpOptions);
+  }
+  unRedeemPoints(): Observable<any>{
+    return this.http.patch(AUTH_API + '/sale/undo-redeem-points', {}, this.httpOptions);
+  }
+  removeDiscount(): Observable<any>{
+    return this.http.patch(AUTH_API + '/sale/remove-discount', {}, this.httpOptions);
   }
 }

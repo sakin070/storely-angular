@@ -57,7 +57,7 @@ button{
   font-family: mulish,serif;
   font-weight: bold;
   padding: .5em 1em;
-  border-style: none;
+  border: .1em solid var(--primary-color);
   border-radius: 0.4em;
   font-size: 1em;
   color: white;
@@ -72,7 +72,7 @@ button.no-fill{
 button.no-fill:hover{
   background-color: var(--passive-color);
   color: white;
-  border: none ;
+  /*border: none ;*/
 }
 .form-group >label{
   display: block;

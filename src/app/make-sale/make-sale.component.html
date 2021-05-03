@@ -1,19 +1,19 @@
 <app-nav-bar [itemId]=5></app-nav-bar>
 <div class="make-sale-container">
-    <form class="make-sale-form">
+    <form class="make-sale-form" autocomplete="off">
         <div class="form-group ">
             <label for="sku" >SKU</label>
-            <input id="sku" class="loyalty-input" name="sku" type="text" [(ngModel)]="sku" >
+            <input id="sku" class="loyalty-input" name="sku" type="text" [(ngModel)]="sku" autofocus (keyup.enter)="addSaleItem()">
         </div>
-        <div class="form-group ">
-            <label for="name" >Name</label>
-            <input id="name" class="loyalty-input" name="name" type="text" [(ngModel)]="name" >
-        </div>
+<!--        <div class="form-group ">-->
+<!--            <label for="name" >Name</label>-->
+<!--            <input id="name" class="loyalty-input" name="name" type="text" [(ngModel)]="name" >-->
+<!--        </div>-->
         <div class="form-group ">
             <label for="quantity" >Quantity</label>
             <input id="quantity" name="quantity" type="text" [(ngModel)]="quantity" >
         </div>
-        <button class="add-button" type=submit (click)="addSaleItem()"> Add &#43;</button>
+        <button class="add-button" type="button" (click)="addSaleItem()"> Add &#43;</button>
     </form>
 
     <div class="make-sale-table">
@@ -52,7 +52,7 @@
     <div class="payment-flex">
         <div class="form-group ">
             <label for="loyaltyCard" >Loyalty Card</label>
-            <input id="loyaltyCard" class="loyalty-input" name="loyaltyCard" type="text" [(ngModel)]="loyaltyCard" >
+            <input id="loyaltyCard" class="loyalty-input" name="loyaltyCard" type="text" [(ngModel)]="loyaltyCard" autocomplete="off" autofocus (keyup.enter)="addLoyaltyCard()">
         </div>
         <button class="add-button" (click)="addLoyaltyCard()"> Add </button>
     </div>
@@ -68,16 +68,18 @@
         <div class="discounts">
             <div class="form-group ">
                 <label for="usePoints" >Use Points</label>
-                <input id="usePoints" name="usePoints" type="number" [(ngModel)]="usePoints" >
+                <input id="usePoints" name="usePoints" type="number" [(ngModel)]="usePoints" autocomplete="off">
             </div>
-            <button class="add-button" (click)="redeemPoints()"> Use Points </button>
+            <button id="usePointsApply" class="add-button" (click)="redeemPoints()"> Use Points </button>
+            <button id="usePointsRemove" class="no-fill clear-button" (click)="unRedeemPoints()"> Remove </button>
         </div>
         <div class="discounts">
             <div class="form-group ">
                 <label for="discountCode" >Discount Code</label>
-                <input id="discountCode" name="discountCode" type="text" [(ngModel)]="discountCode" >
+                <input id="discountCode" name="discountCode" type="text" [(ngModel)]="discountCode" autocomplete="off">
             </div>
-            <button class="add-button" (click)="applyDiscount()"> Apply </button>
+            <button id="applyDiscount" class="add-button" (click)="applyDiscount()"> Apply </button>
+            <button id="applyDiscountRemove" class="no-fill clear-button" (click)="removeDiscount()"> Remove </button>
         </div>
     </div>
 

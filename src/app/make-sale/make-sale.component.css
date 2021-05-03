@@ -21,6 +21,7 @@
 .add-button{
     margin-top: 2em;
     background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
 }
 .clear-button{
     color: var(--danger-color);
@@ -79,4 +80,12 @@ h3{
 .margin-3{
     margin-left: 3em;
     margin-bottom: 1em;
+}
+
+#usePointsRemove{
+    display: none;
+}
+
+#applyDiscountRemove{
+    display: none;
 }
