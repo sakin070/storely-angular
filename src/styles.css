@@ -92,7 +92,10 @@ button.no-fill:hover{
 .form-group >input:active{
   border-color:var(--primary-color);
 }
-
+.form-group >input:read-only{
+  background-color: #EDEFF2;
+  cursor: not-allowed;
+}
 body{
   background-color: #EDEFF2;
 }
@@ -122,4 +125,8 @@ tr.table-row td{
 }
 tr.table-row:hover{
   background-color: #EFF7FF;
+}
+.alert-danger{
+  color: red;
+  font-family: mulish,serif;
 }

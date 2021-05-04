@@ -53,6 +53,9 @@
         <div class="form-group ">
             <label for="loyaltyCard" >Loyalty Card</label>
             <input id="loyaltyCard" class="loyalty-input" name="loyaltyCard" type="text" [(ngModel)]="loyaltyCard" autocomplete="off" autofocus (keyup.enter)="addLoyaltyCard()">
+            <div id="loyaltyCardError" class="alert alert-danger" role="alert">
+                Invalid Loyalty Card !
+            </div>
         </div>
         <button class="add-button" (click)="addLoyaltyCard()"> Add </button>
     </div>
@@ -69,6 +72,9 @@
             <div class="form-group ">
                 <label for="usePoints" >Use Points</label>
                 <input id="usePoints" name="usePoints" type="number" [(ngModel)]="usePoints" autocomplete="off">
+                <div id="usePointsError" class="alert alert-danger" role="alert" *ngIf="usePoints > maxRedeemablePoints">
+                    Max of {{maxRedeemablePoints}}
+                </div>
             </div>
             <button id="usePointsApply" class="add-button" (click)="redeemPoints()"> Use Points </button>
             <button id="usePointsRemove" class="no-fill clear-button" (click)="unRedeemPoints()"> Remove </button>
@@ -96,6 +102,7 @@
             <label for="change" >Change ($)</label>
             <input id="change" name="cash" type="number" [(ngModel)]="cash-total" readonly>
         </div>
+
         <div class="button-containers">
             <button (click)="complete()" >Complete</button>
             <button class="no-fill margin-3" (click)="back()" >Back</button>

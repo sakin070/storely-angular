@@ -82,10 +82,7 @@ h3{
     margin-bottom: 1em;
 }
 
-#usePointsRemove{
+#usePointsRemove, #loyaltyCardError, #applyDiscountRemove{
     display: none;
 }
 
-#applyDiscountRemove{
-    display: none;
-}

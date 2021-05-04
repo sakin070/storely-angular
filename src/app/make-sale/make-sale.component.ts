@@ -58,6 +58,14 @@ export class MakeSaleComponent implements OnInit {
       const payContainer: HTMLCollectionOf<HTMLElement> =
           document.getElementsByClassName('pay-container') as HTMLCollectionOf<HTMLElement> ;
       payContainer[0].style.display = 'none';
+      this.loyaltyCard = '';
+      this.usePoints = 0;
+      this.discountCode = '';
+      this.cash = 0;
+      this.pointsAvailable = 0;
+      this.unRedeemPoints();
+      this.removeDiscount();
+      this.removeLoyaltyCard();
       const makeSaleContainer: HTMLCollectionOf<HTMLElement> =
           document.getElementsByClassName('make-sale-container') as HTMLCollectionOf<HTMLElement> ;
       makeSaleContainer[0].style.display = 'flex';
@@ -102,17 +110,36 @@ export class MakeSaleComponent implements OnInit {
   }
   addLoyaltyCard(): void {
     this.makeSaleService.addLoyaltyCard(this.loyaltyCard).subscribe( data => {
+      const loyaltyCardError: HTMLInputElement = document.getElementById('loyaltyCardError') as HTMLInputElement ;
+      if ( data === null){
+        loyaltyCardError.style.display = 'block';
+        return;
+      }
+      loyaltyCardError.style.display = 'none';
       this.pointsAvailable = data.points;
       this.usePoints = Math.min(data.points, this.loyaltyManager.maxRedeemablePointsPerTransaction);
+      const loyaltyCard: HTMLInputElement = document.getElementById('loyaltyCard') as HTMLInputElement ;
+      loyaltyCard.readOnly = true;
     });
   }
+  removeLoyaltyCard(): void {
+    const loyaltyCardError: HTMLInputElement = document.getElementById('loyaltyCardError') as HTMLInputElement ;
+    loyaltyCardError.style.display = 'none';
+    const loyaltyCard: HTMLInputElement = document.getElementById('loyaltyCard') as HTMLInputElement ;
+    loyaltyCard.readOnly = false;
+  }
   redeemPoints(): void {
+    if ( this.usePoints > this.maxRedeemablePoints){
+      return;
+    }
     this.makeSaleService.usePoints(this.usePoints).subscribe(data => {
       this.total = data;
       // @ts-ignore
       document.getElementById('usePointsApply').style.display = 'none';
       // @ts-ignore
       document.getElementById('usePointsRemove').style.display = 'inline-block';
+      const usePoints: HTMLInputElement = document.getElementById('usePoints') as HTMLInputElement ;
+      usePoints.readOnly = true;
     });
   }
   applyDiscount(): void {
@@ -122,6 +149,8 @@ export class MakeSaleComponent implements OnInit {
       document.getElementById('applyDiscount').style.display = 'none';
       // @ts-ignore
       document.getElementById('applyDiscountRemove').style.display = 'inline-block';
+      const usePoints: HTMLInputElement = document.getElementById('discountCode') as HTMLInputElement ;
+      usePoints.readOnly = true;
     });
   }
   getLoyaltyManager(): void {
@@ -136,6 +165,8 @@ export class MakeSaleComponent implements OnInit {
       document.getElementById('usePointsRemove').style.display = 'none';
       // @ts-ignore
       document.getElementById('usePointsApply').style.display = 'inline-block';
+      const usePoints: HTMLInputElement = document.getElementById('usePoints') as HTMLInputElement ;
+      usePoints.readOnly = false;
     });
   }
   removeDiscount(): void{
@@ -145,6 +176,11 @@ export class MakeSaleComponent implements OnInit {
       document.getElementById('applyDiscountRemove').style.display = 'none';
       // @ts-ignore
       document.getElementById('applyDiscount').style.display = 'inline-block';
+      const usePoints: HTMLInputElement = document.getElementById('discountCode') as HTMLInputElement ;
+      usePoints.readOnly = false;
     });
+  }
+  get maxRedeemablePoints(): number {
+    return Math.min(this.loyaltyManager.maxRedeemablePointsPerTransaction, this.pointsAvailable);
   }
 }
