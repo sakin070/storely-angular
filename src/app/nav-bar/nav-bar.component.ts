@@ -1,4 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {TokenStorageService} from '../_services/token-storage.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,7 +10,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class NavBarComponent implements OnInit {
   // @ts-ignore
   @Input() itemId: number;
-  constructor() { }
+  constructor(private tokenStorageService: TokenStorageService, private router: Router) { }
 
   ngOnInit(): void {
     const item: HTMLCollectionOf<HTMLElement> = document.getElementsByClassName('menu-item') as HTMLCollectionOf<HTMLElement> ;
@@ -24,5 +26,10 @@ export class NavBarComponent implements OnInit {
     const target = event.target as Element;
     // @ts-ignore
     target.parentElement.style.display = 'none';
+  }
+
+  logout(): void{
+    this.tokenStorageService.signOut();
+    this.router.navigateByUrl('/login');
   }
 }
