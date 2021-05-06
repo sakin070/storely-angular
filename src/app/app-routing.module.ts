@@ -7,7 +7,7 @@ import {MakeSaleComponent} from './make-sale/make-sale.component';
 const routes: Routes = [
   {path: '', component: LoginComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'xxy', component: MakeSaleComponent},
+  {path: 'make-sale', component: MakeSaleComponent},
   {path: 'home', component: HomeComponent}
   ];
 

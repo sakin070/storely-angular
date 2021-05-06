@@ -10,6 +10,8 @@
 }
 .login-form-container{
   flex: 1;
+  background-color: white;
+  height: 100vh;
 }
 .login-form{
   margin: 20% 15% 0;

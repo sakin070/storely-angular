@@ -1,13 +1,13 @@
 <div class="nav-container">
     <ul class="menu-items ">
         <li><app-logo></app-logo></li>
-        <li><a class="menu-item"><img srcset="assets/home.svg">Home</a></li>
+        <li><a class="menu-item" (click)="navigate('/home')"><img srcset="assets/home.svg">Home</a></li>
         <li>
             <a class="menu-item" (click)="showSubMenu($event)"> <img srcset="assets/stock.svg"> Stock</a>
             <div class="dropdown">
                <div class="submenu-backdrop" (click)="hideSubmenu($event)"></div>
                 <ul class="submenu">
-                    <li> <a> New Stock </a></li>
+                    <li> <a (click)="navigate('/new-stock')"> New Stock </a></li>
                     <li> <a> New Stock </a></li>
                     <li> <a> Stock Category </a></li>
                 </ul>
@@ -22,7 +22,7 @@
             <div class="dropdown">
                 <div class="submenu-backdrop" (click)="hideSubmenu($event)"></div>
                 <ul class="submenu">
-                    <li> <a> Make Sale </a></li>
+                    <li> <a (click)="navigate('/make-sale')"> Make Sale </a></li>
                     <li> <a> View Sales </a></li>
                 </ul>
             </div>
