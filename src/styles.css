@@ -87,6 +87,20 @@ button.no-fill:hover{
   border-radius: .2em;
   border-style: solid;
 }
+.form-group.inline{
+  display: inline;
+}
+
+.form-group.inline>label{
+  display: inline;
+  padding-right: 2em;
+}
+
+.form-group.inline>input{
+  display: inline;
+  width: initial;
+  margin-right: 2em;
+}
 
 .form-group >input:active{
   border-color:var(--primary-color);
@@ -130,4 +144,11 @@ tr.table-row:hover{
 .alert-danger{
   color: red;
   font-family: mulish,serif;
+}
+.container{
+  max-width: 1080px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 0.2em;
+  padding: 0.3em 0.5em;
 }

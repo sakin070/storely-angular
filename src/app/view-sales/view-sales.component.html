@@ -1,0 +1,36 @@
+<app-nav-bar [itemId]=5></app-nav-bar>
+
+<div class="container">
+    <h1>Sales</h1>
+    <hr>
+    <div class="form-container">
+        <div class="form-group inline">
+            <label for="users">User</label>
+            <input list="users" placeholder="Select a user">
+            <datalist id="users" >
+                <option>A Fake User</option>
+                <option>B Fake User</option>
+                <option>C Fake User</option>
+                <option>D Fake User</option>
+                <option>E Fake User</option>
+                <option>A Fake User</option>
+            </datalist>
+        </div>
+
+        <div class="form-group inline right">
+            <label for="soldOn">Sold On</label>
+            <input id="soldOn" type="date">
+        </div>
+    </div>
+    <div>
+        <table>
+            <tr >
+                <th>Username</th>
+                <th>Sold On</th>
+                <th>Amount</th>
+                <th>View</th>
+            </tr>
+        </table>
+    </div>
+</div>
+
