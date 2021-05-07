@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./view-sales.component.css']
 })
 export class ViewSalesComponent implements OnInit {
-
+  users: Set<string> = new Set<string>();
   constructor() { }
 
   ngOnInit(): void {

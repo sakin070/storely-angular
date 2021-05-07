@@ -152,3 +152,9 @@ tr.table-row:hover{
   border-radius: 0.2em;
   padding: 0.3em 0.5em;
 }
+
+hr{
+  border: none;
+  border-top: .4em solid #EDEFF2;
+  margin: 0 -.5em ;
+}

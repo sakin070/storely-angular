@@ -1,7 +1,16 @@
 .form-group.inline.right{
     position: relative;
-    left: 42vw;
+    left: 50%;
 }
 .form-container{
     padding: 1em 0;
+}
+
+h1{
+    margin: 0.5em 0
+}
+
+hr{
+    margin-top: -.2em;
+    margin-bottom: .4em;
 }
