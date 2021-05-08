@@ -53,7 +53,7 @@ export class MakeSaleService {
   removeDiscount(): Observable<any>{
     return this.http.patch(AUTH_API + '/sale/remove-discount', {}, this.httpOptions);
   }
-  getSaleByUserAndDate(userId: number, soldOn: Date): Observable<any>{
-    return this.http.get(AUTH_API + '/user-and-date?postingUserId=' + userId + '&soldOn=' + soldOn ,  this.httpOptions);
+  getSaleByUserAndDate(userId: number, soldOn: string): Observable<any>{
+    return this.http.get(AUTH_API + '/sale/user-and-date?postingUserId=' + userId + '&soldOn=' + soldOn ,  this.httpOptions);
   }
 }

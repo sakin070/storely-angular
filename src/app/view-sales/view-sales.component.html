@@ -6,20 +6,15 @@
     <div class="form-container">
         <div class="form-group inline">
             <label for="users">User</label>
-            <input list="users" placeholder="Select a user">
+            <input list="users" placeholder="Select a user" (input)="filterSales()" [(ngModel)]="username" >
             <datalist id="users" >
-                <option>A Fake User</option>
-                <option>B Fake User</option>
-                <option>C Fake User</option>
-                <option>D Fake User</option>
-                <option>E Fake User</option>
-                <option>A Fake User</option>
+                <option *ngFor="let user of users">{{user}}</option>
             </datalist>
         </div>
 
         <div class="form-group inline right">
             <label for="soldOn">Sold On</label>
-            <input id="soldOn" type="date">
+            <input id="soldOn" [(ngModel)]="date" type="date">
         </div>
     </div>
     <div>
@@ -29,6 +24,17 @@
                 <th>Sold On</th>
                 <th>Amount</th>
                 <th>View</th>
+            </tr>
+            <tr class="table-row"  *ngFor="let sale of filteredSales">
+                <td>{{sale.postingUser.username}}</td>
+                <td>{{sale.saleDate}}</td>
+                <td>{{sale.price}}</td>
+                <td>View</td>
+            </tr>
+            <tr class="table-row" >
+                <td></td>
+                <td></td>
+                <td style="row-span: 2">{{total}}</td>
             </tr>
         </table>
     </div>
