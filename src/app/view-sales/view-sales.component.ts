@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MakeSaleService} from '../_services/make-sale.service';
+import {formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-view-sales',
@@ -8,19 +9,21 @@ import {MakeSaleService} from '../_services/make-sale.service';
 })
 export class ViewSalesComponent implements OnInit {
   users: Set<string> = new Set<string>();
-  date: Date = new Date();
+  date: string = formatDate(new Date() , 'yyyy-MM-dd', 'en-CA');
   sales: any[] = [];
   filteredSales: any[] = [];
   username = '';
   total = 0;
+  showSales = true;
+  saleItemIndex = 0;
   constructor(private makeSaleService: MakeSaleService) { }
 
   ngOnInit(): void {
-    this.getSalesBYDate();
+    this.getSalesByDate();
   }
 
-  getSalesBYDate(): void{
-    this.makeSaleService.getSaleByUserAndDate(0, this.date.toLocaleDateString('en-CA')).subscribe(data => {
+  getSalesByDate(): void{
+    this.makeSaleService.getSaleByUserAndDate(0, this.date).subscribe(data => {
       data.map((sale: { postingUser: { username: string; }; }) => {this.users.add(sale.postingUser.username); });
       this.sales = data;
       this.filterSales();
@@ -42,5 +45,14 @@ export class ViewSalesComponent implements OnInit {
       return false;
     });
   }
+  showSaleItems(index: number): void{
+    this.showSales = false;
+    this.saleItemIndex = index;
+  }
+  printSale(): void{
 
+  }
+  back(): void{
+    this.showSales = true;
+  }
 }

@@ -141,6 +141,14 @@ tr.table-row td{
 tr.table-row:hover{
   background-color: #EFF7FF;
 }
+tr.table-row.no-border td{
+  border: none;
+}
+
+.total-row{
+  border: 0.2em solid #E5E5E5;
+  text-align: center;
+}
 .alert-danger{
   color: red;
   font-family: mulish,serif;
@@ -150,11 +158,13 @@ tr.table-row:hover{
   margin: 0 auto;
   background-color: white;
   border-radius: 0.2em;
-  padding: 0.3em 0.5em;
+  padding: 0.3em 1.5em;
 }
-
+.container.mini{
+  max-width: 720px;
+}
 hr{
   border: none;
   border-top: .4em solid #EDEFF2;
-  margin: 0 -.5em ;
+  margin: 0 -1.5em;
 }

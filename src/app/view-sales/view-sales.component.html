@@ -1,6 +1,6 @@
 <app-nav-bar [itemId]=5></app-nav-bar>
 
-<div class="container">
+<div class="container" *ngIf="showSales; else saleItems">
     <h1>Sales</h1>
     <hr>
     <div class="form-container">
@@ -14,29 +14,76 @@
 
         <div class="form-group inline right">
             <label for="soldOn">Sold On</label>
-            <input id="soldOn" [(ngModel)]="date" type="date">
+            <input id="soldOn" [(ngModel)]="date" type="date" (change)="getSalesByDate()">
         </div>
     </div>
-    <div>
+    <div class="table-div">
         <table>
-            <tr >
-                <th>Username</th>
-                <th>Sold On</th>
-                <th>Amount</th>
-                <th>View</th>
-            </tr>
-            <tr class="table-row"  *ngFor="let sale of filteredSales">
-                <td>{{sale.postingUser.username}}</td>
-                <td>{{sale.saleDate}}</td>
-                <td>{{sale.price}}</td>
-                <td>View</td>
-            </tr>
-            <tr class="table-row" >
-                <td></td>
-                <td></td>
-                <td style="row-span: 2">{{total}}</td>
-            </tr>
+            <colgroup>
+                <col span="1" style="width: 30%;">
+                <col span="1" style="width: 30%;">
+                <col span="1" style="width: 30%;">
+                <col span="1" style="width: 10%;">
+            </colgroup>
+            <tbody>
+                <tr >
+                    <th>Username</th>
+                    <th>Sold On</th>
+                    <th>Amount</th>
+                    <th>View</th>
+                </tr>
+                <tr class="table-row"  *ngFor="let sale of filteredSales; let i = index">
+                    <td>{{sale.postingUser.username}}</td>
+                    <td>{{sale.saleDate}}</td>
+                    <td>{{sale.price}}</td>
+                    <td><button style=" height: 1em; border: none" (click)="showSaleItems(i)"> <img src="assets/greater-than-solid.svg" style="width: 1.5em; height: 1em" alt="view"> </button></td>
+                </tr>
+                <tr class="table-row no-border">
+                    <td></td>
+                    <td></td>
+                    <th colspan="2" class="total-row"> Total($): {{total}}</th>
+                </tr>
+            </tbody>
+
         </table>
     </div>
 </div>
 
+<ng-template #saleItems >
+    <div class="container mini">
+        <h3>Sale</h3>
+        <hr>
+        <div class="table-div">
+            <table>
+                <colgroup>
+                    <col span="1" style="width: 60%;">
+                    <col span="1" style="width: 20%;">
+                    <col span="1" style="width: 20%;">
+                </colgroup>
+                <tbody>
+                <tr >
+                    <th>Item</th>
+                    <th></th>
+                    <th>Total Price</th>
+                </tr>
+                <tr class="table-row"  *ngFor="let saleItem of filteredSales[saleItemIndex].saleItems">
+                    <td>{{saleItem.stock.name}}</td>
+                    <td> {{saleItem.quantity}} X {{saleItem.unitSellPrice}}</td>
+                    <td>{{saleItem.quantity * saleItem.unitSellPrice}}</td>
+                </tr>
+                <tr class="table-row no-border">
+                    <td></td>
+                    <td></td>
+                    <th class="total-row"> Total($): {{sales[saleItemIndex].price}}</th>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <div class="button-containers">
+            <button (click)="printSale()" >Print</button>
+            <button class="no-fill back-button" (click)="back()" >Back</button>
+        </div>
+    </div>
+
+</ng-template>
