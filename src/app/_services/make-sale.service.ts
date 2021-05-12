@@ -56,4 +56,7 @@ export class MakeSaleService {
   getSaleByUserAndDate(userId: number, soldOn: string): Observable<any>{
     return this.http.get(AUTH_API + '/sale/user-and-date?postingUserId=' + userId + '&soldOn=' + soldOn ,  this.httpOptions);
   }
+  printSale(saleId: number): Observable<any>{
+    return this.http.get(AUTH_API + '/sale/user-and-date?saleId=' + saleId,  this.httpOptions);
+  }
 }

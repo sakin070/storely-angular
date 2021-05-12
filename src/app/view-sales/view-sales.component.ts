@@ -50,7 +50,7 @@ export class ViewSalesComponent implements OnInit {
     this.saleItemIndex = index;
   }
   printSale(): void{
-
+    this.makeSaleService.printSale(this.saleItemIndex).subscribe();
   }
   back(): void{
     this.showSales = true;
