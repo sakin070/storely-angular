@@ -1,0 +1,33 @@
+<app-nav-bar [itemId]=1></app-nav-bar>
+<div class="container mini">
+    <h1>Register Stock</h1>
+    <hr>
+    <form class="stock-form"  name="form" (ngSubmit)="f.form.valid && createStock(f)" #f="ngForm" novalidate>
+        <div class="alert alert-danger" role="alert" *ngIf="createStockError">
+            Stock not created
+        </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" [(ngModel)]="stock.name" required #name="ngModel" autocomplete="off">
+            <div class="alert alert-danger" role="alert" *ngIf="name.errors && f.submitted">
+                Name is required!
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="sku">SKU</label>
+            <input id="sku" name="sku" type="text" [(ngModel)]="stock.sku" required #sku="ngModel" autocomplete="off">
+            <div class="alert alert-danger" role="alert" *ngIf="sku.errors && f.submitted">
+                SKU is required!
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="categoryInput">Category</label>
+            <input id="categoryInput" name="categoryInput" type="text" list="categories" placeholder="Select a category"  (change)="updateCategory($event)">
+            <datalist id="categories">
+                <option *ngFor="let category of categories" [value]="category.name">{{category.name}}</option>
+            </datalist>
+        </div>
+        <button>Register</button>
+    </form>
+</div>
+

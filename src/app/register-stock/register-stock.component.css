@@ -1,0 +1,14 @@
+.stock-form{
+    align-items: center;
+    padding: 1em 4em;
+}
+.form-group{
+    padding-bottom: 1.5em;
+}
+button{
+    margin-top: .5em;
+    margin-left: 40%;
+}
+h1{
+    color: rgba(0, 0, 0, 0.69);
+}

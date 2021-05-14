@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { MakeSaleComponent } from './make-sale/make-sale.component';
 import { ViewSalesComponent } from './view-sales/view-sales.component';
+import { RegisterStockComponent } from './register-stock/register-stock.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ViewSalesComponent } from './view-sales/view-sales.component';
     HomeComponent,
     NavBarComponent,
     MakeSaleComponent,
-    ViewSalesComponent
+    ViewSalesComponent,
+    RegisterStockComponent
   ],
   imports: [
     BrowserModule,
