@@ -12,6 +12,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { MakeSaleComponent } from './make-sale/make-sale.component';
 import { ViewSalesComponent } from './view-sales/view-sales.component';
 import { RegisterStockComponent } from './register-stock/register-stock.component';
+import { StockTableComponent } from './stock-table/stock-table.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { RegisterStockComponent } from './register-stock/register-stock.componen
     NavBarComponent,
     MakeSaleComponent,
     ViewSalesComponent,
-    RegisterStockComponent
+    RegisterStockComponent,
+    StockTableComponent
   ],
   imports: [
     BrowserModule,

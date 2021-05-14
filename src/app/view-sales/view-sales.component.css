@@ -5,21 +5,9 @@
 .form-container{
     padding: 1em 0;
 }
-
-h1{
-    margin: 0.5em 0;
-    color: rgba(0, 0, 0, 0.69);
-}
-
 hr{
     margin-top: -.2em;
     margin-bottom: .4em;
-}
-.table-div{
-    padding:1em 0.5em;
-    margin-bottom: 1em;
-    overflow: auto;
-    max-height: 65vh;
 }
 .button-containers{
     margin: 4% 0 0 35%;

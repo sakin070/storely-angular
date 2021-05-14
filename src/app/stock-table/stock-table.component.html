@@ -1,0 +1,42 @@
+<app-nav-bar [itemId]=1></app-nav-bar>
+
+<div class="container">
+    <div class="header-div">
+        <h1>Stock Table</h1>
+        <input type="search" placeholder="Search by name">
+    </div>
+    <hr>
+    <div class="table-div">
+        <button class="no-fill">Download</button>
+        <table>
+            <colgroup>
+                <col span="1" style="width: 35%;">
+                <col span="1" style="width: 15%;">
+                <col span="1" style="width: 15%;">
+                <col span="1" style="width: 15%;">
+                <col span="1" style="width: 10%;">
+                <col span="1" style="width: 10%;">
+            </colgroup>
+            <tbody>
+                <tr >
+                    <th>Name</th>
+                    <th>Shelf Quantity</th>
+                    <th>Store Quantity</th>
+                    <th>Selling Price</th>
+                    <th>Modify</th>
+                    <th>Delete</th>
+                </tr>
+                <tr class="table-row"  *ngFor="let stock of stocks; let i = index">
+                    <td>{{stock.name}}</td>
+                    <td>{{stock.shelfQuantity}}</td>
+                    <td>{{stock.storeQuantity}}</td>
+                    <td>{{stock.sellingPrice}}</td>
+                    <td><button style=" height: 1em; border: none" (click)="edit(i)"> <img src="assets/greater-than-solid.svg" style="width: 1.5em; height: 1em" alt="edit"> </button></td>
+                    <td><button style=" height: 1em; border: none" (click)="delete(i)"> <img src="assets/greater-than-solid.svg" style="width: 1.5em; height: 1em" alt="delete"> </button></td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+</div>

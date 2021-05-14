@@ -26,7 +26,9 @@ export class StockService {
   }
 
   createStock(stock: any): Observable<any>{
-    console.log(stock);
     return this.http.post(API, stock, this.httpOptions);
+  }
+  getStock(pageNumber: number, pageSize: number): Observable<any>{
+    return this.http.get(API + '/page?page=' + pageNumber + '&size=' + pageSize, this.httpOptions);
   }
 }
