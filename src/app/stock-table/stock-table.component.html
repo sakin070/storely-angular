@@ -4,8 +4,8 @@
     <div class="header-div">
         <h1>Stock Table</h1>
         <div class="stock-search">
-            <input type="search" placeholder="Search by name" (keyup.enter)="getPage(0)" name="search" [(ngModel)]="searchString">
-            <button (click)="getPage(0)"><img src="assets/search-line.svg" alt="search"></button>
+            <input type="search" placeholder="Search by name" (keyup.enter)="search()" name="search" [(ngModel)]="searchString">
+            <button (click)="search()"><img src="assets/search-line.svg" alt="search"></button>
         </div>
     </div>
     <hr>
@@ -41,6 +41,6 @@
 
         </table>
     </div>
-    <app-pagination [$currentIndex]="currentPage" [maxPage]="totalPages"></app-pagination>
+    <app-pagination [$currentIndex]="currentPage" [$maxPage]="totalPages" [getPageFunction]="getPage"></app-pagination>
 
 </div>

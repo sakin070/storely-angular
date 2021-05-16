@@ -12,23 +12,26 @@ export class StockTableComponent implements OnInit {
   searchString = '';
   pageSize = 9;
   currentPage = new BehaviorSubject(1);
-  totalPages = Infinity;
+  totalPages = new BehaviorSubject(Infinity);
   constructor(private stockService: StockService) { }
 
-  ngOnInit(): void {
-    this.getPage(0); // TODO: take this out
+  ngOnInit(): void {}
+  search(): void{
+    this.getPage(1);
+    this.currentPage.next(1);
   }
-  getPage(currentPage: number): void{
+  getPage = (currentPage: number): void => {
     if (this.searchString === ''){
-      this.stockService.getStock(currentPage, this.pageSize).subscribe( data => {
-        console.log(data);
+      this.stockService.getStock(currentPage - 1, this.pageSize).subscribe( data => {
         this.stocks = data.content;
-        this.totalPages = data.totalPages;
+        this.totalPages.next( data === [] ? 1 : data.totalPages);
+        console.log(data);
       });
     }else{
-      this.stockService.getStockByName(this.searchString, currentPage, this.pageSize).subscribe( data => {
+      this.stockService.getStockByName(this.searchString, currentPage - 1, this.pageSize).subscribe( data => {
         this.stocks = data.content;
-        this.totalPages = data.totalPages;
+        this.totalPages.next( data === [] ? 1 : data.totalPages);
+        console.log(data);
       });
     }
   }

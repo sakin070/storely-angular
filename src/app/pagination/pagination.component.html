@@ -1,0 +1,18 @@
+<nav class="pagination">
+    <a (click)="previous()" style="border: none">
+<!--        <span>Previous</span>-->
+        <img class="pagination-image" src="assets/chevron-left-solid.svg" alt="previous">
+    </a>
+    <a [id]="1" (click)="select(1)">1</a>
+    <span *ngIf="showLeftEllipsis" class="ellipsis">...</span>
+    <a [id]="i" (click)="select(i)" *ngFor="let i of currentEight; let last = last">
+        {{i}}
+        <ng-container *ngIf="last">{{selectDeselect(previousIndex,nextIndex)}}</ng-container>
+    </a>
+    <span *ngIf="showRightEllipsis" class="ellipsis">...</span>
+    <a [id]="maxPage" *ngIf="maxPage > 1" (click)="select(maxPage)">{{maxPage}}</a>
+    <a (click)="next()" style="border: none">
+        <img class="pagination-image" src="assets/chevron-right-solid.svg" alt="next">
+<!--        <span>Next</span>-->
+    </a>
+</nav>

@@ -1,0 +1,28 @@
+.pagination{
+    font-family: mulish,serif;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    align-self: center;
+}
+
+.pagination > a{
+    cursor: pointer;
+    padding: .3em .5em;
+    border-radius: .3em;
+    border: .1em solid var(--passive-color);
+    margin-left: .5em;
+}
+.pagination > a:hover{
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.pagination-image{
+    height: 2em;
+}
+.pagination-image:hover{
+    filter: invert(53%) sepia(76%) saturate(3665%) hue-rotate(199deg) brightness(99%) contrast(97%);
+}
+.ellipsis{
+    margin-left: .5em;
+}
