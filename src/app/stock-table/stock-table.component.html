@@ -3,11 +3,14 @@
 <div class="container">
     <div class="header-div">
         <h1>Stock Table</h1>
-        <input type="search" placeholder="Search by name">
+        <div class="stock-search">
+            <input type="search" placeholder="Search by name" (keyup.enter)="getPage(0)" name="search" [(ngModel)]="searchString">
+            <button (click)="getPage(0)"><img src="assets/search-line.svg" alt="search"></button>
+        </div>
     </div>
     <hr>
+    <button class="no-fill" (click)="downloadStockTable()">Download</button>
     <div class="table-div">
-        <button class="no-fill">Download</button>
         <table>
             <colgroup>
                 <col span="1" style="width: 35%;">
@@ -18,7 +21,7 @@
                 <col span="1" style="width: 10%;">
             </colgroup>
             <tbody>
-                <tr >
+                <tr>
                     <th>Name</th>
                     <th>Shelf Quantity</th>
                     <th>Store Quantity</th>
@@ -31,12 +34,13 @@
                     <td>{{stock.shelfQuantity}}</td>
                     <td>{{stock.storeQuantity}}</td>
                     <td>{{stock.sellingPrice}}</td>
-                    <td><button style=" height: 1em; border: none" (click)="edit(i)"> <img src="assets/greater-than-solid.svg" style="width: 1.5em; height: 1em" alt="edit"> </button></td>
-                    <td><button style=" height: 1em; border: none" (click)="delete(i)"> <img src="assets/greater-than-solid.svg" style="width: 1.5em; height: 1em" alt="delete"> </button></td>
+                    <td><button style=" height: 1em; border: none" (click)="edit(i)"> <img src="assets/pencil-line.svg"  alt="edit"> </button></td>
+                    <td><button style=" height: 1em; border: none" (click)="delete(i)"> <img src="assets/delete-bin-7-line.svg" alt="delete"> </button></td>
                 </tr>
             </tbody>
 
         </table>
     </div>
+    <app-pagination [$currentIndex]="currentPage" [maxPage]="totalPages"></app-pagination>
 
 </div>

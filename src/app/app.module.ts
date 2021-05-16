@@ -13,6 +13,7 @@ import { MakeSaleComponent } from './make-sale/make-sale.component';
 import { ViewSalesComponent } from './view-sales/view-sales.component';
 import { RegisterStockComponent } from './register-stock/register-stock.component';
 import { StockTableComponent } from './stock-table/stock-table.component';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { StockTableComponent } from './stock-table/stock-table.component';
     MakeSaleComponent,
     ViewSalesComponent,
     RegisterStockComponent,
-    StockTableComponent
+    StockTableComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,
