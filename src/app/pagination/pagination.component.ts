@@ -6,7 +6,7 @@ import {BehaviorSubject} from 'rxjs';
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css']
 })
-export class PaginationComponent implements OnInit, AfterViewInit {
+export class PaginationComponent implements OnInit  {
 
   // @ts-ignore
   @Input() $currentIndex: BehaviorSubject<number>;
@@ -28,9 +28,7 @@ export class PaginationComponent implements OnInit, AfterViewInit {
     this.getMax();
     this.createCurrentEight();
   }
-  ngAfterViewInit(): void {
-    this.selectDeselect(this.currentIndex, this.currentIndex);
-  }
+
   getMax(): void{
     this.$maxPage.subscribe( value => {
       this.maxPage = value;
@@ -45,12 +43,18 @@ export class PaginationComponent implements OnInit, AfterViewInit {
       this.currentEight = temp;
       this.showRightEllipsis = this.currentIndex !== this.maxPage && this.maxPage - temp[temp.length - 1] > 1;
       this.showLeftEllipsis = this.currentIndex !== 1 && temp[0] - 1 > 1;
+      this.selectDeselect(this.currentIndex, 1);
     } );
   }
   createCurrentEight(): void{
     this.$currentIndex.subscribe(value => {
       const temp: number[] = [];
       this.currentIndex = value;
+      if (value === 1) {
+        this.previousIndex = 1;
+        this.nextIndex = 1;
+        this.selectDeselect(this.currentIndex, 1);
+      }
       let index = value === 1 ? value + 1 : value ;
       if ((index + 8) >= this.maxPage  && this.maxPage > 10 ){
         index = this.maxPage - 8;
