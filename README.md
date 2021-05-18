@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/73c27720-ab0e-4bb8-b1d7-9dc2966eb8d1/deploy-status)](https://app.netlify.com/sites/storely/deploys)
+
 # Storely
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.6.
