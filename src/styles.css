@@ -44,7 +44,7 @@
 *::after {
   box-sizing: inherit;
 }
-h1, h2, h3 {
+h1, h2, h3, h4 {
   font-family: mulish, serif;
   /*font-weight: bold;*/
 }
@@ -79,6 +79,13 @@ button.no-fill:hover{
 .form-group >input{
   width: 100%;
   height: 2.2em;
+  border-color: #9CA8B9;
+  border-radius: .2em;
+  border-style: solid;
+}
+.form-group > textarea{
+  width: 100%;
+  /*height: 2.2em;*/
   border-color: #9CA8B9;
   border-radius: .2em;
   border-style: solid;

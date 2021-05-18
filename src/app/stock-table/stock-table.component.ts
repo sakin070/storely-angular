@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {StockService} from '../_services/stock.service';
 import {BehaviorSubject} from 'rxjs';
+import {CategoryService} from '../_services/category.service';
 
 @Component({
   selector: 'app-stock-table',
@@ -13,9 +14,23 @@ export class StockTableComponent implements OnInit {
   pageSize = 9;
   currentPage = new BehaviorSubject(1);
   totalPages = new BehaviorSubject(Infinity);
-  constructor(private stockService: StockService) { }
+  stock = {
+    name: '',
+    sku: '',
+    category: {name: ''},
+    shelfQuantity: 0,
+    storeQuantity: 0,
+    sellingPrice: 0,
+    reOrderLevel: 0
+  };
+  reason = '';
+  categories: any[] = [];
+  stockTable = true;
+  constructor(private stockService: StockService, private categoryService: CategoryService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.categoryService.getCategories().subscribe(data => { this.categories = data; });
+  }
   search(): void{
     this.getPage(1);
     this.currentPage.next(1);
@@ -25,21 +40,26 @@ export class StockTableComponent implements OnInit {
       this.stockService.getStock(currentPage - 1, this.pageSize).subscribe( data => {
         this.stocks = data.content;
         this.totalPages.next( data === [] ? 1 : data.totalPages);
-        console.log(data);
       });
     }else{
       this.stockService.getStockByName(this.searchString, currentPage - 1, this.pageSize).subscribe( data => {
         this.stocks = data.content;
         this.totalPages.next( data === [] ? 1 : data.totalPages);
-        console.log(data);
       });
     }
   }
   edit(index: number): void{
-
+    this.stockTable = false;
+    this.stock = this.stocks[index];
   }
   delete(index: number): void{
 
+  }
+  save(): void{
+    this.stockService.modifyStock({stockBeingModified: this.stock, modificationReason: this.reason}).subscribe();
+  }
+  back(): void{
+    this.stockTable = true;
   }
   downloadStockTable(): void{
     this.stockService.downloadStockTable().subscribe(data => {
@@ -50,5 +70,7 @@ export class StockTableComponent implements OnInit {
       link.click();
     });
   }
-
+  updateCategory(event: any): void{
+    this.stock.category = this.categories.filter( category => category.name === event.target.value)[0];
+  }
 }

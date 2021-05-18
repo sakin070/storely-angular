@@ -37,4 +37,7 @@ export class StockService {
   downloadStockTable(): Observable<any>{
     return this.http.get(API + '/download/stock-table', this.blobHttpOptions);
   }
+  modifyStock(stock: any): Observable<any>{
+    return this.http.post(API + '/modify', stock, this.httpOptions);
+  }
 }

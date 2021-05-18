@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, AfterViewInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 
 @Component({
@@ -6,7 +6,7 @@ import {BehaviorSubject} from 'rxjs';
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css']
 })
-export class PaginationComponent implements OnInit  {
+export class PaginationComponent implements OnInit {
 
   // @ts-ignore
   @Input() $currentIndex: BehaviorSubject<number>;
@@ -31,31 +31,32 @@ export class PaginationComponent implements OnInit  {
 
   getMax(): void{
     this.$maxPage.subscribe( value => {
-      this.maxPage = value;
-      const temp: number[] = [];
-      let index = this.currentIndex === 1 ? this.currentIndex + 1 : this.currentIndex ;
-      if ((index + 8) >= this.maxPage  && this.maxPage > 10 ){
-        index = this.maxPage - 8;
+      if (this.maxPage !== value){
+        this.maxPage = value;
+        const temp: number[] = [];
+        let index = this.currentIndex === 1 ? this.currentIndex + 1 : this.currentIndex ;
+        if ((index + 8) >= this.maxPage  && this.maxPage > 10 ){
+          index = this.maxPage - 8;
+        }
+        for (let i = index; i < index + 8 && (index + 8) <= this.maxPage; i++) {
+          temp.push(i);
+        }
+        this.currentEight = temp;
+        this.showRightEllipsis = this.currentIndex !== this.maxPage && this.maxPage - temp[temp.length - 1] > 1;
+        this.showLeftEllipsis = this.currentIndex !== 1 && temp[0] - 1 > 1;
+        this.selectDeselect(this.currentIndex, 1);
       }
-      for (let i = index; i < index + 8 && (index + 8) <= this.maxPage; i++) {
-        temp.push(i);
-      }
-      this.currentEight = temp;
-      this.showRightEllipsis = this.currentIndex !== this.maxPage && this.maxPage - temp[temp.length - 1] > 1;
-      this.showLeftEllipsis = this.currentIndex !== 1 && temp[0] - 1 > 1;
-      this.selectDeselect(this.currentIndex, 1);
     } );
   }
   createCurrentEight(): void{
     this.$currentIndex.subscribe(value => {
-      const temp: number[] = [];
       this.currentIndex = value;
       if (value === 1) {
         this.previousIndex = 1;
         this.nextIndex = 1;
-        this.selectDeselect(this.currentIndex, 1);
       }
       let index = value === 1 ? value + 1 : value ;
+      const temp: number[] = [];
       if ((index + 8) >= this.maxPage  && this.maxPage > 10 ){
         index = this.maxPage - 8;
       }

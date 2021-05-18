@@ -1,6 +1,6 @@
 <app-nav-bar [itemId]=1></app-nav-bar>
 
-<div class="container">
+<div class="container" *ngIf="stockTable; else stockModify">
     <div class="header-div">
         <h1>Stock Table</h1>
         <div class="stock-search">
@@ -41,6 +41,76 @@
 
         </table>
     </div>
-    <app-pagination [$currentIndex]="currentPage" [$maxPage]="totalPages" [getPageFunction]="getPage"></app-pagination>
+    <app-pagination class="pagination" [$currentIndex]="currentPage" [$maxPage]="totalPages" [getPageFunction]="getPage"></app-pagination>
 
 </div>
+
+<ng-template #stockModify>
+    <div class="container mini">
+        <h2> Modify Stock</h2>
+        <hr>
+        <form #f>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" [(ngModel)]="stock.name" required #name="ngModel" autocomplete="off">
+                <div class="alert alert-danger" role="alert" *ngIf="name.errors && f.submitted">
+                    Name is required!
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="sku">SKU</label>
+                <input id="sku" name="sku" type="text" [(ngModel)]="stock.sku" required #sku="ngModel" autocomplete="off">
+                <div class="alert alert-danger" role="alert" *ngIf="sku.errors && f.submitted">
+                    SKU is required!
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="categoryInput">Category</label>
+                <input id="categoryInput" name="categoryInput" type="text" list="categories" placeholder="Select a category" [(ngModel)]="stock.category.name" (change)="updateCategory($event)">
+                <datalist id="categories">
+                    <option *ngFor="let category of categories" [value]="category.name">{{category.name}}</option>
+                </datalist>
+            </div>
+            <h4>Quantity</h4>
+            <div class="quantity">
+                <div class="form-group">
+                    <label for="shelf">Shelf</label>
+                    <input id="shelf" name="shelf" type="number" [(ngModel)]="stock.shelfQuantity" required #shelf="ngModel" autocomplete="off">
+                    <div class="alert alert-danger" role="alert" *ngIf="shelf.errors && f.submitted">
+                        Shelf Quantity is required!
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="store">Store</label>
+                    <input id="store" name="store" type="number" [(ngModel)]="stock.storeQuantity" required #store="ngModel" autocomplete="off">
+                    <div class="alert alert-danger" role="alert" *ngIf="store.errors && f.submitted">
+                        Store Quantity is required!
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="sellingPrice">Selling Price</label>
+                <input id="sellingPrice" name="sellingPrice" type="number" [(ngModel)]="stock.sellingPrice" required #sellingPrice="ngModel" autocomplete="off">
+                <div class="alert alert-danger" role="alert" *ngIf="sellingPrice.errors && f.submitted">
+                    Selling Price is required!
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="reorderLevel">Re-Order Level</label>
+                <input id="reorderLevel" name="reorderLevel" type="number" [(ngModel)]="stock.reOrderLevel" required #reorderLevel="ngModel" autocomplete="off">
+                <div class="alert alert-danger" role="alert" *ngIf="reorderLevel.errors && f.submitted">
+                    Re-Order Level is required!
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="reason">Reason for Modification</label>
+                <textarea id="reason" name="reason"  rows="3" [(ngModel)]="reason" required autocomplete="off"> </textarea>
+            </div>
+        </form>
+
+        <div class="button-containers">
+            <button (click)="save()" >Save</button>
+            <button class="no-fill margin-3" (click)="back()" >Cancel</button>
+        </div>
+    </div>
+</ng-template>
