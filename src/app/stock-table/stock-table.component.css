@@ -64,3 +64,36 @@ hr{
     margin-left: 3em;
     /*margin-bottom: 1em;*/
 }
+.delete-container{
+    position: relative;
+}
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.69);
+}
+.delete-content{
+    position: fixed;
+    background-color: white;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 20em;
+    padding: .6em 1.5em;
+    font-family: mulish, sans-serif;
+    border-radius: .3em;
+}
+.delete-content>p{
+    text-align: center;
+}
+.delete-content>hr{
+    margin: 0 -1.5em;
+}
+.delete-content>.button-containers{
+    margin: 4em 0 2% 20%;
+    font-size: 0.8em;
+}

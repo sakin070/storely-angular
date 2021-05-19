@@ -13,6 +13,7 @@ export class StockService {
 
   httpOptions: any ;
   blobHttpOptions: any;
+  textHttpOptions: any;
   constructor(private tokenStorageService: TokenStorageService, private http: HttpClient) {
     if (tokenStorageService.getToken()){
       this.httpOptions = {
@@ -21,6 +22,10 @@ export class StockService {
       this.blobHttpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: tokenStorageService.getToken()as string }),
         responseType: 'blob'
+      };
+      this.textHttpOptions = {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: tokenStorageService.getToken()as string }),
+        responseType: 'text'
       };
     }
   }
@@ -39,5 +44,8 @@ export class StockService {
   }
   modifyStock(stock: any): Observable<any>{
     return this.http.post(API + '/modify', stock, this.httpOptions);
+  }
+  deleteStock(stockId: number): Observable<any>{
+    return this.http.delete(API + '/' + stockId, this.textHttpOptions);
   }
 }

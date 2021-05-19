@@ -44,7 +44,18 @@
     <app-pagination class="pagination" [$currentIndex]="currentPage" [$maxPage]="totalPages" [getPageFunction]="getPage"></app-pagination>
 
 </div>
-
+<div *ngIf="showDeleteModal" class="delete-container">
+    <div class="modal" (click)="hideModal()"></div>
+    <div class="delete-content">
+        <h4>Delete Stock</h4>
+        <hr>
+        <p>Are you want to delete "{{stock.name}}"?</p>
+        <div class="button-containers">
+            <button (click)="deleteStock()" style="background-color: var(--danger-color)">Delete</button>
+            <button class="no-fill margin-3" (click)="hideModal()" >Cancel</button>
+        </div>
+    </div>
+</div>
 <ng-template #stockModify>
     <div class="container mini">
         <h2> Modify Stock</h2>

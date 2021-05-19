@@ -15,6 +15,7 @@ export class StockTableComponent implements OnInit {
   currentPage = new BehaviorSubject(1);
   totalPages = new BehaviorSubject(Infinity);
   stock = {
+    stock_id: 0,
     name: '',
     sku: '',
     category: {name: ''},
@@ -26,6 +27,8 @@ export class StockTableComponent implements OnInit {
   reason = '';
   categories: any[] = [];
   stockTable = true;
+  showDeleteModal = false;
+  index = 0;
   constructor(private stockService: StockService, private categoryService: CategoryService) { }
 
   ngOnInit(): void {
@@ -53,7 +56,20 @@ export class StockTableComponent implements OnInit {
     this.stock = this.stocks[index];
   }
   delete(index: number): void{
-
+    this.stock = this.stocks[index];
+    this.showDeleteModal = true;
+    this.index = index;
+  }
+  deleteStock(): void{
+    this.stockService.deleteStock(this.stock.stock_id).subscribe(() => {
+      this.showDeleteModal = false;
+      this.currentPage.subscribe(value => {
+        this.getPage(value);
+      }).unsubscribe();
+    } );
+  }
+  hideModal(): void{
+    this.showDeleteModal = false;
   }
   save(): void{
     this.stockService.modifyStock({stockBeingModified: this.stock, modificationReason: this.reason}).subscribe();
