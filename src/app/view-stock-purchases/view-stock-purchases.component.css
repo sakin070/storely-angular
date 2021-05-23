@@ -1,0 +1,16 @@
+.static-info{
+    margin: .8em 0;
+}
+.back-link{
+    font-family: mulish, sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+}
+.back-link>img{
+    height: 1em;
+    width: 1em;
+}
+.pagination{
+    margin: 0 0 2.5em 28%;
+    font-size: .8em;
+}

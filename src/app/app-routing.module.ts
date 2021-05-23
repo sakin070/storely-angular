@@ -7,6 +7,7 @@ import {ViewSalesComponent} from './view-sales/view-sales.component';
 import {RegisterStockComponent} from './register-stock/register-stock.component';
 import {StockTableComponent} from './stock-table/stock-table.component';
 import {StockPurchaseComponent} from './stock-purchase/stock-purchase.component';
+import {ViewStockPurchasesComponent} from './view-stock-purchases/view-stock-purchases.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -15,7 +16,8 @@ const routes: Routes = [
   {path: 'view-sales', component: ViewSalesComponent},
   {path: 'register-stock', component: RegisterStockComponent},
   {path: 'stock-table', component: StockTableComponent},
-  {path: 'stock-purchase', component: StockPurchaseComponent},
+  {path: 'new-stock-purchase', component: StockPurchaseComponent},
+  {path: 'view-stock-purchases', component: ViewStockPurchasesComponent},
   {path: 'home', component: HomeComponent}
   ];
 

@@ -15,6 +15,7 @@ import { RegisterStockComponent } from './register-stock/register-stock.componen
 import { StockTableComponent } from './stock-table/stock-table.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { StockPurchaseComponent } from './stock-purchase/stock-purchase.component';
+import { ViewStockPurchasesComponent } from './view-stock-purchases/view-stock-purchases.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { StockPurchaseComponent } from './stock-purchase/stock-purchase.componen
     RegisterStockComponent,
     StockTableComponent,
     PaginationComponent,
-    StockPurchaseComponent
+    StockPurchaseComponent,
+    ViewStockPurchasesComponent
   ],
     imports: [
         BrowserModule,

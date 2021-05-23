@@ -3,6 +3,7 @@ import {TokenStorageService} from './token-storage.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
+// const API = 'http://localhost:8080/stock-purchase';
 const API = 'https://storley.herokuapp.com/stock-purchase';
 
 @Injectable({
@@ -30,5 +31,14 @@ export class StockPurchaseService {
   }
   createStockPurchase(stockPurchase: any): Observable<any>{
     return this.http.post(API, stockPurchase, this.httpOptions);
+  }
+  getPurchases(pageNumber: number, pageSize: number, startDate: string, endDate: string): Observable<any>{
+    return this.http.get(API + '/page?page=' + pageNumber + '&size='
+        + pageSize + '&startDate=' + startDate + '&endDate=' + endDate, this.httpOptions);
+  }
+
+  getPurchasesBySupplierId(pageNumber: number, pageSize: number, startDate: string, endDate: string, supplierId: number): Observable<any>{
+    return this.http.get(API + '/page?page=' + pageNumber + '&size='
+        + pageSize + '&startDate=' + startDate + '&endDate=' + endDate + '&supplierId=' + supplierId, this.httpOptions);
   }
 }
