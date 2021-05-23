@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { LogoComponent } from './logo/logo.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -14,6 +14,7 @@ import { ViewSalesComponent } from './view-sales/view-sales.component';
 import { RegisterStockComponent } from './register-stock/register-stock.component';
 import { StockTableComponent } from './stock-table/stock-table.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { StockPurchaseComponent } from './stock-purchase/stock-purchase.component';
 
 @NgModule({
   declarations: [
@@ -26,14 +27,16 @@ import { PaginationComponent } from './pagination/pagination.component';
     ViewSalesComponent,
     RegisterStockComponent,
     StockTableComponent,
-    PaginationComponent
+    PaginationComponent,
+    StockPurchaseComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

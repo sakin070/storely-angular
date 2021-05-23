@@ -72,7 +72,8 @@ export class StockTableComponent implements OnInit {
     this.showDeleteModal = false;
   }
   save(): void{
-    this.stockService.modifyStock({stockBeingModified: this.stock, modificationReason: this.reason}).subscribe();
+    this.stockService.modifyStock({stockBeingModified: this.stock, modificationReason: this.reason}).subscribe(
+        () => this.stockTable = true);
   }
   back(): void{
     this.stockTable = true;

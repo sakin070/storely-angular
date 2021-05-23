@@ -1,0 +1,167 @@
+<app-nav-bar [itemId]=1></app-nav-bar>
+<div class="container">
+    <h1>Stock Purchase</h1>
+    <hr>
+    <div class="static-info" >
+        <div class="form-group inline">
+            <label for="supplier"><strong>Supplier</strong></label>
+            <input style="width: 25em" id="supplier" name="supplier" type="text" list="suppliers" placeholder="Select a supplier" (change)="updateSupplier($event)" autocomplete="off">
+            <datalist id="suppliers">
+                <option *ngFor="let supplier of suppliers" [value]="supplier.name">{{supplier.name}}</option>
+            </datalist>
+        </div>
+
+        <div class="form-group inline right">
+            <label for="date"><strong>Date</strong></label>
+            <input id="date" name="date" type="date" [(ngModel)]="date" autocomplete="off">
+        </div>
+    </div>
+    <div *ngIf="preview; else fullTable" class="flex">
+        <div class="purchaseForm">
+            <form #f="ngForm" novalidate>
+                <div class="form-group">
+                    <label for="sku">SKU</label>
+                    <input id="sku" name="sku" type="text" [(ngModel)]="stock.sku" required #sku="ngModel" autocomplete="off" (keyup.enter)="getStockBySKU()">
+                    <div class="alert alert-danger" role="alert" *ngIf="sku.errors && f.submitted">
+                        SKU is required!
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input id="name" name="name" type="text" [(ngModel)]="stock.name" required #name="ngModel" autocomplete="off">
+                    <div class="alert alert-danger" role="alert" *ngIf="name.errors && f.submitted">
+                        Name is required!
+                    </div>
+                </div>
+
+                <h4>Quantity Purchased</h4>
+                <div class="flex">
+                    <div class="form-group">
+                        <label for="shelf">Shelf</label>
+                        <input id="shelf" name="shelf" type="number" [(ngModel)]="shelfQuantity" required autocomplete="off">
+<!--                        <div class="alert alert-danger" role="alert" *ngIf="shelf.errors && f.submitted">-->
+<!--                            Shelf Quantity is required!-->
+<!--                        </div>-->
+                    </div>
+                    <div class="form-group">
+                        <label for="store">Store</label>
+                        <input id="store" name="store" type="number" [(ngModel)]="storeQuantity" required #store="ngModel" autocomplete="off">
+                        <div class="alert alert-danger" role="alert" *ngIf="store.errors && f.submitted">
+                            Store Quantity is required!
+                        </div>
+                    </div>
+                </div>
+
+                <h4>Cost Price</h4>
+                <div class="flex">
+                    <div class="form-group">
+                        <label for="newCost">New Cost</label>
+                        <input id="newCost" name="newCost" type="number" [(ngModel)]="newCostPrice" required #newCost="ngModel" autocomplete="off">
+                        <div class="alert alert-danger" role="alert" *ngIf="newCost.errors && f.submitted">
+                            Cost Price is required!
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="oldCost">Old Cost</label>
+                        <input id="oldCost" name="oldCost" type="number" [(ngModel)]="stock.costPrice" readonly>
+                    </div>
+                </div>
+
+                <h4>Selling Price</h4>
+                <div class="flex">
+                    <div class="form-group">
+                        <label for="newSellingPrice">New Selling Price</label>
+                        <input id="newSellingPrice" name="newSellingPrice" type="number" [(ngModel)]="newSellingPrice" required #newSellingPriceM="ngModel" autocomplete="off">
+                        <div class="alert alert-danger" role="alert" *ngIf="newSellingPriceM.errors && f.submitted">
+                            Selling Price is required!
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="oldSellingPrice">Old Selling Price</label>
+                        <input id="oldSellingPrice" name="oldSellingPrice" type="number" [(ngModel)]="stock.sellingPrice" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reorderLevel">Re-Order Level</label>
+                    <input id="reorderLevel" name="reorderLevel" type="number" [(ngModel)]="reorderLevel" required #reorderLevelM="ngModel" autocomplete="off">
+                    <div class="alert alert-danger" role="alert" *ngIf="reorderLevelM.errors && f.submitted">
+                        Re-Order Level is required!
+                    </div>
+                </div>
+                <button *ngIf="!isEdit" class="centered" style="background-color: var(--secondary-color)" (click)="add()" type="reset">Add &#43;</button>
+                <button *ngIf="isEdit" class="centered" (click)="save()" type="reset">Save</button>
+            </form>
+        </div>
+        <div class="table-div">
+            <table>
+                <colgroup>
+                    <col span="1" style="width: 35%;">
+                    <col span="1" style="width: 21%;">
+                    <col span="1" style="width: 21%;">
+                    <col span="1" style="width: 22%;">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Shelf Quantity Purchased</th>
+                    <th>Store Quantity Purchased</th>
+                    <th>Cost Price</th>
+                </tr>
+                <tr class="table-row"  *ngFor="let purchase of purchases; let i = index">
+                    <td>{{purchase.stock.name}}</td>
+                    <td>{{purchase.shelfQuantityPurchased}}</td>
+                    <td>{{purchase.storeQuantityPurchased}}</td>
+                    <td>{{purchase.costPrice}}</td>
+                </tr>
+                </tbody>
+
+            </table>
+            <button class="centered" (click)="view()" >View</button>
+        </div>
+    </div>
+
+    <ng-template #fullTable>
+        <div>
+            <a (click)="back()" class="back-link"><img src="assets/arrow-left-solid.svg" alt="back"> Back</a>
+        </div>
+        <div class="table-div">
+            <table>
+                <colgroup>
+                    <col span="1" style="width: 25%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 12%;">
+                    <col span="1" style="width: 13%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 10%;">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Shelf Quantity Purchased</th>
+                    <th>Store Quantity Purchased</th>
+                    <th>Cost Price</th>
+                    <th>Selling Price</th>
+                    <th>Modify</th>
+                    <th>Delete</th>
+                </tr>
+                <tr class="table-row"  *ngFor="let purchase of purchases; let i = index">
+                    <td>{{purchase.stock.name}}</td>
+                    <td>{{purchase.shelfQuantityPurchased}}</td>
+                    <td>{{purchase.storeQuantityPurchased}}</td>
+                    <td>{{purchase.costPrice}}</td>
+                    <td>{{purchase.sellingPrice}}</td>
+                    <td><button style=" height: 1em; border: none" (click)="edit(i)"> <img src="assets/pencil-line.svg"  alt="edit"> </button></td>
+                    <td><button style=" height: 1em; border: none" (click)="delete(i)"> <img src="assets/delete-bin-7-line.svg" alt="delete"> </button></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="button-containers">
+                <button (click)="post()" >Post</button>
+                <button class="no-fill clear-button" (click)="clearPurchaseItems()" >Clear</button>
+            </div>
+        </div>
+    </ng-template>
+</div>

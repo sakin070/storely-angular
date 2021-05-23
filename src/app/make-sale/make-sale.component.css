@@ -23,13 +23,6 @@
     background-color: var(--secondary-color);
     border-color: var(--secondary-color);
 }
-.clear-button{
-    color: var(--danger-color);
-    margin-left: 2em;
-}
-.clear-button:hover{
-    background-color: var(--danger-color);
-}
 .button-containers{
     margin: 4% 0 0 25%;
 }

@@ -6,6 +6,7 @@ import {MakeSaleComponent} from './make-sale/make-sale.component';
 import {ViewSalesComponent} from './view-sales/view-sales.component';
 import {RegisterStockComponent} from './register-stock/register-stock.component';
 import {StockTableComponent} from './stock-table/stock-table.component';
+import {StockPurchaseComponent} from './stock-purchase/stock-purchase.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'view-sales', component: ViewSalesComponent},
   {path: 'register-stock', component: RegisterStockComponent},
   {path: 'stock-table', component: StockTableComponent},
+  {path: 'stock-purchase', component: StockPurchaseComponent},
   {path: 'home', component: HomeComponent}
   ];
 

@@ -1,0 +1,39 @@
+.flex{
+    display: flex;
+    gap: 3em;
+}
+.form-group.inline.right{
+    position: relative;
+    left: 30.5%;
+}
+.flex > .purchaseForm{
+    flex-basis: 40%;
+    flex-grow: 1;
+}
+.flex > .table-div{
+    flex-basis: 60%;
+    flex-grow: 1;
+}
+
+.centered{
+    margin: 1em 38%;
+}
+h4{
+    margin: 1.7em 0 0 0;
+}
+.static-info{
+    margin: .8em 0;
+}
+.button-containers{
+    margin: 2% 0 2% 40%;
+}
+.back-link{
+    font-family: mulish, sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 1em;
+}
+.back-link>img{
+    height: 1em;
+    width: 1em;
+}
