@@ -30,9 +30,8 @@ export class PaginationComponent implements OnInit {
     this.$currentIndex.subscribe(value => {
       this.getPageFunction(value);
       this.currentIndex = value;
-      if ( value === 1){
-        this.previousIndex = this.currentIndex;
-      }
+      this.selectDeselect(this.previousIndex, this.currentIndex);
+      this.previousIndex = value;
     });
   }
   getMax(): void{
