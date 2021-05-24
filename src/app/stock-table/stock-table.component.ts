@@ -13,7 +13,7 @@ export class StockTableComponent implements OnInit {
   searchString = '';
   pageSize = 9;
   currentPage = new BehaviorSubject(1);
-  totalPages = new BehaviorSubject(Infinity);
+  totalPages = new BehaviorSubject(1);
   stock = {
     stock_id: 0,
     name: '',

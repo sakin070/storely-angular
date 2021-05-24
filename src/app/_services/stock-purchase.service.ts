@@ -38,7 +38,7 @@ export class StockPurchaseService {
   }
 
   getPurchasesBySupplierId(pageNumber: number, pageSize: number, startDate: string, endDate: string, supplierId: number): Observable<any>{
-    return this.http.get(API + '/page?page=' + pageNumber + '&size='
+    return this.http.get(API + '/supplier/page?page=' + pageNumber + '&size='
         + pageSize + '&startDate=' + startDate + '&endDate=' + endDate + '&supplierId=' + supplierId, this.httpOptions);
   }
 }

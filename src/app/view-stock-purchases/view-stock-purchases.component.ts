@@ -19,7 +19,7 @@ export class ViewStockPurchasesComponent implements OnInit {
   startDate: string = formatDate(new Date().setDate(new Date().getDate() - 30) , 'yyyy-MM-dd', 'en-CA');
   pageSize = 9;
   currentPage = new BehaviorSubject(1);
-  totalPages = new BehaviorSubject(Infinity);
+  totalPages = new BehaviorSubject(1);
   constructor(private supplierService: SupplierService, private stockPurchaseService: StockPurchaseService) { }
 
   ngOnInit(): void {
@@ -33,11 +33,9 @@ export class ViewStockPurchasesComponent implements OnInit {
         this.totalPages.next( data === [] ? 1 : data.totalPages);
       });
     }else{
-      console.log(this.supplier);
       this.stockPurchaseService.getPurchasesBySupplierId(
           currentPage - 1, this.pageSize, this.startDate, this.endDate, this.supplier.supplierId).subscribe( data => {
         this.purchases = data.content;
-        console.log(data);
         this.totalPages.next( data === [] ? 1 : data.totalPages);
       });
     }

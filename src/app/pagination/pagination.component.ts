@@ -14,80 +14,70 @@ export class PaginationComponent implements OnInit {
   @Input() $maxPage: BehaviorSubject<number>;
   // @ts-ignore
   @Input() getPageFunction: (index: number) => void;
-  currentEight: number[] = [];
   showLeftEllipsis = false;
   showRightEllipsis = false;
   currentIndex = 1;
   previousIndex = 1;
-  nextIndex = 1;
   maxPage = 1;
+  indexBetween: any[] = [];
+  left = 0;
+  right = 7;
 
   constructor() { }
 
   ngOnInit(): void {
     this.getMax();
-    this.createCurrentEight();
+    this.$currentIndex.subscribe(value => {
+      this.getPageFunction(value);
+      this.currentIndex = value;
+      if ( value === 1){
+        this.previousIndex = this.currentIndex;
+      }
+    });
   }
-
   getMax(): void{
     this.$maxPage.subscribe( value => {
-      if (this.maxPage !== value){
-        this.maxPage = value;
-        const temp: number[] = [];
-        let index = this.currentIndex === 1 ? this.currentIndex + 1 : this.currentIndex ;
-        if ((index + 8) >= this.maxPage  && this.maxPage > 10 ){
-          index = this.maxPage - 8;
-        }
-        for (let i = index; i < index + 8 && (index + 8) <= this.maxPage; i++) {
+      if (value !== this.maxPage){
+        const temp = [];
+        for (let i = 2; i < value; i++) {
           temp.push(i);
         }
-        this.currentEight = temp;
-        this.showRightEllipsis = this.currentIndex !== this.maxPage && this.maxPage - temp[temp.length - 1] > 1;
-        this.showLeftEllipsis = this.currentIndex !== 1 && temp[0] - 1 > 1;
-        this.selectDeselect(this.currentIndex, 1);
+        this.indexBetween = temp;
+        this.left = 0;
+        this.right = Math.min(7, temp.length);
+        this.currentIndex = 1;
+        this.selectDeselect(this.currentIndex, this.currentIndex);
+        this.maxPage = value;
       }
-    } );
-  }
-  createCurrentEight(): void{
-    this.$currentIndex.subscribe(value => {
-      this.currentIndex = value;
-      if (value === 1) {
-        this.previousIndex = 1;
-        this.nextIndex = 1;
-      }
-      let index = value === 1 ? value + 1 : value ;
-      const temp: number[] = [];
-      if ((index + 8) >= this.maxPage  && this.maxPage > 10 ){
-        index = this.maxPage - 8;
-      }
-      for (let i = index; i < index + 8 && (index + 8) <= this.maxPage; i++) {
-        temp.push(i);
-      }
-      this.currentEight = temp;
-      this.getPageFunction(value);
-      this.showRightEllipsis = value !== this.maxPage && this.maxPage - temp[temp.length - 1] > 1;
-      this.showLeftEllipsis = value !== 1 && temp[0] - 1 > 1;
+      this.selectDeselect(this.previousIndex, this.currentIndex);
+      this.showRightEllipsis = this.maxPage > 10 && this.maxPage !== this.indexBetween[this.right] + 1;
+      this.showLeftEllipsis = this.maxPage > 10 && this.indexBetween[this.left] - 1 !== 1;
     });
   }
   previous(): void{
     if (this.currentIndex > 1) {
       const next = this.currentIndex  - 1;
-      this.$currentIndex.next(this.currentIndex - 1);
-      this.previousIndex = next + 1;
-      this.nextIndex = next;
+      this.previousIndex = this.currentIndex;
+      this.$currentIndex.next(next);
+      if (this.indexBetween[this.left] > next && next !== 1){
+        this.right = this.left - 1;
+        this.left = Math.max(this.left - 8, 0);
+      }
     }
   }
   next(): void{
     if (this.currentIndex  < this.maxPage){
       const next = this.currentIndex  + 1;
-      this.$currentIndex.next(this.currentIndex  + 1);
-      this.previousIndex = next - 1;
-      this.nextIndex = next;
+      this.previousIndex = this.currentIndex;
+      this.$currentIndex.next(next);
+      if (this.indexBetween[this.right] < next  && this.right < this.indexBetween.length && next !== this.maxPage){
+        this.left = this.right + 1;
+        this.right = Math.min(this.right + 8, this.indexBetween.length - 1);
+      }
     }
   }
   select(index: number): void{
     this.previousIndex = this.currentIndex;
-    this.nextIndex = index;
     this.selectDeselect(this.currentIndex, index);
     this.$currentIndex.next(index);
     this.getPageFunction(index);
