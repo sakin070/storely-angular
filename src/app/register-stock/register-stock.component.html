@@ -27,7 +27,7 @@
                 <option *ngFor="let category of categories" [value]="category.name">{{category.name}}</option>
             </datalist>
         </div>
-        <button>Register</button>
+        <button (click)="createStock(f)">Register</button>
     </form>
 </div>
 

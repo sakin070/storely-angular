@@ -1,0 +1,44 @@
+<app-nav-bar [itemId]=1></app-nav-bar>
+<div class="container mini">
+    <h1>Stock Transfer</h1>
+    <hr>
+    <form class="stock-form"  name="form" #f="ngForm" novalidate>
+        <div class="alert alert-danger" role="alert" *ngIf="stockTransferError">
+            Stock not transferred!
+        </div>
+        <div class="form-group">
+            <label for="sku">SKU</label>
+            <input id="sku" name="sku" type="text" [(ngModel)]="stock.sku" required #sku="ngModel" autocomplete="off" (keyup.enter)="getStockBySKU()">
+            <div class="alert alert-danger" role="alert" *ngIf="sku.errors && f.submitted">
+                SKU is required!
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" [(ngModel)]="stock.name" required #name="ngModel" autocomplete="off">
+            <div class="alert alert-danger" role="alert" *ngIf="name.errors && f.submitted">
+                Name is required!
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="amount">Amount</label>
+            <input id="amount" name="amount" type="number" [(ngModel)]="amount" required #amountM="ngModel" autocomplete="off">
+            <div class="alert alert-danger" role="alert" *ngIf="amountM.errors && f.submitted">
+                Amount is required!
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="transferType">Transfer Type</label>
+            <select id="transferType" name="transferType" [(ngModel)]="transferType">
+                <option></option>
+                <option>Shelf To Store</option>
+                <option>Store To Shelf</option>
+            </select>
+            <div class="alert alert-danger" role="alert" *ngIf="transferTypeError && f.submitted">
+                Select transfer type
+            </div>
+        </div>
+        <button (click)="transferStock(f)">Transfer</button>
+    </form>
+</div>
+
