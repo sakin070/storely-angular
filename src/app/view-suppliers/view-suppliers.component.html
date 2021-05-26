@@ -1,0 +1,80 @@
+<app-nav-bar [itemId]=3></app-nav-bar>
+
+<div class="container" *ngIf="supplierTable; else editSupplierTemplate">
+    <div class="header-div">
+        <h1>Suppliers</h1>
+        <div class="stock-search">
+            <input type="search" placeholder="Search by name" (keyup.enter)="search()" name="search" [(ngModel)]="searchString" (search)="search()">
+            <button (click)="search()"><img src="assets/search-line.svg" alt="search"></button>
+        </div>
+    </div>
+    <hr>
+    <div class="table-div">
+        <table>
+            <colgroup>
+                <col span="1" style="width: 37%;">
+                <col span="1" style="width: 17%;">
+                <col span="1" style="width: 17%;">
+                <col span="1" style="width: 17%;">
+                <col span="1" style="width: 12%;">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Edit</th>
+            </tr>
+            <tr class="table-row"  *ngFor="let supplier of suppliers; let i = index">
+                <td>{{supplier.name}}</td>
+                <td>{{supplier.phoneNumber}}</td>
+                <td>{{supplier.email}}</td>
+                <td>{{supplier.address}}</td>
+                <td><button style=" height: 1em; border: none" (click)="edit(i)"> <img src="assets/pencil-line.svg"  alt="edit"> </button></td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <app-pagination class="pagination" [$currentIndex]="currentPage" [$maxPage]="totalPages" [getPageFunction]="getPage"></app-pagination>
+
+</div>
+
+<ng-template #editSupplierTemplate>
+    <div class="container mini">
+        <h1>Edit Supplier</h1>
+        <hr>
+        <form class="stock-form"  name="form" (ngSubmit)="f.form.valid && editSupplier(f)" #f="ngForm" novalidate>
+            <div class="alert alert-danger" role="alert" *ngIf="modifySupplier">
+                Supplier not created
+            </div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" [(ngModel)]="supplier.name" required #name="ngModel" autocomplete="off">
+                <div class="alert alert-danger" role="alert" *ngIf="name.errors && f.submitted">
+                    Name is required!
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="sku">Phone Number</label>
+                <input id="sku" name="sku" type="text" [(ngModel)]="supplier.phoneNumber" required #sku="ngModel" autocomplete="off">
+                <div class="alert alert-danger" role="alert" *ngIf="sku.errors && f.submitted">
+                    Phone Number is required!
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">email</label>
+                <input id="email" name="email" type="email" [(ngModel)]="supplier.email" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input id="address" name="address" type="text" [(ngModel)]="supplier.address" autocomplete="off">
+            </div>
+            <div class="button-containers">
+                <button (click)="editSupplier(f)" >Save</button>
+                <button class="no-fill margin-3" (click)="back()" >Cancel</button>
+            </div>
+        </form>
+    </div>
+</ng-template>

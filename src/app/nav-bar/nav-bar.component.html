@@ -30,6 +30,16 @@
                 </ul>
             </div>
         </li>
+        <li>
+            <a class="menu-item" (click)="showSubMenu($event)"> <img srcset="assets/suppliers.svg">Suppliers</a>
+            <div class="dropdown">
+                <div class="submenu-backdrop" (click)="hideSubmenu($event)"></div>
+                <ul class="submenu">
+                    <li> <a (click)="navigate('/new-supplier')"> New Supplier </a></li>
+                    <li> <a (click)="navigate('/view-suppliers')"> View Suppliers </a></li>
+                </ul>
+            </div>
+        </li>
         <li class="logout"><a (click)="logout()"> <img srcset="assets/Logout.svg">Logout</a></li>
     </ul>
 </div>

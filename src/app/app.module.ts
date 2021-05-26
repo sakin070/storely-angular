@@ -18,6 +18,8 @@ import { StockPurchaseComponent } from './stock-purchase/stock-purchase.componen
 import { ViewStockPurchasesComponent } from './view-stock-purchases/view-stock-purchases.component';
 import { StockTransferComponent } from './stock-transfer/stock-transfer.component';
 import { CategoryComponent } from './category/category.component';
+import { CreateSupplierComponent } from './create-supplier/create-supplier.component';
+import { ViewSuppliersComponent } from './view-suppliers/view-suppliers.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { CategoryComponent } from './category/category.component';
     StockPurchaseComponent,
     ViewStockPurchasesComponent,
     StockTransferComponent,
-    CategoryComponent
+    CategoryComponent,
+    CreateSupplierComponent,
+    ViewSuppliersComponent
   ],
     imports: [
         BrowserModule,

@@ -27,7 +27,19 @@ export class SupplierService {
     }
   }
 
-  getSupplier(): Observable<any>{
+  getSupplier(): Observable<any>{ // TODO: remove this from application
     return this.http.get(API, this.httpOptions);
+  }
+  createSupplier(supplier: any): Observable<any>{
+    return this.http.post(API, supplier, this.httpOptions);
+  }
+  editSupplier(supplier: any): Observable<any>{
+    return this.http.put(API, supplier, this.httpOptions);
+  }
+  getSupplierPage(pageNumber: number, pageSize: number): Observable<any>{
+    return this.http.get(API + '/page?page=' + pageNumber + '&size=' + pageSize, this.httpOptions);
+  }
+  getSupplierByName(name: string, pageNumber: number, pageSize: number): Observable<any>{
+    return this.http.get(API + '/name?name=' + name + '&page=' + pageNumber + '&size=' + pageSize, this.httpOptions);
   }
 }

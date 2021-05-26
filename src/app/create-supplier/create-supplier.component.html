@@ -1,0 +1,34 @@
+<app-nav-bar [itemId]=3></app-nav-bar>
+<div class="container mini">
+    <h1>New Supplier</h1>
+    <hr>
+    <form class="stock-form"  name="form" (ngSubmit)="f.form.valid && createSupplier(f)" #f="ngForm" novalidate>
+        <div class="alert alert-danger" role="alert" *ngIf="createSupplierError">
+            Supplier not created
+        </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" [(ngModel)]="supplier.name" required #name="ngModel" autocomplete="off">
+            <div class="alert alert-danger" role="alert" *ngIf="name.errors && f.submitted">
+                Name is required!
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="sku">Phone Number</label>
+            <input id="sku" name="sku" type="text" [(ngModel)]="supplier.phoneNumber" required #sku="ngModel" autocomplete="off">
+            <div class="alert alert-danger" role="alert" *ngIf="sku.errors && f.submitted">
+                Phone Number is required!
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email">email</label>
+            <input id="email" name="email" type="email" [(ngModel)]="supplier.email" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input id="address" name="address" type="text" [(ngModel)]="supplier.address" autocomplete="off">
+        </div>
+        <button (click)="createSupplier(f)">Save</button>
+    </form>
+</div>
+
