@@ -25,4 +25,13 @@ export class CategoryService {
   getCategories(): Observable<any>{
     return this.http.get(API, this.httpOptions);
   }
+  getCategoryStockCount(categoryId: number): Observable<any>{
+    return this.http.get(API + '/stock/count/' + categoryId, this.httpOptions);
+  }
+  deleteCategory(categoryId: number): Observable<any>{
+    return this.http.delete(API + '/' + categoryId, this.textHttpOptions);
+  }
+  createCategory(category: any): Observable<any>{
+    return this.http.post(API, category, this.httpOptions);
+  }
 }

@@ -9,10 +9,12 @@ import {StockTableComponent} from './stock-table/stock-table.component';
 import {StockPurchaseComponent} from './stock-purchase/stock-purchase.component';
 import {ViewStockPurchasesComponent} from './view-stock-purchases/view-stock-purchases.component';
 import {StockTransferComponent} from './stock-transfer/stock-transfer.component';
+import {CategoryComponent} from './category/category.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'category', component: CategoryComponent},
   {path: 'make-sale', component: MakeSaleComponent},
   {path: 'view-sales', component: ViewSalesComponent},
   {path: 'register-stock', component: RegisterStockComponent},

@@ -1,0 +1,30 @@
+.delete-container{
+    position: relative;
+}
+.delete-content{
+    position: fixed;
+    background-color: white;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 20em;
+    padding: .6em 1.5em;
+    font-family: mulish, sans-serif;
+    border-radius: .3em;
+}
+.button-containers{
+    margin: 2% 0 2% 25%;
+}
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.69);
+}
+.margin-3{
+    font-size: 1em;
+    margin-left: 2em;
+}

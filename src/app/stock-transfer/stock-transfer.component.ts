@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {StockService} from '../_services/stock.service';
 import {NgForm} from '@angular/forms';
 
+
 @Component({
   selector: 'app-stock-transfer',
   templateUrl: './stock-transfer.component.html',
@@ -14,6 +15,8 @@ export class StockTransferComponent implements OnInit {
     sku: '',
     name: ''
   };
+  stockList: any;
+  private timer: any;
   stockTransferError = false;
   transferTypeError = false;
   transferType = '';
@@ -55,5 +58,21 @@ export class StockTransferComponent implements OnInit {
     this.transferTypeError = false;
     this.transferType = '';
     form.resetForm();
+  }
+  getStockByName(): void{
+    // if there is already a timer running... then stop it
+    if (this.timer){
+      clearTimeout(this.timer);
+    }
+    // trigger the search action after 400 millis
+    this.timer = setTimeout(() => {
+      this.stockService.getStockByName(this.stock.name, 0, 20)
+          .subscribe(data => {
+            this.stockList = data.content; console.log(data);
+            if (this.stockList.length === 1){
+              this.stock = this.stockList[0];
+            }
+          });
+    }, 400);
   }
 }

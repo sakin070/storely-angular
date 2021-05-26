@@ -17,6 +17,7 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { StockPurchaseComponent } from './stock-purchase/stock-purchase.component';
 import { ViewStockPurchasesComponent } from './view-stock-purchases/view-stock-purchases.component';
 import { StockTransferComponent } from './stock-transfer/stock-transfer.component';
+import { CategoryComponent } from './category/category.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { StockTransferComponent } from './stock-transfer/stock-transfer.componen
     PaginationComponent,
     StockPurchaseComponent,
     ViewStockPurchasesComponent,
-    StockTransferComponent
+    StockTransferComponent,
+    CategoryComponent
   ],
     imports: [
         BrowserModule,
