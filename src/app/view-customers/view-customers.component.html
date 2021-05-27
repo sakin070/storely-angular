@@ -1,8 +1,8 @@
-<app-nav-bar [itemId]=3></app-nav-bar>
+<app-nav-bar [itemId]=4></app-nav-bar>
 
-<div class="container" *ngIf="supplierTable; else editSupplierTemplate">
+<div class="container" *ngIf="customerTable; else editCustomerTemplate">
     <div class="header-div">
-        <h1>Suppliers</h1>
+        <h1>Customers</h1>
         <div class="stock-search">
             <input type="search" placeholder="Search by name" (keyup.enter)="search()" name="search" [(ngModel)]="searchString" (search)="search()">
             <button (click)="search()"><img src="assets/search-line.svg" alt="search"></button>
@@ -26,11 +26,11 @@
                 <th>Address</th>
                 <th>Edit</th>
             </tr>
-            <tr class="table-row"  *ngFor="let supplier of suppliers; let i = index">
-                <td>{{supplier.name}}</td>
-                <td>{{supplier.phoneNumber}}</td>
-                <td>{{supplier.email}}</td>
-                <td>{{supplier.address}}</td>
+            <tr class="table-row"  *ngFor="let customer of customers; let i = index">
+                <td>{{customer.name}}</td>
+                <td>{{customer.phoneNumber}}</td>
+                <td>{{customer.email}}</td>
+                <td>{{customer.address}}</td>
                 <td><button style=" height: 1em; border: none" (click)="edit(i)"> <img src="assets/pencil-line.svg"  alt="edit"> </button></td>
             </tr>
             </tbody>
@@ -41,38 +41,51 @@
 
 </div>
 
-<ng-template #editSupplierTemplate>
+<ng-template #editCustomerTemplate>
     <div class="container mini">
-        <h1>Edit Supplier</h1>
+        <h1>New Customer</h1>
         <hr>
-        <form class="stock-form"  name="form" (ngSubmit)="f.form.valid && editSupplier(f)" #f="ngForm" novalidate>
-            <div class="alert alert-danger" role="alert" *ngIf="modifySupplier">
-                Supplier not updated
+        <form class="stock-form"  name="form" (ngSubmit)="f.form.valid && updateCustomer(f)" #f="ngForm" novalidate>
+            <div class="alert alert-danger" role="alert" *ngIf="createCustomerError">
+                Customer not updated
             </div>
             <div class="form-group">
                 <label for="name">Name</label>
-                <input id="name" name="name" type="text" [(ngModel)]="supplier.name" required #name="ngModel" autocomplete="off">
+                <input id="name" name="name" type="text" [(ngModel)]="customer.name" required #name="ngModel" autocomplete="off">
                 <div class="alert alert-danger" role="alert" *ngIf="name.errors && f.submitted">
                     Name is required!
                 </div>
             </div>
             <div class="form-group">
                 <label for="sku">Phone Number</label>
-                <input id="sku" name="sku" type="text" [(ngModel)]="supplier.phoneNumber" required #sku="ngModel" autocomplete="off">
+                <input id="sku" name="sku" type="text" [(ngModel)]="customer.phoneNumber" required #sku="ngModel" autocomplete="off">
                 <div class="alert alert-danger" role="alert" *ngIf="sku.errors && f.submitted">
                     Phone Number is required!
                 </div>
             </div>
             <div class="form-group">
                 <label for="email">email</label>
-                <input id="email" name="email" type="email" [(ngModel)]="supplier.email" autocomplete="off">
+                <input id="email" name="email" type="email" [(ngModel)]="customer.email" autocomplete="off" #email="ngModel">
+                <div class="alert alert-danger" role="alert" *ngIf="email.errors && f.submitted">
+                    email is required!
+                </div>
             </div>
             <div class="form-group">
                 <label for="address">Address</label>
-                <input id="address" name="address" type="text" [(ngModel)]="supplier.address" autocomplete="off">
+                <input id="address" name="address" type="text" [(ngModel)]="customer.address" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="cardNumber">Loyalty Card Number</label>
+                <input id="cardNumber" list="cards" name="cardNumber" type="text" [(ngModel)]="loyaltyCard"  required #card="ngModel" autocomplete="off" (keyup)="getLoyaltyCards()">
+                <datalist id="cards">
+                    <option *ngFor="let lc of loyaltyCards" [value]="lc.cardNumber">{{lc.cardNumber}}</option>
+                </datalist>
+                <div class="alert alert-danger" role="alert" *ngIf="card.errors && f.submitted">
+                    Loyalty Card Number is required!
+                </div>
             </div>
             <div class="button-containers">
-                <button (click)="editSupplier(f)" >Save</button>
+                <button (click)="updateCustomer(f)">Save</button>
                 <button class="no-fill margin-3" (click)="back()" >Cancel</button>
             </div>
         </form>

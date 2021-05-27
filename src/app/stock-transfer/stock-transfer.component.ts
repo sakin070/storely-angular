@@ -16,7 +16,7 @@ export class StockTransferComponent implements OnInit {
     name: ''
   };
   stockList: any;
-  private timer: any;
+  timer: any;
   stockTransferError = false;
   transferTypeError = false;
   transferType = '';
@@ -68,7 +68,7 @@ export class StockTransferComponent implements OnInit {
     this.timer = setTimeout(() => {
       this.stockService.getStockByName(this.stock.name, 0, 20)
           .subscribe(data => {
-            this.stockList = data.content; console.log(data);
+            this.stockList = data.content;
             if (this.stockList.length === 1){
               this.stock = this.stockList[0];
             }

@@ -27,6 +27,7 @@ export class CreateSupplierComponent implements OnInit {
         },
         () => {
           this.createSupplierError = true;
-        });
+        }
+    );
   }
 }

@@ -1,0 +1,11 @@
+.stock-form{
+    align-items: center;
+    padding: 1em 4em;
+}
+.form-group{
+    padding-bottom: 1em;
+}
+button{
+    margin-top: .5em;
+    margin-left: 40%;
+}

@@ -20,6 +20,8 @@ import { StockTransferComponent } from './stock-transfer/stock-transfer.componen
 import { CategoryComponent } from './category/category.component';
 import { CreateSupplierComponent } from './create-supplier/create-supplier.component';
 import { ViewSuppliersComponent } from './view-suppliers/view-suppliers.component';
+import { CreateCustomerComponent } from './create-customer/create-customer.component';
+import { ViewCustomersComponent } from './view-customers/view-customers.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { ViewSuppliersComponent } from './view-suppliers/view-suppliers.componen
     StockTransferComponent,
     CategoryComponent,
     CreateSupplierComponent,
-    ViewSuppliersComponent
+    ViewSuppliersComponent,
+    CreateCustomerComponent,
+    ViewCustomersComponent
   ],
     imports: [
         BrowserModule,

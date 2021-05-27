@@ -12,15 +12,19 @@ import {StockTransferComponent} from './stock-transfer/stock-transfer.component'
 import {CategoryComponent} from './category/category.component';
 import {CreateSupplierComponent} from './create-supplier/create-supplier.component';
 import {ViewSuppliersComponent} from './view-suppliers/view-suppliers.component';
+import {CreateCustomerComponent} from './create-customer/create-customer.component';
+import {ViewCustomersComponent} from './view-customers/view-customers.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
   {path: 'login', component: LoginComponent},
   {path: 'category', component: CategoryComponent},
   {path: 'make-sale', component: MakeSaleComponent},
+  {path: 'view-sales', component: ViewSalesComponent},
   {path: 'new-supplier', component: CreateSupplierComponent},
   {path: 'view-suppliers', component: ViewSuppliersComponent},
-  {path: 'view-sales', component: ViewSalesComponent},
+  {path: 'new-customer', component: CreateCustomerComponent},
+  {path: 'view-customers', component: ViewCustomersComponent},
   {path: 'register-stock', component: RegisterStockComponent},
   {path: 'stock-table', component: StockTableComponent},
   {path: 'stock-transfer', component: StockTransferComponent},
