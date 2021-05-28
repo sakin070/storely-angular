@@ -2,7 +2,7 @@
 <div class="container mini">
     <h1>Register Stock</h1>
     <hr>
-    <form class="stock-form"  name="form" (ngSubmit)="f.form.valid && createStock(f)" #f="ngForm" novalidate>
+    <form class="stock-form"  name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
         <div class="alert alert-danger" role="alert" *ngIf="createStockError">
             Stock not created
         </div>
