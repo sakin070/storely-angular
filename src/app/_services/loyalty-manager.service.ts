@@ -3,8 +3,8 @@ import {TokenStorageService} from './token-storage.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
-const API = 'http://localhost:8080/loyalty-manager';
-// const API = 'https://storley.herokuapp.com/loyalty-manager';
+// const API = 'http://localhost:8080/loyalty-manager';
+const API = 'https://storley.herokuapp.com/loyalty-manager';
 
 @Injectable({
   providedIn: 'root'
