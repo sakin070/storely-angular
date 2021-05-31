@@ -1,0 +1,14 @@
+.flex{
+    display: flex;
+    gap: 3em;
+}
+.form-group.inline.right{
+    position: relative;
+    left: 30.5%;
+}
+.centered{
+    margin: 1em 38%;
+}
+h4{
+    margin: 1.7em 0 0 0;
+}

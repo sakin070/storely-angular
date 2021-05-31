@@ -1,0 +1,42 @@
+<app-nav-bar [itemId]=4></app-nav-bar>
+<div class="container mini">
+    <h1>Loyalty Management</h1>
+    <hr>
+    <form #f="ngForm" novalidate style="margin: 0 5em">
+
+        <h4>Point For Cash</h4>
+        <div class="flex">
+            <div class="form-group">
+                <label for="aPoint">Point</label>
+                <input id="aPoint" name="aPoint" type="number" value="1" readonly>
+            </div>
+            <div class="form-group">
+                <label for="cash">Cash ($)</label>
+                <input id="cash" name="cash" type="number" [(ngModel)]="lm.pointsForCash" required autocomplete="off" [readOnly]="!edit">
+            </div>
+        </div>
+
+        <h4>Cash For Points</h4>
+        <div class="flex">
+            <div class="form-group">
+                <label for="aCash">Cash ($)</label>
+                <input id="aCash" name="aCash" value="1" type="number" readonly>
+            </div>
+            <div class="form-group">
+                <label for="point">Points</label>
+                <input id="point" name="point" type="number" [(ngModel)]="lm.cashForPoints" required autocomplete="off" [readOnly]="!edit">
+            </div>
+        </div>
+
+        <div class="form-group" style="margin-top: 1em">
+            <label for="max">Max Points Redeemable Per Transaction</label>
+            <input id="max" name="max" type="number" [(ngModel)]="lm.maxRedeemablePointsPerTransaction" required #newCost="ngModel" autocomplete="off" [readOnly]="!edit">
+            <div class="alert alert-danger" role="alert" *ngIf="newCost.errors && f.submitted">
+                Max Points Redeemable is required!
+            </div>
+        </div>
+
+        <button *ngIf="!edit" class="centered"  (click)="Edit()" type="reset">Edit</button>
+        <button *ngIf="edit" class="centered" (click)="save()" type="reset">Save</button>
+    </form>
+</div>

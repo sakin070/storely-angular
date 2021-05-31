@@ -22,10 +22,12 @@ export class CategoryComponent implements OnInit {
     this.showDeleteModal = false;
   }
   add(): void {
-    this.categoryService.createCategory({name: this.categoryName}).subscribe( () => {
-      this.getAllCategories();
-      this.categoryName = '';
-    });
+    if ( this.categoryName !== ''){
+      this.categoryService.createCategory({name: this.categoryName}).subscribe( () => {
+        this.getAllCategories();
+        this.categoryName = '';
+      });
+    }
   }
   deleteCategory(): void {
     console.log(this.canBeDeleted);

@@ -2,7 +2,7 @@
 <div class="container mini">
     <h1>Register Stock</h1>
     <hr>
-    <form class="stock-form"  name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
+    <form class="stock-form"  (keydown.enter)="$event.preventDefault()" name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
         <div class="alert alert-danger" role="alert" *ngIf="createStockError">
             Stock not created
         </div>
@@ -22,7 +22,7 @@
         </div>
         <div class="form-group">
             <label for="categoryInput">Category</label>
-            <input id="categoryInput" name="categoryInput" type="text" list="categories" placeholder="Select a category"  (change)="updateCategory($event)">
+            <input id="categoryInput" name="categoryInput" type="text" list="categories" placeholder="Select a category"  (change)="updateCategory($event)" autocomplete="off">
             <datalist id="categories">
                 <option *ngFor="let category of categories" [value]="category.name">{{category.name}}</option>
             </datalist>

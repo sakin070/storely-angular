@@ -1,21 +1,12 @@
 <app-nav-bar [itemId]=1></app-nav-bar>
 
 <div class="container mini">
-    <div class="header-div">
-        <h1>Categories</h1>
-        <hr>
-        <div style="display: flex; align-items: flex-end; gap: 3em; padding:0.5em 0.5em">
-            <div class="form-group" style="flex-basis: 80%">
-                <label for="name">Category</label>
-                <input id="name" name="name" type="text" [(ngModel)]="categoryName" autocomplete="off" placeholder="Enter a category name">
-                <div class="alert alert-danger" role="alert" *ngIf="categoryError">
-                    Name is required!
-                </div>
-            </div>
-            <div style="flex-basis: 20%;">
-                <button (click)="add()" style="font-size: .8em; background-color: var(--secondary-color)">Add &#43; </button>
-            </div>
-        </div>
+    <h1>Categories</h1>
+    <hr>
+    <div class="form-group header-div" style="gap: 0.5em; padding:0.5em 0.5em" >
+        <label for="name">Category</label>
+        <input id="name" name="name" type="text" [(ngModel)]="categoryName" autocomplete="off" placeholder="Enter a category name">
+        <button (click)="add()" style="font-size: .8em; background-color: var(--secondary-color); flex-basis: 20%;">Add &#43; </button>
     </div>
     <div class="table-div">
         <table>

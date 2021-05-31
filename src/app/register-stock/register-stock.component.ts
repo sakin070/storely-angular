@@ -19,13 +19,14 @@ export class RegisterStockComponent implements OnInit {
   constructor(private categoryService: CategoryService, private stockService: StockService) { }
 
   ngOnInit(): void {
-    this.categoryService.getCategories().subscribe(data => { this.categories = data; });
+    this.categoryService.getCategories().subscribe(data => { this.categories = data; console.log(this.categories); });
   }
   createStock(form: NgForm): void{
     this.stockService.createStock(this.stock).subscribe(
         () => {
             form.resetForm();
             (document.getElementById('categoryInput') as HTMLInputElement).value = '';
+            this.createStockError = false;
              },
         () => {
           this.createStockError = true;
