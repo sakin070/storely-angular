@@ -1,0 +1,117 @@
+<app-nav-bar [itemId]=5></app-nav-bar>
+<div class="container mini">
+    <h1>New User</h1>
+    <hr>
+
+    <form *ngIf="formOne; else formTwo" class="stock-form"  name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
+
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input id="firstName" name="firstName" type="text" [(ngModel)]="user.firstName" required #firstName="ngModel" autocomplete="off">
+            <div class="alert alert-danger" role="alert" *ngIf="firstName.errors && f.submitted">
+                First Name is required!
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input id="lastName" name="lastName" type="text" [(ngModel)]="user.lastName" required #lastName="ngModel" autocomplete="off">
+            <div class="alert alert-danger" role="alert" *ngIf="lastName.errors && f.submitted">
+                Last Name is required!
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input id="username" name="username" type="text" [(ngModel)]="user.username" required #username="ngModel" autocomplete="off">
+            <div class="alert alert-danger" role="alert" *ngIf="username.errors && f.submitted">
+                Username is required!
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="!validUsername">
+                Username is taken!
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" [(ngModel)]="user.astring" required autocomplete="off" #password="ngModel">
+            <div class="alert alert-danger" role="alert" *ngIf="password.errors && f.submitted">
+                Password is required!
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="rePassword">Re-enter Password</label>
+            <input id="rePassword" name="rePassword" type="password" [(ngModel)]="rePassword" required autocomplete="off">
+            <div class="alert alert-danger" role="alert" *ngIf="rePassword !== user.astring && f.submitted">
+                Passwords do not match!
+            </div>
+        </div>
+
+        <button (click)="next(f)" style="margin-left: 12em">Next</button>
+    </form>
+    <ng-template #formTwo>
+        <form class="stock-form"  name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
+            <div>
+                <a (click)="back()" class="back-link"><img src="assets/arrow-left-solid.svg" alt="back"> Back</a>
+            </div>
+            <div class="extra-margin">
+                <div class="form-group">
+                    <label for="sec1">Security Question 1</label>
+                    <select id="sec1" name="sec1" type="text" [(ngModel)]="user.firstSecurityQuestion" required #sec1="ngModel" autocomplete="off">
+                        <option *ngFor="let question of secQuestions" [value]="question"> {{question}} </option>
+                    </select>
+                    <div class="alert alert-danger" role="alert" *ngIf="sec1.errors && f.submitted">
+                        Security Question 1 is required!
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="answer1">Answer</label>
+                    <input id="answer1" name="answer1" type="text" [(ngModel)]="user.firstSecurityQuestionAnswer" required #answer1="ngModel" autocomplete="off">
+                    <div class="alert alert-danger" role="alert" *ngIf="answer1.errors && f.submitted">
+                        Answer is required!
+                    </div>
+                </div>
+            </div>
+
+            <div class="extra-margin">
+                <div class="form-group">
+                    <label for="sec2">Security Question 2</label>
+                    <select id="sec2" name="sec2" type="text" [(ngModel)]="user.secondSecurityQuestion" required #sec2="ngModel" autocomplete="off">
+                        <option *ngFor="let question of secQuestions2" [value]="question"> {{question}} </option>
+                    </select>
+                    <div class="alert alert-danger" role="alert" *ngIf="sec2.errors && f.submitted">
+                        Security Question 2 is required!
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="answer2">Answer</label>
+                    <input id="answer2" name="answer2" type="text" [(ngModel)]="user.secondSecurityQuestionAnswer" required #answer2="ngModel" autocomplete="off">
+                    <div class="alert alert-danger" role="alert" *ngIf="answer2.errors && f.submitted">
+                        Answer is required!
+                    </div>
+                </div>
+            </div>
+
+            <div class="extra-margin">
+                <div class="form-group">
+                    <label for="sec3">Security Question 3</label>
+                    <select id="sec3" name="sec3" type="text" [(ngModel)]="user.thirdSecurityQuestion" required #sec3="ngModel" autocomplete="off">
+                        <option *ngFor="let question of secQuestions3" [value]="question"> {{question}} </option>
+                    </select>
+                    <div class="alert alert-danger" role="alert" *ngIf="sec3.errors && f.submitted">
+                        Security Question 3 is required!
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="answer3">Answer</label>
+                    <input id="answer3" name="answer3" type="text" [(ngModel)]="user.thirdSecurityQuestionAnswer" required #answer3="ngModel" autocomplete="off">
+                    <div class="alert alert-danger" role="alert" *ngIf="answer3.errors && f.submitted">
+                        Answer is required!
+                    </div>
+                </div>
+            </div>
+            <div class="button-containers">
+                <button (click)="save()" >Save</button>
+                <button class="no-fill clear-button" (click)="cancel()" >Cancel</button>
+            </div>
+        </form>
+    </ng-template>
+</div>
+

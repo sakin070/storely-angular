@@ -23,6 +23,7 @@ import { ViewSuppliersComponent } from './view-suppliers/view-suppliers.componen
 import { CreateCustomerComponent } from './create-customer/create-customer.component';
 import { ViewCustomersComponent } from './view-customers/view-customers.component';
 import { LoyaltyManagementComponent } from './loyalty-management/loyalty-management.component';
+import { NewUserComponent } from './new-user/new-user.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { LoyaltyManagementComponent } from './loyalty-management/loyalty-managem
     ViewSuppliersComponent,
     CreateCustomerComponent,
     ViewCustomersComponent,
-    LoyaltyManagementComponent
+    LoyaltyManagementComponent,
+    NewUserComponent
   ],
     imports: [
         BrowserModule,

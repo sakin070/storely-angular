@@ -17,9 +17,6 @@
             </div>
         </li>
 
-<!--        <li><a class="menu-item"><img srcset="assets/suppliers.svg" alt="supplier"> Supplier</a></li>-->
-<!--        <li><a class="menu-item"><img srcset="assets/customers.svg" alt="customer">Customer</a></li>-->
-<!--        <li><a class="menu-item"><img srcset="assets/users.svg" alt="user">User</a></li>-->
         <li>
             <a class="menu-item" (click)="showSubMenu($event)"> <img srcset="assets/sale.svg">Sale</a>
             <div class="dropdown">
@@ -48,6 +45,16 @@
                     <li> <a (click)="navigate('/new-customer')"> New Customer </a></li>
                     <li> <a (click)="navigate('/view-customers')"> View Customers </a></li>
                     <li> <a (click)="navigate('/loyalty-management')"> Loyalty Manager </a></li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <a class="menu-item" (click)="showSubMenu($event)"> <img srcset="assets/users.svg">Users</a>
+            <div class="dropdown">
+                <div class="submenu-backdrop" (click)="hideSubmenu($event)"></div>
+                <ul class="submenu">
+                    <li> <a (click)="navigate('/new-user')"> New User </a></li>
+                    <li> <a (click)="navigate('/view-users')"> View Users </a></li>
                 </ul>
             </div>
         </li>

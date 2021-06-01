@@ -3,13 +3,12 @@ import {TokenStorageService} from './token-storage.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
-// const API = 'http://localhost:8080/category';
-const API = 'https://storley.herokuapp.com/category';
-
+const API = 'http://localhost:8080/user';
+// const API = 'https://storley.herokuapp.com/user';
 @Injectable({
   providedIn: 'root'
 })
-export class CategoryService {
+export class UserService {
   httpOptions: any ;
   textHttpOptions: any;
   constructor(private tokenStorageService: TokenStorageService, private http: HttpClient) {
@@ -23,16 +22,12 @@ export class CategoryService {
       };
     }
   }
-  getCategories(): Observable<any>{
-    return this.http.get(API, this.httpOptions);
+
+  createUser(user: any): Observable<any>{
+    return this.http.post(API, user, this.httpOptions);
   }
-  getCategoryStockCount(categoryId: number): Observable<any>{
-    return this.http.get(API + '/stock/count/' + categoryId, this.httpOptions);
-  }
-  deleteCategory(categoryId: number): Observable<any>{
-    return this.http.delete(API + '/' + categoryId, this.textHttpOptions);
-  }
-  createCategory(category: any): Observable<any>{
-    return this.http.post(API, category, this.httpOptions);
+
+  verifyUsername(username: string): Observable<any>{
+    return this.http.get(API + '/username?username=' + username, this.httpOptions);
   }
 }
