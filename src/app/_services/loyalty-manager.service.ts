@@ -22,7 +22,6 @@ export class LoyaltyManagerService {
     return this.http.get(API, this.httpOptions);
   }
   updateLoyaltyManager(loyaltyManager: any): Observable<any>{
-    console.log(loyaltyManager);
-    return this.http.put(API, loyaltyManager, this.httpOptions);
+    return this.http.patch(API, loyaltyManager, this.httpOptions);
   }
 }
