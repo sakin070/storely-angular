@@ -3,8 +3,8 @@ import {TokenStorageService} from './token-storage.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
-// const API = 'http://localhost:8080/user';
-const API = 'https://storley.herokuapp.com/user';
+const API = 'http://localhost:8080/user';
+// const API = 'https://storley.herokuapp.com/user';
 @Injectable({
   providedIn: 'root'
 })
@@ -28,7 +28,7 @@ export class UserService {
   }
 
   verifyUsername(username: string): Observable<any>{
-    return this.http.get(API + '/username?username=' + username, this.httpOptions);
+    return this.http.get(API + '/public/username?username=' + username);
   }
   getUsers(pageNumber: number, pageSize: number): Observable<any>{
     return this.http.get(API + '/page?page=' + pageNumber + '&size=' + pageSize, this.httpOptions);
@@ -36,7 +36,10 @@ export class UserService {
   getUsersByUsername(username: string, pageNumber: number, pageSize: number): Observable<any>{
     return this.http.get(API + '/name?username=' + username + '&page=' + pageNumber + '&size=' + pageSize, this.httpOptions);
   }
-  updateUser(user: any): Observable<any>{
+  updateUserRole(user: any): Observable<any>{
     return this.http.patch(API + '/roles', user, this.httpOptions);
+  }
+  updateUser(user: any): Observable<any>{
+    return this.http.patch(API + '/public/update', user, this.httpOptions);
   }
 }

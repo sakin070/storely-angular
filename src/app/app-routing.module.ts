@@ -17,10 +17,12 @@ import {ViewCustomersComponent} from './view-customers/view-customers.component'
 import {LoyaltyManagementComponent} from './loyalty-management/loyalty-management.component';
 import {NewUserComponent} from './new-user/new-user.component';
 import {ViewUsersComponent} from './view-users/view-users.component';
+import {ResetPasswordComponent} from './reset-password/reset-password.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'reset-password', component: ResetPasswordComponent},
   {path: 'category', component: CategoryComponent},
   {path: 'make-sale', component: MakeSaleComponent},
   {path: 'view-sales', component: ViewSalesComponent},

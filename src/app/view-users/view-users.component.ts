@@ -103,7 +103,7 @@ export class ViewUsersComponent implements OnInit {
     }else{
       this.user.roles = this.user.roles.filter((role) => role.id !== 3);
     }
-    this.userService.updateUser(this.user).subscribe(() => {
+    this.userService.updateUserRole(this.user).subscribe(() => {
       this.userService.getUsers(this.currentPage.value, this.pageSize).subscribe(
         () => this.userTable = true
       );

@@ -1,7 +1,7 @@
 <div class="login-container">
   <img src="assets/login-img.png" >
   <div class="login-form-container">
-      <form class="login-form"  name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+      <form class="login-form"  name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
         <div class="logo">
           <app-logo ></app-logo>
         </div>
@@ -22,10 +22,10 @@
             Password is required!
           </div>
         </div>
-        <a href="">
+        <a (click)="forgetPassword()">
           Forgot password?
         </a>
-        <button>Login</button>
+        <button (click)="onSubmit()">Login</button>
       </form>
   </div>
 </div>

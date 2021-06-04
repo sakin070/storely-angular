@@ -25,6 +25,7 @@ import { ViewCustomersComponent } from './view-customers/view-customers.componen
 import { LoyaltyManagementComponent } from './loyalty-management/loyalty-management.component';
 import { NewUserComponent } from './new-user/new-user.component';
 import { ViewUsersComponent } from './view-users/view-users.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { ViewUsersComponent } from './view-users/view-users.component';
     ViewCustomersComponent,
     LoyaltyManagementComponent,
     NewUserComponent,
-    ViewUsersComponent
+    ViewUsersComponent,
+    ResetPasswordComponent
   ],
     imports: [
         BrowserModule,
