@@ -24,6 +24,7 @@ import { CreateCustomerComponent } from './create-customer/create-customer.compo
 import { ViewCustomersComponent } from './view-customers/view-customers.component';
 import { LoyaltyManagementComponent } from './loyalty-management/loyalty-management.component';
 import { NewUserComponent } from './new-user/new-user.component';
+import { ViewUsersComponent } from './view-users/view-users.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { NewUserComponent } from './new-user/new-user.component';
     CreateCustomerComponent,
     ViewCustomersComponent,
     LoyaltyManagementComponent,
-    NewUserComponent
+    NewUserComponent,
+    ViewUsersComponent
   ],
     imports: [
         BrowserModule,

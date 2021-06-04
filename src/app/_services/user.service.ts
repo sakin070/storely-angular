@@ -30,4 +30,13 @@ export class UserService {
   verifyUsername(username: string): Observable<any>{
     return this.http.get(API + '/username?username=' + username, this.httpOptions);
   }
+  getUsers(pageNumber: number, pageSize: number): Observable<any>{
+    return this.http.get(API + '/page?page=' + pageNumber + '&size=' + pageSize, this.httpOptions);
+  }
+  getUsersByUsername(username: string, pageNumber: number, pageSize: number): Observable<any>{
+    return this.http.get(API + '/name?username=' + username + '&page=' + pageNumber + '&size=' + pageSize, this.httpOptions);
+  }
+  updateUser(user: any): Observable<any>{
+    return this.http.patch(API + '/roles', user, this.httpOptions);
+  }
 }

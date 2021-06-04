@@ -1,0 +1,22 @@
+.pagination{
+    margin: 0 0 2.5em 30%;
+    font-size: .8em;
+}
+.extra-padding{
+    padding:1em 10em;
+}
+.back-link{
+    font-family: mulish, sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 1em;
+}
+.back-link>img{
+    height: 1em;
+    width: 1em;
+    margin: 1em 0  0 1em;
+}
+.button-containers{
+    font-size: 0.8em;
+    margin: 4% 0 0 37%;
+}

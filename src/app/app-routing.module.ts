@@ -16,6 +16,7 @@ import {CreateCustomerComponent} from './create-customer/create-customer.compone
 import {ViewCustomersComponent} from './view-customers/view-customers.component';
 import {LoyaltyManagementComponent} from './loyalty-management/loyalty-management.component';
 import {NewUserComponent} from './new-user/new-user.component';
+import {ViewUsersComponent} from './view-users/view-users.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -24,7 +25,7 @@ const routes: Routes = [
   {path: 'make-sale', component: MakeSaleComponent},
   {path: 'view-sales', component: ViewSalesComponent},
   {path: 'new-supplier', component: CreateSupplierComponent},
-  {path: 'view-users', component: ViewSalesComponent},
+  {path: 'view-users', component: ViewUsersComponent},
   {path: 'new-user', component: NewUserComponent},
   {path: 'view-suppliers', component: ViewSuppliersComponent},
   {path: 'new-customer', component: CreateCustomerComponent},

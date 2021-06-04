@@ -1,0 +1,97 @@
+<app-nav-bar [itemId]=5></app-nav-bar>
+<div class="container" *ngIf="userTable; else userSettings">
+    <div class="header-div">
+        <h1>Users</h1>
+        <div class="stock-search">
+            <input type="search" placeholder="Search by username" (keyup.enter)="search()" name="search" [(ngModel)]="searchString" (search)="search()">
+            <button (click)="search()"><img src="assets/search-line.svg" alt="search"></button>
+        </div>
+    </div>
+    <hr>
+    <div class="table-div">
+        <table>
+            <colgroup>
+                <col span="1" style="width: 35%;">
+                <col span="1" style="width: 25%;">
+                <col span="1" style="width: 25%;">
+                <col span="1" style="width: 15%;">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th>Username</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Settings</th>
+            </tr>
+            <tr class="table-row"  *ngFor="let user of users; let i = index">
+                <td>{{user.username}}</td>
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td><button style=" height: 1em; border: none" (click)="modify(i)"> <img src="assets/cogs-solid.svg" alt="settings" style="width: 1em; height: 1em"> </button></td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <app-pagination class="pagination" [$currentIndex]="currentPage" [$maxPage]="totalPages" [getPageFunction]="getPage"></app-pagination>
+
+</div>
+
+<ng-template #userSettings>
+
+    <div class="container mini">
+        <div class="header-div">
+            <h1>User Settings</h1>
+            <div class="stock-search" style="background-color: white">
+                <h4>{{user.firstName}} {{user.lastName}}</h4>
+            </div>
+        </div>
+        <hr>
+        <div>
+            <a (click)="back()" class="back-link"><img src="assets/arrow-left-solid.svg" alt="back"> Back</a>
+        </div>
+        <div class="table-div extra-padding">
+            <table>
+                <colgroup>
+                    <col span="1" style="width: 90%;">
+                    <col span="1" style="width: 10%;">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th>Authorizations</th>
+                        <th></th>
+                    </tr>
+                    <tr class="table-row"  >
+                        <td>Administrator</td>
+                        <td><input id="admin" type="checkbox" [checked]="check1"></td>
+                    </tr>
+                    <tr class="table-row"  >
+                        <td>Manager</td>
+                        <td><input id="manager" type="checkbox" [checked]="check2"></td>
+                    </tr>
+                    <tr class="table-row"  >
+                        <td>Returns</td>
+                        <td><input id="returns" type="checkbox" [checked]="check3"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="button-containers">
+            <button (click)="updateUser()" >Save</button>
+            <button class="no-fill clear-button" (click)="delete()" >Delete</button>
+        </div>
+        <div *ngIf="showDeleteModal" class="delete-container">
+            <div class="modal" (click)="hideModal()"></div>
+            <div class="delete-content">
+                <h4>Delete User</h4>
+                <hr>
+                <p>Are you want to delete "{{user.username}}"?</p>
+                <div class="button-containers">
+                    <button (click)="deleteUser()" style="background-color: var(--danger-color)">Delete</button>
+                    <button class="no-fill" style="margin-left: 0.5em" (click)="hideModal()" >Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
