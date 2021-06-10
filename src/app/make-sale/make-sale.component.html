@@ -1,22 +1,30 @@
-<app-nav-bar [itemId]=2></app-nav-bar>
 <div class="make-sale-container">
-    <form class="make-sale-form" autocomplete="off">
-        <div class="form-group ">
-            <label for="sku" >SKU</label>
-            <input id="sku" class="loyalty-input" name="sku" type="text" [(ngModel)]="sku" autofocus (keyup.enter)="addSaleItem()">
-        </div>
+<!--    <form class="make-sale-form" autocomplete="off">-->
 <!--        <div class="form-group ">-->
-<!--            <label for="name" >Name</label>-->
-<!--            <input id="name" class="loyalty-input" name="name" type="text" [(ngModel)]="name" >-->
+<!--            <label for="sku" >SKU</label>-->
+<!--            <input id="sku" class="loyalty-input" name="sku" type="text" [(ngModel)]="sku" autofocus (keyup.enter)="addSaleItem()">-->
 <!--        </div>-->
-        <div class="form-group ">
-            <label for="quantity" >Quantity</label>
-            <input id="quantity" name="quantity" type="text" [(ngModel)]="quantity" >
-        </div>
-        <button class="add-button" type="button" (click)="addSaleItem()"> Add &#43;</button>
-    </form>
+<!--        <div class="form-group ">-->
+<!--            <label for="quantity" >Quantity</label>-->
+<!--            <input id="quantity" name="quantity" type="text" [(ngModel)]="quantity" >-->
+<!--        </div>-->
+<!--        <button class="add-button" type="button" (click)="addSaleItem()"> Add &#43;</button>-->
+<!--    </form>-->
 
+
+<!--    <h1>New Customer</h1>-->
+<!--    <hr>-->
     <div class="make-sale-table">
+        <div class="form-group">
+            <input id="stock" list="cards" name="stock" type="search" [(ngModel)]="stockName"  placeholder="Search Products" required #card="ngModel" autocomplete="off" (input)="getStocks()" (keyup.enter)="addStock()">
+            <datalist id="cards">
+                <option *ngFor="let stock of stocks" [value]="stock.name">{{stock.name}}</option>
+            </datalist>
+        </div>
+<!--        <div *ngIf="showCustomer">-->
+<!--            <h3>{{sale.customer.firstName}}  {{sale.customer.lastName}}</h3>-->
+<!--            <h4>Points: {{sale.customer.pointsAvailable}}</h4>-->
+<!--        </div>-->
         <div class="table-div">
             <table >
                 <tr >
@@ -25,88 +33,99 @@
                     <th>Total Price</th>
                     <th>Remove</th>
                 </tr>
-
+                <colgroup>
+                    <col span="1" style="width: 50%;">
+                    <col span="1" style="width: 16%;">
+                    <col span="1" style="width: 16%;">
+                    <col span="1" style="width: 17%;">
+                </colgroup>
                 <tr class="table-row" *ngFor="let saleItem of sale.saleItems; index as i ">
                     <td>{{saleItem.stock.name}}</td>
                     <td>{{saleItem.quantity}} X ${{saleItem.stock.sellingPrice}}</td>
                     <td>${{saleItem.quantity * saleItem.stock.sellingPrice}} </td>
-                    <td><button (click)="removeSaleItem(i)"><img src="assets/close-icon.png" alt="remove item"></button></td>
+                    <td><button (click)="removeSaleItem(i)" style="border: none; height: 1em"><img style="border: none; height: 1em" src="assets/close-icon.png" alt="remove item"></button></td>
                 </tr>
-
             </table>
         </div>
 
-        <div class="button-containers">
-            <button (click)="pay()" >Pay</button>
-            <button class="no-fill clear-button" (click)="clearSaleItems()" >Clear</button>
+        <div class="pricing">
+            <h5>Subtotal</h5>
+            <h5>{{sale.price}}</h5>
+            <h5>Tax</h5>
+            <h5>{{sale.tax}}</h5>
+            <h4>Total</h4>
+            <h4>${{sale.price + sale.tax}}</h4>
         </div>
+    </div>
+    <div class="buttons-grid">
+        <button (click)="addCustomer()" class="no-fill" style="grid-area: b1">Add Customer</button>
+        <button (click)="addCoupon()" class="no-fill" style="grid-area: b2">Add Coupon</button>
+        <button (click)="return()" class="no-fill" style="grid-area: b3">Return</button>
+        <button (click)="stockAndPrice()" class="no-fill" style="grid-area: b4">Stock & Price</button>
+        <button (click)="printLastReceipt()" class="no-fill" style="grid-area: b5">Last Receipt</button>
+        <button (click)="recentSales()" class="no-fill" style="grid-area: b6">Recent Sales</button>
+        <button (click)="suspendSale()" class="no-fill" style="grid-area: b7">Suspend Sale</button>
+        <button (click)="restoreSale()" class="no-fill" style="grid-area: b8">Restore Sale</button>
+        <button *ngIf="saleOnlyUser; else home" (click)="logout()" style="grid-area: b9">Logout</button>
+        <ng-template #home>
+            <button (click)="goHome()" style="grid-area: b9">Home</button>
+        </ng-template>
+        <button (click)="clearSaleItems()" class="no-fill clear-button" style="grid-area: b10; ">Clear</button>
+<!--        <button (click)="pay()" style="grid-area: pay; background-color: var(&#45;&#45;secondary-color)" [disabled]="sale.saleItems.length == 0">Pay</button>-->
+        <button (click)="pay()" style="grid-area: pay; background-color: var(--secondary-color)">Pay</button>
     </div>
 
 </div>
-
-<div class="pay-container">
-    <div>
-        <h2>Payment</h2>
-        <hr>
-    </div>
-    <div class="payment-flex">
-        <div class="form-group ">
-            <label for="loyaltyCard" >Loyalty Card</label>
-            <input id="loyaltyCard" class="loyalty-input" name="loyaltyCard" type="text" [(ngModel)]="loyaltyCard" autocomplete="off" autofocus (keyup.enter)="addLoyaltyCard()">
-            <div id="loyaltyCardError" class="alert alert-danger" role="alert">
-                Invalid Loyalty Card !
+<div *ngIf="showPaymentDialog" class="delete-container">
+    <div class="modal" (click)="hidePaymentDialog()"></div>
+    <div class="delete-content">
+        <h4>Payment Method</h4>
+        <hr style="margin: 0.5em -1.5em 0">
+        <div>
+            <div class="form-group inline">
+                <label for="name">Use Points</label>
+                <input id="name" name="name" type="text" [(ngModel)]="usePoints" autocomplete="off" placeholder="e.g 10 points">
+            </div>
+            <button *ngIf="addPoints; else removePoints" id="usePointsApply" style="font-size: 0.8em" class="add-button" (click)="redeemPoints()"> Use Points </button>
+            <ng-template #removePoints>
+                <button id="usePointsRemove" class="no-fill clear-button" (click)="unRedeemPoints()"> Remove </button>
+            </ng-template>
+        </div>
+        <div style="margin: 1em 0; float:right">
+            <div class="form-group inline" >
+                <label for="total" ><strong>Total ($)</strong></label>
+                <input id="total" name="total" type="number" [(ngModel)]="sale.price" readonly>
             </div>
         </div>
-        <button class="add-button" (click)="addLoyaltyCard()"> Add </button>
-    </div>
 
-    <div class="form-group ">
-        <label for="pointsAvailable" >Points Available</label>
-        <input id="pointsAvailable" name="pointsAvailable" type="number" [(ngModel)]="pointsAvailable" readonly>
-    </div>
-
-    <hr>
-
-    <div class="payment-flex">
-        <div class="discounts">
-            <div class="form-group ">
-                <label for="usePoints" >Use Points</label>
-                <input id="usePoints" name="usePoints" type="number" [(ngModel)]="usePoints" autocomplete="off">
-                <div id="usePointsError" class="alert alert-danger" role="alert" *ngIf="usePoints > maxRedeemablePoints">
-                    Max of {{maxRedeemablePoints}}
+<!--        <div style=";">-->
+<!--            -->
+<!--        </div>-->
+        <div style="margin-top: 4em">
+            <div *ngFor="let payment of payments" style="margin-bottom: 0.5em">
+                <div class="form-group inline" >
+                    <label>Payment Type</label>
+                    <select [(ngModel)]="payment.type">
+                        <option selected="selected">Cash</option>
+                        <option>P.O.S</option>
+                    </select>
+                    <label>($)</label>
+                    <input name="cash" type="number" [(ngModel)]="payment.amount" placeholder="amount" (change)="calcChange()">
                 </div>
             </div>
-            <button id="usePointsApply" class="add-button" (click)="redeemPoints()"> Use Points </button>
-            <button id="usePointsRemove" class="no-fill clear-button" (click)="unRedeemPoints()"> Remove </button>
+
+            <button (click)="split()" style="background-color: var(--secondary-color); font-size: 0.8em; margin-bottom: .5em">Add Payment</button>
         </div>
-        <div class="discounts">
-            <div class="form-group ">
-                <label for="discountCode" >Discount Code</label>
-                <input id="discountCode" name="discountCode" type="text" [(ngModel)]="discountCode" autocomplete="off">
+        <div style="margin: 1em 0; float:right">
+            <div class="form-group inline">
+                <label for="change" >Change ($)</label>
+                <input id="change" name="cash" type="number" [(ngModel)]="change" readonly>
             </div>
-            <button id="applyDiscount" class="add-button" (click)="applyDiscount()"> Apply </button>
-            <button id="applyDiscountRemove" class="no-fill clear-button" (click)="removeDiscount()"> Remove </button>
-        </div>
-    </div>
-
-    <hr>
-
-    <div>
-        <h3>Total ($): {{total}}</h3>
-        <div class="form-group ">
-            <label for="cash" >Cash ($)</label>
-            <input id="cash" name="cash" type="number" [(ngModel)]="cash" >
-        </div>
-
-        <div class="form-group ">
-            <label for="change" >Change ($)</label>
-            <input id="change" name="cash" type="number" [(ngModel)]="cash-total" readonly>
         </div>
 
         <div class="button-containers">
-            <button (click)="complete()" >Complete</button>
-            <button class="no-fill margin-3" (click)="back()" >Back</button>
+            <button (click)="complete()">Complete</button>
+            <button class="no-fill margin-3" (click)="hidePaymentDialog()" >Cancel</button>
         </div>
     </div>
-
 </div>

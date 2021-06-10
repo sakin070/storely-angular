@@ -2,19 +2,43 @@
     display: flex;
     background-color: white;
     border-radius: .3em;
-    min-height: 80vh;
-    margin: 0 7%;
+    margin: 2em 4em;
+    padding: 2em;
+    gap: 2em;
 }
-.make-sale-form{
+.buttons-grid {
     flex: 1;
-    margin: 0.5em 1em 0 2em ;
+    display: grid;
+    grid-template-areas: "b1 b2"
+                       "b3 b4"
+                       "b5 b6"
+                       "b7 b8"
+                       "b9 b10"
+                       "pay pay";
+    grid-template-columns: 1fr 1fr ;
+    grid-template-rows: repeat(6, auto);
+    column-gap: 1em;
+    row-gap: 1em;
+    font-size: 0.8em;
+}
+.pricing {
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    grid-template-rows: repeat(2, auto);
+    column-gap: 1em;
+    row-gap: .8em;
+    /*font-size: 0.8em;*/
+    border-top-color: var(--passive-color);
+    border-top-style: solid;
+    border-top-width: 0.2em;
+    align-items: center;
 }
 .make-sale-table{
-    padding-left: 5em;
     flex: 2;
 }
 .table-div{
     overflow: auto;
+    min-height: 55vh;
     max-height: 70vh;
 }
 
@@ -38,13 +62,13 @@
     padding: 0.1em 2em;
     display: none;
 }
-.payment-flex > .form-group{
-    flex: 60%;
-}
+/*.payment-flex > .form-group{*/
+/*    flex: 60%;*/
+/*}*/
 
-.form-group > input{
-    width: 12em;
-}
+/*.form-group > input{*/
+/*    width: 12em;*/
+/*}*/
 
 .form-group > .loyalty-input {
     width: 100%;
@@ -77,3 +101,10 @@ h3{
     display: none;
 }
 
+button.clear-button {
+     margin-left: 0;
+}
+
+h4,h5,h6{
+    margin: 0;
+}

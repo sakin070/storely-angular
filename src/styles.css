@@ -44,7 +44,7 @@
 *::after {
   box-sizing: inherit;
 }
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5, h6 {
   font-family: mulish, serif;
   /*font-weight: bold;*/
 }
@@ -114,6 +114,12 @@ button.clear-button:hover{
 }
 
 .form-group.inline>input{
+  display: inline;
+  width: initial;
+  margin-right: 2em;
+}
+
+.form-group.inline>select{
   display: inline;
   width: initial;
   margin-right: 2em;

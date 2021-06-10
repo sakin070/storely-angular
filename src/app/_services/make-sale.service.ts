@@ -3,8 +3,8 @@ import {Observable} from 'rxjs';
 import {TokenStorageService} from './token-storage.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-const AUTH_API = 'https://storley.herokuapp.com';
-// const AUTH_API = 'http://localhost:8080';
+// const AUTH_API = 'https://storley.herokuapp.com';
+const AUTH_API = 'http://localhost:8080';
 @Injectable({
   providedIn: 'root'
 })
@@ -58,5 +58,20 @@ export class MakeSaleService {
   }
   printSale(saleId: number): Observable<any>{
     return this.http.get(AUTH_API + '/sale/user-and-date?saleId=' + saleId,  this.httpOptions);
+  }
+  addStock(stock: any, saleId: number): Observable<any>{
+    if (!saleId){
+      saleId = 0;
+    }
+    return this.http.patch(AUTH_API + '/sale/addStock?saleId=' + saleId, stock, this.httpOptions);
+  }
+  removeStock(stock: any, saleId: number): Observable<any>{
+    return this.http.patch(AUTH_API + '/sale/removeStock?saleId=' + saleId, stock, this.httpOptions);
+  }
+  persistSaleById( saleId: number): Observable<any>{
+    return this.http.post(AUTH_API + '/sale/persistSale?saleId=' + saleId, {}, this.httpOptions);
+  }
+  clearSaleById( saleId: number): Observable<any>{
+    return this.http.delete(AUTH_API + '/sale/deleteSale?saleId=' + saleId, this.httpOptions);
   }
 }

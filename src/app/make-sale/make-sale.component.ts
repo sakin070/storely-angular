@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MakeSaleService} from '../_services/make-sale.service';
+import {StockService} from '../_services/stock.service';
 
 @Component({
   selector: 'app-make-sale',
@@ -7,107 +8,111 @@ import {MakeSaleService} from '../_services/make-sale.service';
   styleUrls: ['./make-sale.component.css']
 })
 export class MakeSaleComponent implements OnInit {
+  timer: any;
+  saleOnlyUser = true;
   sku = '';
   name = '';
-  quantity = 1;
+  stockName = '';
+  payments: any[] = [];
+  stocks: any[] = [];
+  stock = {};
   sale: any = {
-    saleItems: []
+    price: 0,
+    profit: 0,
+    saleId: 0,
+    saleItems: [],
+    tax: 0
   };
   loyaltyCard = '';
   pointsAvailable = 0;
   usePoints = 0;
   discountCode = '';
-  total = 0;
-  cash = 0;
   loyaltyManager = {maxRedeemablePointsPerTransaction: 0};
-  constructor(private makeSaleService: MakeSaleService) {
+  showCustomer = false;
+  showPaymentDialog = false;
+  addPoints = true;
+  change = 0;
+  constructor(private makeSaleService: MakeSaleService, private stockService: StockService) {
     this.makeSaleService.clearSaleItems().subscribe();
     this.getLoyaltyManager();
   }
 
   ngOnInit(): void {}
-
+  addCustomer(): void {}
+  addCoupon(): void {}
+  return(): void {}
+  stockAndPrice(): void {}
+  printLastReceipt(): void {}
+  recentSales(): void {}
+  suspendSale(): void {}
+  restoreSale(): void {}
+  logout(): void {}
+  goHome(): void {}
   pay(): void {
-    this.makeSaleService.createSale(this.sale).subscribe(data => {
-      this.total = data.price;
-      const makeSaleContainer: HTMLCollectionOf<HTMLElement> =
-          document.getElementsByClassName('make-sale-container') as HTMLCollectionOf<HTMLElement> ;
-      makeSaleContainer[0].style.display = 'none';
-      const payContainer: HTMLCollectionOf<HTMLElement> =
-          document.getElementsByClassName('pay-container') as HTMLCollectionOf<HTMLElement> ;
-      payContainer[0].style.display = 'block';
-    });
+    this.payments = [{amount: this.sale.price, type: ''}];
+    this.showPaymentDialog = true;
+  }
+  hidePaymentDialog(): void{
+    this.showPaymentDialog = false;
   }
   complete(): void {
-    this.makeSaleService.persistSale().subscribe(() => {
+    this.makeSaleService.persistSaleById(this.sale.saleId).subscribe(() => {
       this.sku = '';
       this.name = '';
-      this.quantity = 1;
-      this.sale = { saleItems: [] };
       this.loyaltyCard = '';
       this.pointsAvailable = 0;
       this.usePoints = 0;
       this.discountCode = '';
-      this.total = 0;
-      this.cash = 0;
-      this.back();
-    });
-  }
-  back(): void {
-    this.makeSaleService.clearSaleItems().subscribe(() => {
-      const payContainer: HTMLCollectionOf<HTMLElement> =
-          document.getElementsByClassName('pay-container') as HTMLCollectionOf<HTMLElement> ;
-      payContainer[0].style.display = 'none';
-      this.loyaltyCard = '';
-      this.usePoints = 0;
-      this.discountCode = '';
-      this.cash = 0;
-      this.pointsAvailable = 0;
-      this.unRedeemPoints();
-      this.removeDiscount();
-      this.removeLoyaltyCard();
-      const makeSaleContainer: HTMLCollectionOf<HTMLElement> =
-          document.getElementsByClassName('make-sale-container') as HTMLCollectionOf<HTMLElement> ;
-      makeSaleContainer[0].style.display = 'flex';
+      // new below
+      this.sale = {
+        price: 0,
+        profit: 0,
+        saleId: 0,
+        saleItems: [],
+        tax: 0
+      };
+      this.hidePaymentDialog();
     });
   }
   clearSaleItems(): void {
-    this.makeSaleService.clearSaleItems().subscribe(() => {
-      this.sale.saleItems = [];
+    this.makeSaleService.clearSaleById(this.sale.saleId).subscribe(() => {
+      this.sale = {
+        price: 0,
+        profit: 0,
+        saleId: 0,
+        saleItems: [],
+        tax: 0
+      };
     });
   }
   removeSaleItem(index: number): void {
-    if (this.sale.saleItems[index].quantity === 1){
-      this.sale.saleItems.splice(index);
-    }else{
-      this.sale.saleItems[index].quantity = this.sale.saleItems[index].quantity - 1 ;
-    }
-  }
-  addSaleItem(): void{
-    const saleItem = this.sale.saleItems.find( (element: any) => {
-      if (element.stock.sku === this.sku){
-        element.quantity = element.quantity + this.quantity;
-      }
-      return element.stock.sku === this.sku;
+    this.makeSaleService.removeStock(this.sale.saleItems[index].stock, this.sale.saleId).subscribe(data => {
+      this.sale = data;
     });
-    if ( !saleItem){
-      this.makeSaleService.getStockBySKU(this.sku).subscribe(data => {
-        const tempSaleItem: any = {
-          stock: {
-            stock_id: data.stock_id,
-            sku: data.sku,
-            name: data.name,
-            sellingPrice: data.sellingPrice
-          },
-          quantity: this.quantity
-        };
-        this.sale.saleItems.push(tempSaleItem);
-      });
-    }
-    this.sku = '';
-    this.name = '';
-    this.quantity = 1;
   }
+  // addSaleItemBySKU(): void{
+  //   const saleItem = this.sale.saleItems.find( (element: any) => {
+  //     if (element.stock.sku === this.sku){
+  //       element.quantity = element.quantity + this.quantity;
+  //     }
+  //     return element.stock.sku === this.sku;
+  //   });
+  //   if ( !saleItem){
+  //     this.makeSaleService.getStockBySKU(this.sku).subscribe(data => {
+  //       const tempSaleItem: any = {
+  //         stock: {
+  //           stock_id: data.stock_id,
+  //           sku: data.sku,
+  //           name: data.name,
+  //           sellingPrice: data.sellingPrice
+  //         },
+  //       };
+  //       this.sale.saleItems.push(tempSaleItem);
+  //     });
+  //   }
+  //   this.sku = '';
+  //   this.name = '';
+  // }
   addLoyaltyCard(): void {
     this.makeSaleService.addLoyaltyCard(this.loyaltyCard).subscribe( data => {
       const loyaltyCardError: HTMLInputElement = document.getElementById('loyaltyCardError') as HTMLInputElement ;
@@ -133,7 +138,6 @@ export class MakeSaleComponent implements OnInit {
       return;
     }
     this.makeSaleService.usePoints(this.usePoints).subscribe(data => {
-      this.total = data;
       // @ts-ignore
       document.getElementById('usePointsApply').style.display = 'none';
       // @ts-ignore
@@ -142,17 +146,16 @@ export class MakeSaleComponent implements OnInit {
       usePoints.readOnly = true;
     });
   }
-  applyDiscount(): void {
-    this.makeSaleService.applyDiscount(this.discountCode).subscribe(data => {
-      this.total = data;
-      // @ts-ignore
-      document.getElementById('applyDiscount').style.display = 'none';
-      // @ts-ignore
-      document.getElementById('applyDiscountRemove').style.display = 'inline-block';
-      const usePoints: HTMLInputElement = document.getElementById('discountCode') as HTMLInputElement ;
-      usePoints.readOnly = true;
-    });
-  }
+  // applyDiscount(): void {
+  //   this.makeSaleService.applyDiscount(this.discountCode).subscribe(data => {
+  //     // @ts-ignore
+  //     document.getElementById('applyDiscount').style.display = 'none';
+  //     // @ts-ignore
+  //     document.getElementById('applyDiscountRemove').style.display = 'inline-block';
+  //     const usePoints: HTMLInputElement = document.getElementById('discountCode') as HTMLInputElement ;
+  //     usePoints.readOnly = true;
+  //   });
+  // }
   getLoyaltyManager(): void {
     this.makeSaleService.getLoyaltyManager().subscribe(data => {
       this.loyaltyManager = data[0];
@@ -160,7 +163,6 @@ export class MakeSaleComponent implements OnInit {
   }
   unRedeemPoints(): void {
     this.makeSaleService.unRedeemPoints().subscribe(data => {
-      this.total = data;
       // @ts-ignore
       document.getElementById('usePointsRemove').style.display = 'none';
       // @ts-ignore
@@ -171,7 +173,6 @@ export class MakeSaleComponent implements OnInit {
   }
   removeDiscount(): void{
     this.makeSaleService.removeDiscount().subscribe(data => {
-      this.total = data;
       // @ts-ignore
       document.getElementById('applyDiscountRemove').style.display = 'none';
       // @ts-ignore
@@ -182,5 +183,35 @@ export class MakeSaleComponent implements OnInit {
   }
   get maxRedeemablePoints(): number {
     return Math.min(this.loyaltyManager.maxRedeemablePointsPerTransaction, this.pointsAvailable);
+  }
+  getStocks(): void{
+    if (this.timer){
+      clearTimeout(this.timer);
+    }
+    this.timer = setTimeout(() => {
+      this.stockService.getStockByName(this.stockName, 0, 20)
+        .subscribe(data => {
+          this.stocks = data.content;
+          if (this.stocks.length === 1){
+            this.stock = this.stocks[0];
+            this.stocks = [];
+          }
+        });
+    }, 400);
+  }
+  addStock(): void{
+    this.makeSaleService.addStock(this.stock, this.sale.saleId).subscribe(data => {
+      this.sale = data;
+      this.stock = {};
+      this.stockName = '';
+    });
+  }
+  calcChange(): void {
+    let total = 0;
+    this.payments.forEach( payment => total = total + payment.amount);
+    this.change = total - this.sale.price;
+  }
+  split(): void{
+    this.payments.push({amount: 0, type: ''});
   }
 }
