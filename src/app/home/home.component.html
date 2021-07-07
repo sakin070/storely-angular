@@ -25,8 +25,11 @@
 
     <div class="form-group product-container">
       <label for="product" >Product</label>
-      <input id="product" name="product" type="text" [(ngModel)]="product" >
-      <button> Add &#43;</button>
+      <input id="product" list="cards" name="product" type="search" [(ngModel)]="product" placeholder="Search Products" required autocomplete="off" (input)="getProduct()" (keyup.enter)="addProduct()">
+	  <datalist id="cards">
+		<option *ngFor="let aProduct of products" [value]="aProduct.name">{{aProduct.name}}</option>
+	</datalist>
+      <button (click)="addProduct()"> Add &#43;</button>
     </div>
 
     <div class="table-div">
