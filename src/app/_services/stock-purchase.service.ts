@@ -3,8 +3,8 @@ import {TokenStorageService} from './token-storage.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
-const API = 'http://localhost:8080/stock-purchase';
-// const API = 'https://storley.herokuapp.com/stock-purchase';
+// const API = 'http://localhost:8080/stock-purchase';
+const API = 'https://storley.herokuapp.com/stock-purchase';
 
 @Injectable({
   providedIn: 'root'
