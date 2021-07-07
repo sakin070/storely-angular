@@ -31,6 +31,8 @@
   font-size: calc(1vw + 0.6em);
   --primary-color: #408AF8;
   --secondary-color:  #38ACB5;
+  /*--primary-color: #266cc7;*/
+  /*--secondary-color:  #26c782;*/
   --passive-color: #8AA0BD;
   --danger-color: #EE3C3C;
 }
@@ -81,6 +83,24 @@ button.clear-button{
 }
 button.clear-button:hover{
   background-color: var(--danger-color);
+}
+button.no-fill.orange{
+  background-color: white;
+  color: #c73126;
+  border: .1em solid ;
+}
+button.no-fill:hover.orange{
+  background-color: #c73126;
+  color: white;
+}
+button.no-fill.green{
+  background-color: white;
+  color: var(--secondary-color);
+  border: .1em solid ;
+}
+button.no-fill:hover.green{
+  background-color: var(--secondary-color);
+  color: white;
 }
 .form-group >input{
   width: 100%;

@@ -1,26 +1,17 @@
 <div class="make-sale-container">
-<!--    <form class="make-sale-form" autocomplete="off">-->
-<!--        <div class="form-group ">-->
-<!--            <label for="sku" >SKU</label>-->
-<!--            <input id="sku" class="loyalty-input" name="sku" type="text" [(ngModel)]="sku" autofocus (keyup.enter)="addSaleItem()">-->
-<!--        </div>-->
-<!--        <div class="form-group ">-->
-<!--            <label for="quantity" >Quantity</label>-->
-<!--            <input id="quantity" name="quantity" type="text" [(ngModel)]="quantity" >-->
-<!--        </div>-->
-<!--        <button class="add-button" type="button" (click)="addSaleItem()"> Add &#43;</button>-->
-<!--    </form>-->
-
-
-<!--    <h1>New Customer</h1>-->
-<!--    <hr>-->
     <div class="make-sale-table">
-        <div class="form-group">
-            <input id="stock" list="cards" name="stock" type="search" [(ngModel)]="stockName"  placeholder="Search Products" required #card="ngModel" autocomplete="off" (input)="getStocks()" (keyup.enter)="addStock()">
-            <datalist id="cards">
-                <option *ngFor="let stock of stocks" [value]="stock.name">{{stock.name}}</option>
-            </datalist>
+        <div style="display: flex; gap: 1em">
+            <div class="form-group">
+                <input id="sku" name="sku" type="text" [(ngModel)]="sku" autofocus (keyup.enter)="addStockBySKU()" placeholder="Enter SKU">
+            </div>
+            <div class="form-group ">
+                <input id="stock" list="cards" name="stock" type="search" [(ngModel)]="stockName"  placeholder="Search Products" required autocomplete="off" (input)="getStocks()" (keyup.enter)="addStock()">
+                <datalist id="cards">
+                    <option *ngFor="let stock of stocks" [value]="stock.name">{{stock.name}}</option>
+                </datalist>
+            </div>
         </div>
+
 <!--        <div *ngIf="showCustomer">-->
 <!--            <h3>{{sale.customer.firstName}}  {{sale.customer.lastName}}</h3>-->
 <!--            <h4>Points: {{sale.customer.pointsAvailable}}</h4>-->
@@ -61,11 +52,11 @@
         <button (click)="addCustomer()" class="no-fill" style="grid-area: b1">Add Customer</button>
         <button (click)="addCoupon()" class="no-fill" style="grid-area: b2">Add Coupon</button>
         <button (click)="return()" class="no-fill" style="grid-area: b3">Return</button>
-        <button (click)="stockAndPrice()" class="no-fill" style="grid-area: b4">Stock & Price</button>
+        <button (click)="showStockAndPrice()" class="no-fill" style="grid-area: b4">Stock & Price</button>
         <button (click)="printLastReceipt()" class="no-fill" style="grid-area: b5">Last Receipt</button>
         <button (click)="recentSales()" class="no-fill" style="grid-area: b6">Recent Sales</button>
-        <button (click)="suspendSale()" class="no-fill" style="grid-area: b7">Suspend Sale</button>
-        <button (click)="restoreSale()" class="no-fill" style="grid-area: b8">Restore Sale</button>
+        <button (click)="suspendSale()" class="no-fill orange" style="grid-area: b7">Suspend Sale</button>
+        <button (click)="restoreSale()" class="no-fill" [ngClass]="suspended ? 'green':''" style="grid-area: b8">Restore Sale</button>
         <button *ngIf="saleOnlyUser; else home" (click)="logout()" style="grid-area: b9">Logout</button>
         <ng-template #home>
             <button (click)="goHome()" style="grid-area: b9">Home</button>
@@ -81,14 +72,14 @@
     <div class="delete-content">
         <h4>Payment Method</h4>
         <hr style="margin: 0.5em -1.5em 0">
-        <div>
+        <div *ngIf="sale.loyaltyCard">
             <div class="form-group inline">
-                <label for="name">Use Points</label>
-                <input id="name" name="name" type="text" [(ngModel)]="usePoints" autocomplete="off" placeholder="e.g 10 points">
+                <label for="usePoints">Use Points</label>
+                <input id="usePoints" name="name" type="text" [(ngModel)]="usePoints" autocomplete="off" placeholder="e.g 10 points" [readOnly]="!addPoints">
             </div>
             <button *ngIf="addPoints; else removePoints" id="usePointsApply" style="font-size: 0.8em" class="add-button" (click)="redeemPoints()"> Use Points </button>
             <ng-template #removePoints>
-                <button id="usePointsRemove" class="no-fill clear-button" (click)="unRedeemPoints()"> Remove </button>
+                <button id="usePointsRemove" class="no-fill clear-button" style="font-size: 0.8em; margin-top: 2em;" (click)="unRedeemPoints()"> Remove </button>
             </ng-template>
         </div>
         <div style="margin: 1em 0; float:right">
@@ -98,19 +89,16 @@
             </div>
         </div>
 
-<!--        <div style=";">-->
-<!--            -->
-<!--        </div>-->
         <div style="margin-top: 4em">
             <div *ngFor="let payment of payments" style="margin-bottom: 0.5em">
                 <div class="form-group inline" >
                     <label>Payment Type</label>
                     <select [(ngModel)]="payment.type">
-                        <option selected="selected">Cash</option>
-                        <option>P.O.S</option>
+                        <option selected="selected">CASH</option>
+                        <option>POS</option>
                     </select>
                     <label>($)</label>
-                    <input name="cash" type="number" [(ngModel)]="payment.amount" placeholder="amount" (change)="calcChange()">
+                    <input name="cash" type="number" [(ngModel)]="payment.amount" placeholder="amount" (input)="calcChange()">
                 </div>
             </div>
 
@@ -126,6 +114,178 @@
         <div class="button-containers">
             <button (click)="complete()">Complete</button>
             <button class="no-fill margin-3" (click)="hidePaymentDialog()" >Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="viewSales" class="delete-container">
+    <div class="modal" (click)="hideViewSaleDialog()"></div>
+    <div class="delete-content">
+        <div *ngIf="showSales; else saleItems">
+            <h4>Recent Sales</h4>
+            <hr style="margin: 0.5em -1.5em 0">
+            <div class="table-div">
+                <table>
+                    <colgroup>
+                        <col span="1" style="width: 40%;">
+                        <col span="1" style="width: 40%;">
+                        <col span="1" style="width: 20%;">
+                    </colgroup>
+                    <tbody>
+                    <tr >
+                        <th>Sold On</th>
+                        <th>Amount</th>
+                        <th>View</th>
+                    </tr>
+                    <tr class="table-row"  *ngFor="let sale of sales; let i = index">
+                        <td>{{sale.saleDate}}</td>
+                        <td>{{sale.price}}</td>
+                        <td><button style=" height: 1em; border: none" (click)="showSaleItems(i)"> <img src="assets/greater-than-solid.svg" style="width: 1.5em; height: 1em" alt="view"> </button></td>
+                    </tr>
+                    <tr class="table-row no-border">
+                        <td></td>
+                        <th colspan="2" class="total-row"> P.O.S Total($): {{posTotal}}</th>
+                    </tr>
+                    <tr class="table-row no-border">
+                        <td></td>
+                        <th colspan="2" class="total-row">  Cash Total($): {{cashTotal}}</th>
+                    </tr>
+                    <tr class="table-row no-border">
+                        <td></td>
+                        <th colspan="2" class="total-row"> Total($): {{cashTotal + posTotal}}</th>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+        <ng-template #saleItems >
+            <div class="delete-container">
+                <h4>Sale</h4>
+                <hr style="margin: 0.5em -1.5em 0">
+                <div class="table-div">
+                    <table>
+                        <colgroup>
+                            <col span="1" style="width: 60%;">
+                            <col span="1" style="width: 20%;">
+                            <col span="1" style="width: 20%;">
+                        </colgroup>
+                        <tbody>
+                        <tr >
+                            <th>Item</th>
+                            <th></th>
+                            <th>Total Price</th>
+                        </tr>
+                        <tr class="table-row"  *ngFor="let saleItem of sales[saleItemIndex].saleItems">
+                            <td>{{saleItem.stock.name}}</td>
+                            <td> {{saleItem.quantity}} X {{saleItem.unitSellPrice}}</td>
+                            <td>{{saleItem.quantity * saleItem.unitSellPrice}}</td>
+                        </tr>
+                        <tr class="table-row no-border">
+                            <td></td>
+                            <th colspan="2" class="total-row"> Total($): {{sales[saleItemIndex].price}}</th>
+                        </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+                <div class="button-containers" style="font-size: .8em; margin-left: 35%">
+                    <button (click)="printSale()" >Print</button>
+                    <button class="no-fill back-button" style="margin-left: 1em" (click)="hideSaleItems()" >Back</button>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</div>
+
+<div *ngIf="stockAndPrice" class="delete-container">
+    <div class="modal" (click)="hideStockAndPrice()"></div>
+    <div class="delete-content">
+        <div>
+            <h4>Stock And Price</h4>
+            <hr style="margin: 0.5em -1.5em .8em">
+            <div class="stock-search">
+                <input type="search" placeholder="Search by name" (input)="getStocks()" name="search" [(ngModel)]="stockName" (search)="getStocks()">
+                <button (click)="getStocks()"><img src="assets/search-line.svg" alt="search"></button>
+            </div>
+            <div class="table-div">
+                <table>
+                    <colgroup>
+                        <col span="1" style="width: 40%;">
+                        <col span="1" style="width: 20%;">
+                        <col span="1" style="width: 20%;">
+                        <col span="1" style="width: 20%;">
+                    </colgroup>
+                    <tbody>
+                        <tr >
+                            <th>Name</th>
+                            <th>Shelf Quantity</th>
+                            <th>Store Quantity</th>
+                            <th>Selling Price</th>
+                        </tr>
+                        <tr class="table-row"  *ngFor="let stock of stocks; let i = index">
+                            <td>{{stock.name}}</td>
+                            <td>{{stock.shelfQuantity}}</td>
+                            <td>{{stock.storeQuantity}}</td>
+                            <td>{{stock.sellingPrice}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="returnStock" class="delete-container">
+    <div class="modal" (click)="hideReturn()"></div>
+    <div class="delete-content">
+        <div class="form-group">
+            <input id="saleId" name="saleId" type="number" [(ngModel)]="saleId"  placeholder="Enter receipt id" required autocomplete="off"  (keyup.enter)="getSale()">
+        </div>
+        <h5 *ngIf="failedReturn" style="color: red">Return Failed</h5>
+        <div class="table-div">
+            <table >
+                <tr >
+                    <th>Item</th>
+                    <th></th>
+                    <th>Total Price</th>
+                    <th>Return</th>
+                </tr>
+                <colgroup>
+                    <col span="1" style="width: 50%;">
+                    <col span="1" style="width: 16%;">
+                    <col span="1" style="width: 16%;">
+                    <col span="1" style="width: 17%;">
+                </colgroup>
+                <tr class="table-row" *ngFor="let saleItem of receipt.saleItems; index as i ">
+                    <td>{{saleItem.stock.name}}</td>
+                    <td>{{saleItem.quantity}} X ${{saleItem.stock.sellingPrice}}</td>
+                    <td>${{saleItem.quantity * saleItem.stock.sellingPrice}} </td>
+                    <td>
+                        <input type="number" [min]="0" [max]="saleItem.quantity" [(ngModel)]="returns[i].quantity" style="border: none; height: 1em;font-size: 1em;width: 3em;margin-right: 0.5em" (change)="calcReturn()">
+                        <label>/{{saleItem.quantity}}</label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="pricing">
+            <h5>Return</h5>
+            <h5>{{cashReturn}}</h5>
+        </div>
+        <button [disabled]="disableButtons" (click)="makeReturn()" style="margin-left: 40%">Return</button>
+    </div>
+</div>
+
+<div *ngIf="showCustomerDialogue" class="delete-container">
+    <div class="modal" (click)="hideCustomerDialogue()"></div>
+    <div class="delete-content">
+        <div class="payment-flex">
+            <div class="form-group " >
+                <label for="loyaltyCard" >Loyalty Card</label>
+                <input id="loyaltyCard" class="loyalty-input" name="loyaltyCard" type="text" [(ngModel)]="loyaltyCard" autocomplete="off" (keyup.enter)="addLoyaltyCard()">
+            </div>
+            <button class="add-button" (click)="addLoyaltyCard()"> Add </button>
         </div>
     </div>
 </div>
