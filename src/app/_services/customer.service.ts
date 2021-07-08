@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 const API = 'https://storley.herokuapp.com/customer';
+// const API = 'http://localhost:8080/customer';
 
 @Injectable({
   providedIn: 'root'

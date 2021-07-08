@@ -3,8 +3,8 @@ import {Observable} from 'rxjs';
 import {TokenStorageService} from './token-storage.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-// const AUTH_API = 'https://storley.herokuapp.com';
-const AUTH_API = 'http://localhost:8080';
+const AUTH_API = 'https://storley.herokuapp.com';
+// const AUTH_API = 'http://localhost:8080';
 @Injectable({
   providedIn: 'root'
 })
@@ -35,11 +35,12 @@ export class MakeSaleService {
   persistSale(): Observable<any>{
     return this.http.post(AUTH_API + '/sale/persist', {}, this.httpOptions);
   }
-  addLoyaltyCard(cardNumber: string): Observable<any>{
-    return this.http.patch(AUTH_API + '/sale/add-loyalty-card?cardNumber=' + cardNumber, {}, this.httpOptions);
+  addLoyaltyCard(cardNumber: string, saleId: number): Observable<any>{
+    return this.http.patch(AUTH_API + '/sale/add-loyalty-card-byId?cardNumber=' + cardNumber + '&saleId=' + saleId, {}, this.httpOptions);
+    // return this.http.patch(AUTH_API + '/sale/add-loyalty-card?cardNumber=' + cardNumber, {}, this.httpOptions);
   }
-  usePoints(points: number): Observable<any>{
-    return this.http.patch(AUTH_API + '/sale/redeem-points?points=' + points, {}, this.httpOptions);
+  usePoints(points: number, saleId: number): Observable<any>{
+    return this.http.patch(AUTH_API + '/sale/redeem-pointsById?points=' + points + '&saleId=' + saleId, {}, this.httpOptions);
   }
   applyDiscount( discountCode: string): Observable<any>{
     return this.http.patch(AUTH_API + '/sale/add-discount?code=' + discountCode, {}, this.httpOptions);
@@ -47,8 +48,8 @@ export class MakeSaleService {
   getLoyaltyManager(): Observable<any>{
     return this.http.get(AUTH_API + '/loyalty-manager', this.httpOptions);
   }
-  unRedeemPoints(): Observable<any>{
-    return this.http.patch(AUTH_API + '/sale/undo-redeem-points', {}, this.httpOptions);
+  unRedeemPoints(saleId: number): Observable<any>{
+    return this.http.patch(AUTH_API + '/sale/undo-redeem-pointsById?saleId=' + saleId, {}, this.httpOptions);
   }
   removeDiscount(): Observable<any>{
     return this.http.patch(AUTH_API + '/sale/remove-discount', {}, this.httpOptions);
@@ -65,13 +66,25 @@ export class MakeSaleService {
     }
     return this.http.patch(AUTH_API + '/sale/addStock?saleId=' + saleId, stock, this.httpOptions);
   }
+  addStockBySKU(sku: string, saleId: number): Observable<any>{
+    if (!saleId){
+      saleId = 0;
+    }
+    return this.http.patch(AUTH_API + '/sale/addStockBySKU?sku=' + sku + '&saleId=' + saleId, {}, this.httpOptions);
+  }
   removeStock(stock: any, saleId: number): Observable<any>{
     return this.http.patch(AUTH_API + '/sale/removeStock?saleId=' + saleId, stock, this.httpOptions);
   }
-  persistSaleById( saleId: number): Observable<any>{
-    return this.http.post(AUTH_API + '/sale/persistSale?saleId=' + saleId, {}, this.httpOptions);
+  persistSaleById( saleId: number, payments: any): Observable<any>{
+    return this.http.post(AUTH_API + '/sale/persistSale?saleId=' + saleId, payments, this.httpOptions);
   }
   clearSaleById( saleId: number): Observable<any>{
     return this.http.delete(AUTH_API + '/sale/deleteSale?saleId=' + saleId, this.httpOptions);
+  }
+  getSale(saleId: number): Observable<any>{
+    return this.http.get(AUTH_API + '/sale/' + saleId,  this.httpOptions);
+  }
+  addReturn(saleId: number, returns: any[]): Observable<any>{
+    return this.http.patch(AUTH_API + '/sale/return?saleId=' + saleId, returns, this.httpOptions);
   }
 }
