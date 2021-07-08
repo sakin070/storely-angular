@@ -44,4 +44,10 @@ export class HomeService {
   deleteToBuyItem(buyItemId: number): Observable<any> {
     return this.http.delete(AUTH_API + '/buy-item/' + buyItemId, this.textHttpOptions);
   }
+  getBuyItemByName(name: string, pageNumber: number, pageSize: number): Observable<any>{
+    return this.http.get(AUTH_API + '/stock/name?name=' + name + '&page=' + pageNumber + '&size=' + pageSize, this.httpOptions);
+  }
+  addBuyItem(stock: any): Observable<any>{
+    return this.http.post(AUTH_API + '/buy-item', stock, this.httpOptions);
+  }
 }

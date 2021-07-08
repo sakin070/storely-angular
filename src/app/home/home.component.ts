@@ -12,7 +12,10 @@ export class HomeComponent implements OnInit {
   inventorySalePrice = '';
   inventoryCostPrice = '';
   monthsProfit = '';
+  timer : any;
   product: any;
+  productData = {};
+  products: any[] = [];
   // @ts-ignore
   toBuyItems: [any] = [];
   // @ts-ignore
@@ -71,5 +74,37 @@ export class HomeComponent implements OnInit {
       // Configuration options go here
       options: {}
     });
+  }
+  getProduct(): void{
+	if (this.timer){
+		clearTimeout(this.timer);
+	  }
+	  this.timer = setTimeout(() => {
+		this.homeService.getBuyItemByName(this.product, 0, 15)
+		  .subscribe(data => {
+			this.products = data.content;
+			if (this.products.length === 1){
+			  this.productData = this.products[0];
+			  this.product = this.products[0].name;
+			  this.products = [];
+			}
+		  });
+	  }, 400);
+	  
+  }
+  addProduct():void{
+	  this.homeService.addBuyItem({stock:this.productData}).subscribe(
+		()=>{
+		  this.product = '';
+		  this.products = [];
+		  this.productData = {};
+		  this.homeService.getToBuyItems().subscribe(data => { this.toBuyItems = data; });
+	  	},
+		()=>{
+			this.product = '';
+			this.products = [];
+			this.productData = {};
+		}
+	  )
   }
 }
