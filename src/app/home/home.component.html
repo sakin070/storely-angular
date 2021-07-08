@@ -28,7 +28,7 @@
       <input id="product" list="cards" name="product" type="search" [(ngModel)]="product" placeholder="Search Products" required autocomplete="off" (input)="getProduct()" (keyup.enter)="addProduct()">
 	  <datalist id="cards">
 		<option *ngFor="let aProduct of products" [value]="aProduct.name">{{aProduct.name}}</option>
-	</datalist>
+	  </datalist>
       <button (click)="addProduct()"> Add &#43;</button>
     </div>
 
