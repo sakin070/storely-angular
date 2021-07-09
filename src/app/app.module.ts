@@ -26,6 +26,7 @@ import { LoyaltyManagementComponent } from './loyalty-management/loyalty-managem
 import { NewUserComponent } from './new-user/new-user.component';
 import { ViewUsersComponent } from './view-users/view-users.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { BalanceSheetReportComponent } from './balance-sheet-report/balance-sheet-report.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     LoyaltyManagementComponent,
     NewUserComponent,
     ViewUsersComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    BalanceSheetReportComponent
   ],
     imports: [
         BrowserModule,
