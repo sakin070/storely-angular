@@ -27,6 +27,7 @@ import { NewUserComponent } from './new-user/new-user.component';
 import { ViewUsersComponent } from './view-users/view-users.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { BalanceSheetReportComponent } from './balance-sheet-report/balance-sheet-report.component';
+import { ExpenseComponent } from './expense/expense.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { BalanceSheetReportComponent } from './balance-sheet-report/balance-shee
     NewUserComponent,
     ViewUsersComponent,
     ResetPasswordComponent,
-    BalanceSheetReportComponent
+    BalanceSheetReportComponent,
+    ExpenseComponent
   ],
     imports: [
         BrowserModule,

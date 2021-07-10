@@ -60,9 +60,9 @@
                 <td>{{expense.categoryName}}</td>
                 <td>${{expense.groupAmount}}</td>
             </tr>
-            <tr class="table-row"  *ngFor="let expense of expensesByGroup; let i = index">
+            <tr class="table-row">
                 <td>Total Operating Expenses</td>
-                <td>${{expense.groupAmount}}</td>
+                <td>${{totalOperatingExpense}}</td>
             </tr>
 
             <tr>
