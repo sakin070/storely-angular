@@ -50,6 +50,7 @@
         <h4>Delete Stock</h4>
         <hr>
         <p>Are you want to delete "{{stock.name}}"?</p>
+        <p>Once done this operation can not be undone</p>
         <div class="button-containers">
             <button (click)="deleteStock()" style="background-color: var(--danger-color)">Delete</button>
             <button class="no-fill margin-3" (click)="hideModal()" >Cancel</button>

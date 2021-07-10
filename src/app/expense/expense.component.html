@@ -6,39 +6,33 @@
         <button (click)="showNewExpense()">Add +</button>
     </div>
     <hr>
-    <div style="display: flex; margin: 1em 0">
-        <div style="flex-grow: 1;">
-            <button >Delete Selected</button>
-        </div>
-        <div style="display: flex; justify-content: flex-end; flex-grow: 1; gap: .5em">
-            <button>Filter</button>
-            <div class="stock-search" style="flex-grow: 0">
-                <input type="search" placeholder="Search by description" (keyup.enter)="search()" name="search" [(ngModel)]="descriptionString" (search)="search()">
-                <button (click)="search()"><img src="assets/search-line.svg" alt="search"></button>
-            </div>
+    <div style="display: flex; justify-content: flex-end; flex-grow: 1; gap: .5em">
+        <button (click)="clickFilter()">Filter</button>
+        <div class="stock-search" style="flex-grow: 0">
+            <input type="search" placeholder="Search by description" (keyup.enter)="search()" name="search" [(ngModel)]="descriptionString" (search)="search()">
+            <button (click)="search()"><img src="assets/search-line.svg" alt="search"></button>
         </div>
     </div>
     <div class="table-div">
         <table>
             <colgroup>
-                <col span="1" style="width: 10%;">
                 <col span="1" style="width: 15%;">
                 <col span="1" style="width: 30%;">
                 <col span="1" style="width: 20%;">
                 <col span="1" style="width: 15%;">
                 <col span="1" style="width: 10%;">
+                <col span="1" style="width: 10%;">
             </colgroup>
             <tbody>
             <tr>
-                <th></th>
                 <th>Date</th>
                 <th>Description</th>
                 <th>Category</th>
                 <th>Amount</th>
                 <th>Edit</th>
+                <th>Delete</th>
             </tr>
             <tr class="table-row"  *ngFor="let anExpense of expenses; let i = index">
-                <td><input type="checkbox" name="expenseCheckbox" [disabled]="currentUserId !== anExpense.postingUser.id"></td>
                 <td>{{anExpense.dateEntered}}</td>
                 <td>{{anExpense.description}}</td>
                 <td>{{anExpense.expenseCategory.name}}</td>
@@ -46,6 +40,11 @@
                 <td>
                     <button style=" height: 1em; border: none" (click)="edit(i)" [disabled]="currentUserId !== anExpense.postingUser.id">
                         <img src="assets/pencil-line.svg"  alt="edit">
+                    </button>
+                </td>
+                <td>
+                    <button style=" height: 1em; border: none" (click)="showDelete(i)" [disabled]="currentUserId !== anExpense.postingUser.id">
+                        <img src="assets/delete-bin-7-line.svg" alt="delete">
                     </button>
                 </td>
             </tr>
@@ -100,3 +99,45 @@
         </form>
     </div>
 </ng-template>
+
+<div *ngIf="showFilter" class="delete-container">
+    <div class="modal" (click)="hideFilter()"></div>
+    <div class="delete-content">
+        <div>
+            <h4>Filter</h4>
+            <hr style="margin: 0.5em -1.5em .8em">
+            <form class="stock-form" #f="ngForm" novalidate>
+                <div class="form-group">
+                    <label for="dateFilter">Date</label>
+                    <input id="dateFilter" name="name" type="date" [(ngModel)]="date">
+                </div>
+                <div class="form-group">
+                    <label for="filterCategoryInput">Category</label>
+                    <input id="filterCategoryInput" name="categoryInput" type="text" list="filterCategory" [(ngModel)]="categoryName" placeholder="Select a category" autocomplete="off">
+                    <datalist id="filterCategory">
+                        <option *ngFor="let category of categories" [value]="category.name">{{category.name}}</option>
+                    </datalist>
+                </div>
+                <div class="form-group">
+                    <label for="filterDescription">Description</label>
+                    <input id="filterDescription" name="description" type="text" [(ngModel)]="descriptionString" autocomplete="off">
+                </div>
+                <button (click)="filter()" style="font-size: 0.8em; margin-left: 30%">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showDeleteModal" class="delete-container">
+    <div class="modal" (click)="hideDeleteModal()"></div>
+    <div class="delete-content">
+        <h4>Delete Expenses</h4>
+        <hr>
+        <p>Are you want to delete ?</p>
+        <p>Once done this operation can not be undone</p>
+        <div class="button-containers">
+            <button (click)="deleteExpense()" style="background-color: var(--danger-color)">Delete</button>
+            <button class="no-fill margin-3" (click)="hideDeleteModal()" >Cancel</button>
+        </div>
+    </div>
+</div>

@@ -3,8 +3,8 @@ import {TokenStorageService} from './token-storage.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
-const API = 'https://storley.herokuapp.com/expense';
-// const API = 'http://localhost:8080/expense';
+// const API = 'https://storley.herokuapp.com/expense';
+const API = 'http://localhost:8080/expense';
 
 @Injectable({
   providedIn: 'root'
@@ -28,9 +28,9 @@ export class ExpenseService {
     return this.http.get(API + '/group-total?startDate=' + startDate + '&endDate=' + endDate, this.httpOptions);
   }
 
-  getExpensesByDescription(descriptionString: any, pageNumber: number, pageSize: number): Observable<any> {
-    return this.http.get
-    (API + '/description?page=' + pageNumber + '&size=' + pageSize + '&description=' + descriptionString, this.httpOptions);
+  getExpensesByDescription(descriptionString: any, date: string, category: string, pageNumber: number, pageSize: number): Observable<any> {
+    return this.http.get(API + '/description?page=' + pageNumber + '&size=' + pageSize +
+      '&description=' + descriptionString  + '&date=' + date  + '&category=' + category , this.httpOptions);
   }
 
   getExpensePage(pageNumber: number, pageSize: number): Observable<any> {
@@ -39,6 +39,10 @@ export class ExpenseService {
 
   createExpense(expense: any): Observable<any> {
     return this.http.post(API, expense, this.httpOptions);
+  }
+
+  deleteExpense(id: number): Observable<any>{
+    return this.http.delete(API + '/?id=' + id, this.httpOptions);
   }
 
   getAllExpenseCategories(): Observable<any> {

@@ -9,9 +9,11 @@ import {TokenStorageService} from '../_services/token-storage.service';
   styleUrls: ['./expense.component.css']
 })
 export class ExpenseComponent implements OnInit {
-  currentUserId = 0;
+  currentUserId = -1;
   viewExpenses = true;
   newExpense = true;
+  showFilter = false;
+  showDeleteModal = false;
   expenses: any[] = [];
   categories: any[] = [];
   expense: any = {
@@ -27,9 +29,12 @@ export class ExpenseComponent implements OnInit {
     }
   };
   descriptionString = '';
+  date = '';
+  categoryName = '';
   pageSize = 9;
   currentPage = new BehaviorSubject(1);
   totalPages = new BehaviorSubject(1);
+  idToBeDeleted = 0;
   constructor(private expenseService: ExpenseService, private tokenService: TokenStorageService) {
     this.currentUserId = tokenService.getUser().id;
     this.expenseService.getAllExpenseCategories().subscribe(data => this.categories = data);
@@ -52,7 +57,7 @@ export class ExpenseComponent implements OnInit {
         this.totalPages.next( data === [] ? 1 : data.totalPages);
       });
     }else{
-      this.expenseService.getExpensesByDescription(this.descriptionString, currentPage - 1, this.pageSize).subscribe( data => {
+      this.expenseService.getExpensesByDescription(this.descriptionString, this.date, this.categoryName, currentPage - 1, this.pageSize).subscribe( data => {
         this.expenses = data.content;
         this.totalPages.next( data === [] ? 1 : data.totalPages);
       });
@@ -74,5 +79,32 @@ export class ExpenseComponent implements OnInit {
   search(): void{
     this.getPage(1);
     this.currentPage.next(1);
+  }
+  hideFilter(): void{
+    this.showFilter = false;
+  }
+  clickFilter(): void{
+    this.showFilter = true;
+  }
+  filter(): void{
+    this.expenseService.getExpensesByDescription(this.descriptionString, this.date, this.categoryName, 0, this.pageSize).subscribe( data => {
+      this.expenses = data.content;
+      this.totalPages.next( data === [] ? 1 : data.totalPages);
+      this.currentPage.next(1);
+      this.hideFilter();
+    });
+  }
+  hideDeleteModal(): void{
+    this.showDeleteModal = false;
+  }
+  showDelete(id: number): void{
+    this.idToBeDeleted = id;
+    this.showDeleteModal = true;
+  }
+  deleteExpense(): void{
+    this.expenseService.deleteExpense(this.expenses[this.idToBeDeleted].id).subscribe(() => {
+      this.getPage(this.currentPage.value);
+      this.hideDeleteModal();
+    });
   }
 }
