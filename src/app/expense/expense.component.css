@@ -8,3 +8,7 @@
 .margin-3{
     margin-left: .5em;
 }
+
+.modify:disabled>img{
+    filter: invert(64%) sepia(16%) saturate(283%) hue-rotate(176deg) brightness(101%) contrast(94%);
+}

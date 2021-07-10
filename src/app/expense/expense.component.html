@@ -38,12 +38,12 @@
                 <td>{{anExpense.expenseCategory.name}}</td>
                 <td>{{anExpense.amount}}</td>
                 <td>
-                    <button style=" height: 1em; border: none" (click)="edit(i)" [disabled]="currentUserId !== anExpense.postingUser.id">
+                    <button class="modify" style=" height: 1em; border: none" (click)="edit(i)" [disabled]="currentUserId !== anExpense.postingUser.id">
                         <img src="assets/pencil-line.svg"  alt="edit">
                     </button>
                 </td>
                 <td>
-                    <button style=" height: 1em; border: none" (click)="showDelete(i)" [disabled]="currentUserId !== anExpense.postingUser.id">
+                    <button class="modify" style=" height: 1em; border: none" (click)="showDelete(i)" [disabled]="currentUserId !== anExpense.postingUser.id">
                         <img src="assets/delete-bin-7-line.svg" alt="delete">
                     </button>
                 </td>
