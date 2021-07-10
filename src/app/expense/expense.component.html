@@ -1,0 +1,102 @@
+<app-nav-bar [itemId]=3></app-nav-bar>
+
+<div class="container" *ngIf="viewExpenses; else editExpense">
+    <div class="header-div">
+        <h1>Expenses</h1>
+        <button (click)="showNewExpense()">Add +</button>
+    </div>
+    <hr>
+    <div style="display: flex; margin: 1em 0">
+        <div style="flex-grow: 1;">
+            <button >Delete Selected</button>
+        </div>
+        <div style="display: flex; justify-content: flex-end; flex-grow: 1; gap: .5em">
+            <button>Filter</button>
+            <div class="stock-search" style="flex-grow: 0">
+                <input type="search" placeholder="Search by description" (keyup.enter)="search()" name="search" [(ngModel)]="descriptionString" (search)="search()">
+                <button (click)="search()"><img src="assets/search-line.svg" alt="search"></button>
+            </div>
+        </div>
+    </div>
+    <div class="table-div">
+        <table>
+            <colgroup>
+                <col span="1" style="width: 10%;">
+                <col span="1" style="width: 15%;">
+                <col span="1" style="width: 30%;">
+                <col span="1" style="width: 20%;">
+                <col span="1" style="width: 15%;">
+                <col span="1" style="width: 10%;">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th></th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Edit</th>
+            </tr>
+            <tr class="table-row"  *ngFor="let anExpense of expenses; let i = index">
+                <td><input type="checkbox" name="expenseCheckbox" [disabled]="currentUserId !== anExpense.postingUser.id"></td>
+                <td>{{anExpense.dateEntered}}</td>
+                <td>{{anExpense.description}}</td>
+                <td>{{anExpense.expenseCategory.name}}</td>
+                <td>{{anExpense.amount}}</td>
+                <td>
+                    <button style=" height: 1em; border: none" (click)="edit(i)" [disabled]="currentUserId !== anExpense.postingUser.id">
+                        <img src="assets/pencil-line.svg"  alt="edit">
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <app-pagination class="pagination" [$currentIndex]="currentPage" [$maxPage]="totalPages" [getPageFunction]="getPage"></app-pagination>
+
+</div>
+
+<ng-template #editExpense>
+    <div class="container mini">
+        <h1 *ngIf="newExpense; else heading">New Expense</h1>
+        <ng-template #heading>
+            <h1>Edit Expense</h1>
+        </ng-template>
+        <hr>
+        <form class="stock-form" #f="ngForm" novalidate>
+            <div class="form-group">
+                <label for="name">Date</label>
+                <input id="name" name="name" type="date" [(ngModel)]="expense.dateEntered" required #name="ngModel">
+                <div class="alert alert-danger" role="alert" *ngIf="name.errors && f.submitted">
+                    Name is required!
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="categoryInput">Category</label>
+                <input id="categoryInput" name="categoryInput" type="text" list="categories" [(ngModel)]="expense.expenseCategory.name" placeholder="Select a category"  (change)="updateCategory($event)" autocomplete="off">
+                <datalist id="categories">
+                    <option *ngFor="let category of categories" [value]="category.name">{{category.name}}</option>
+                </datalist>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input id="description" name="description" type="text" [(ngModel)]="expense.description" required #sku="ngModel" autocomplete="off">
+                <div class="alert alert-danger" role="alert" *ngIf="sku.errors && f.submitted">
+                    Description is required!
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="amount">Amount</label>
+                <input id="amount" name="amount" type="number" [(ngModel)]="expense.amount" autocomplete="off" #amount="ngModel">
+                <div class="alert alert-danger" role="alert" *ngIf="amount.errors && f.submitted">
+                    Amount is required!
+                </div>
+            </div>
+            <div class="button-containers">
+                <button (click)="saveExpense()" >Save</button>
+                <button class="no-fill margin-3" (click)="back()" >Cancel</button>
+            </div>
+        </form>
+    </div>
+</ng-template>
