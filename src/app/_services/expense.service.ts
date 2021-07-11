@@ -3,8 +3,8 @@ import {TokenStorageService} from './token-storage.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
-// const API = 'https://storley.herokuapp.com/expense';
-const API = 'http://localhost:8080/expense';
+const API = 'https://storley.herokuapp.com/expense';
+// const API = 'http://localhost:8080/expense';
 
 @Injectable({
   providedIn: 'root'
@@ -47,5 +47,17 @@ export class ExpenseService {
 
   getAllExpenseCategories(): Observable<any> {
     return this.http.get(API + '-category', this.httpOptions);
+  }
+
+  deleteExpenseCategory(id: number): Observable<any> {
+    return this.http.delete(API + '-category/?id=' + id, this.httpOptions);
+  }
+
+  createExpenseCategory(expenseCategory: any): Observable<any> {
+    return this.http.post(API + '-category', expenseCategory, this.httpOptions);
+  }
+
+  categoryHasExpense(id: number): Observable<any> {
+    return this.http.get(API + '/category/has-expense/?id=' + id, this.textHttpOptions);
   }
 }
