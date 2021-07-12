@@ -26,7 +26,6 @@ export class SupplierService {
       };
     }
   }
-
   getSupplier(): Observable<any>{ // TODO: remove this from application
     return this.http.get(API, this.httpOptions);
   }

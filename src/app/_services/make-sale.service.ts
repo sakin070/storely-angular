@@ -42,8 +42,8 @@ export class MakeSaleService {
   usePoints(points: number, saleId: number): Observable<any>{
     return this.http.patch(AUTH_API + '/sale/redeem-pointsById?points=' + points + '&saleId=' + saleId, {}, this.httpOptions);
   }
-  applyDiscount( discountCode: string): Observable<any>{
-    return this.http.patch(AUTH_API + '/sale/add-discount?code=' + discountCode, {}, this.httpOptions);
+  applyDiscount( discountCode: string, saleId: number): Observable<any>{
+    return this.http.patch(AUTH_API + '/sale/add-discount?code=' + discountCode + '&saleId=' + saleId, {}, this.httpOptions);
   }
   getLoyaltyManager(): Observable<any>{
     return this.http.get(AUTH_API + '/loyalty-manager', this.httpOptions);

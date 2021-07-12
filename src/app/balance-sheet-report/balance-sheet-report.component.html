@@ -1,0 +1,93 @@
+<app-nav-bar [itemId]=1></app-nav-bar>
+<div class="container" >
+    <h1>Profit & Loss</h1>
+    <hr>
+    <div class="static-info" >
+
+        <div class="form-group inline right">
+            <label for="startDate"><strong>Posted Between</strong></label>
+            <input id="startDate" name="startDate" type="date" [(ngModel)]="startDate" autocomplete="off" (change)="getData()">
+        </div>
+        <div class="form-group inline right">
+            <label for="endDate"><strong>and</strong></label>
+            <input id="endDate" name="endDate" type="date" [(ngModel)]="endDate" autocomplete="off" (change)="getData()">
+        </div>
+    </div>
+    <div class="table-div">
+        <table>
+            <colgroup>
+                <col span="1" style="width: 80%;">
+                <col span="1" style="width: 20%;">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th><strong>ACCOUNTS</strong></th>
+                <th></th>
+            </tr>
+
+            <tr>
+                <th>Sales</th>
+                <th>$ {{incomeBreakdown.income}}</th>
+            </tr>
+
+            <tr>
+                <th>Cost of Goods Sold</th>
+                <th>$ {{incomeBreakdown.cogs}}</th>
+            </tr>
+
+            <tr>
+                <th>
+                    <div>Gross Profit</div>
+                    <span>
+                        <p> As a percentage of Total Income </p>
+                    </span>
+                </th>
+                <th>
+                    <div>$ {{incomeBreakdown.grossProfit}}</div>
+                    <span>
+                        <p> {{grossProfitPercent}} %</p>
+                    </span>
+
+                </th>
+            </tr>
+            <tr>
+                <th>Operating Expenses</th>
+                <th></th>
+            </tr>
+
+            <tr class="table-row"  *ngFor="let expense of expensesByGroup; let i = index">
+<!--                TODO: make expenses route to a report-->
+                <td>{{expense.categoryName}}</td>
+                <td>${{expense.groupAmount}}</td>
+            </tr>
+            <tr class="table-row"  *ngFor="let expense of expensesByGroup; let i = index">
+                <td>Total Operating Expenses</td>
+                <td>${{expense.groupAmount}}</td>
+            </tr>
+
+            <tr>
+                <th>
+                    <div>Net Profit</div>
+                    <span>
+                        <p> As a percentage of Total Income </p>
+                    </span>
+                </th>
+                <th>
+                    <div>
+<!--                        <div *ngIf="netProfit<0"> -</div>-->
+                        $ {{netProfit}}
+                    </div>
+                    <span>
+                        <p>
+                            <map *ngIf="netProfit<0"> -</map>
+                            {{grossProfitPercent}} %
+                        </p>
+                    </span>
+
+                </th>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+</div>
