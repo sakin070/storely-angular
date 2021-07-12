@@ -19,6 +19,8 @@ import {NewUserComponent} from './new-user/new-user.component';
 import {ViewUsersComponent} from './view-users/view-users.component';
 import {ResetPasswordComponent} from './reset-password/reset-password.component';
 import {BalanceSheetReportComponent} from './balance-sheet-report/balance-sheet-report.component';
+import {ExpenseComponent} from './expense/expense.component';
+import {ExpenseCategoryComponent} from './expense-category/expense-category.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -40,6 +42,8 @@ const routes: Routes = [
   {path: 'view-stock-purchases', component: ViewStockPurchasesComponent},
   {path: 'loyalty-management', component: LoyaltyManagementComponent},
   {path: 'balance-sheet', component: BalanceSheetReportComponent},
+  {path: 'expense', component: ExpenseComponent},
+  {path: 'expense-category', component: ExpenseCategoryComponent},
   {path: 'home', component: HomeComponent}
   ];
 

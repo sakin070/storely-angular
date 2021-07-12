@@ -13,10 +13,11 @@
     <div class="table-div">
         <table>
             <colgroup>
-                <col span="1" style="width: 35%;">
-                <col span="1" style="width: 15%;">
-                <col span="1" style="width: 15%;">
-                <col span="1" style="width: 15%;">
+                <col span="1" style="width: 30%;">
+                <col span="1" style="width: 12.5%;">
+                <col span="1" style="width: 12.5%;">
+                <col span="1" style="width: 12.5%;">
+                <col span="1" style="width: 12.5%;">
                 <col span="1" style="width: 10%;">
                 <col span="1" style="width: 10%;">
             </colgroup>
@@ -25,6 +26,7 @@
                     <th>Name</th>
                     <th>Shelf Quantity</th>
                     <th>Store Quantity</th>
+                    <th>Cost Price</th>
                     <th>Selling Price</th>
                     <th>Modify</th>
                     <th>Delete</th>
@@ -33,6 +35,7 @@
                     <td>{{stock.name}}</td>
                     <td>{{stock.shelfQuantity}}</td>
                     <td>{{stock.storeQuantity}}</td>
+                    <td>{{stock.costPrice}}</td>
                     <td>{{stock.sellingPrice}}</td>
                     <td><button style=" height: 1em; border: none" (click)="edit(i)"> <img src="assets/pencil-line.svg"  alt="edit"> </button></td>
                     <td><button style=" height: 1em; border: none" (click)="delete(i)"> <img src="assets/delete-bin-7-line.svg" alt="delete"> </button></td>
@@ -50,6 +53,7 @@
         <h4>Delete Stock</h4>
         <hr>
         <p>Are you want to delete "{{stock.name}}"?</p>
+        <p>Once done this operation can not be undone</p>
         <div class="button-containers">
             <button (click)="deleteStock()" style="background-color: var(--danger-color)">Delete</button>
             <button class="no-fill margin-3" (click)="hideModal()" >Cancel</button>

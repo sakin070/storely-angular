@@ -1,0 +1,22 @@
+th{
+    background-color: white;
+    border-bottom: 0.125em solid rgba(0, 0, 0, 0.25);
+    padding: 0.3em 0;
+}
+
+tr.table-row.data td{
+    border-bottom: 0.0625em solid rgba(0, 0, 0, 0.25);
+}
+
+.heading>th{
+    border: none;
+}
+
+.boxer{
+    margin-top: 1em;
+    background-color: #e0e7eb;
+    padding: .5em .3em ;
+}
+.static-info{
+    margin: .65em 0 .65em 6em;
+}

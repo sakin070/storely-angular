@@ -1,17 +1,18 @@
-<app-nav-bar [itemId]=1></app-nav-bar>
+<app-nav-bar [itemId]=6></app-nav-bar>
 <div class="container" >
     <h1>Profit & Loss</h1>
     <hr>
     <div class="static-info" >
 
         <div class="form-group inline right">
-            <label for="startDate"><strong>Posted Between</strong></label>
-            <input id="startDate" name="startDate" type="date" [(ngModel)]="startDate" autocomplete="off" (change)="getData()">
+            <label for="startDate"><strong>Period Between</strong></label>
+            <input id="startDate" name="startDate" type="date" [(ngModel)]="startDate" autocomplete="off">
         </div>
         <div class="form-group inline right">
             <label for="endDate"><strong>and</strong></label>
-            <input id="endDate" name="endDate" type="date" [(ngModel)]="endDate" autocomplete="off" (change)="getData()">
+            <input id="endDate" name="endDate" type="date" [(ngModel)]="endDate" autocomplete="off">
         </div>
+        <button style="font-size: 0.8em" (click)="getData()">Update</button>
     </div>
     <div class="table-div">
         <table>
@@ -24,63 +25,73 @@
                 <th><strong>ACCOUNTS</strong></th>
                 <th></th>
             </tr>
-
-            <tr>
-                <th>Sales</th>
-                <th>$ {{incomeBreakdown.income}}</th>
-            </tr>
-
-            <tr>
-                <th>Cost of Goods Sold</th>
-                <th>$ {{incomeBreakdown.cogs}}</th>
-            </tr>
-
-            <tr>
+            <tr class="heading">
                 <th>
-                    <div>Gross Profit</div>
+                    <div class="boxer">
+                        Sales
+                    </div>
+                </th>
+                <th>
+                    <div class="boxer">
+                        $ {{incomeBreakdown.income}}
+                    </div>
+                </th>
+            </tr>
+
+            <tr class="heading">
+                <th>
+                    <div class="boxer">
+                        Cost of Goods Sold
+                    </div>
+                </th>
+                <th><div class="boxer">$ {{incomeBreakdown.cogs}}</div></th>
+            </tr>
+
+            <tr class="heading">
+                <th>
+                    <div class="boxer">Gross Profit</div>
                     <span>
-                        <p> As a percentage of Total Income </p>
+                        <p class="boxer" style="margin-top: 0; font-size: .7em"> As a percentage of Sales </p>
                     </span>
                 </th>
                 <th>
-                    <div>$ {{incomeBreakdown.grossProfit}}</div>
+                    <div class="boxer">$ {{incomeBreakdown.grossProfit}}</div>
                     <span>
-                        <p> {{grossProfitPercent}} %</p>
+                        <p class="boxer" style="margin-top: 0; font-size: .7em"> {{grossProfitPercent}} %</p>
                     </span>
 
                 </th>
             </tr>
-            <tr>
-                <th>Operating Expenses</th>
-                <th></th>
+            <tr class="heading">
+                <th colspan="2"> <div class="boxer">Operating Expenses</div></th>
             </tr>
 
-            <tr class="table-row"  *ngFor="let expense of expensesByGroup; let i = index">
+            <tr class="table-row data"  *ngFor="let expense of expensesByGroup; let i = index">
 <!--                TODO: make expenses route to a report-->
                 <td>{{expense.categoryName}}</td>
                 <td>${{expense.groupAmount}}</td>
             </tr>
-            <tr class="table-row"  *ngFor="let expense of expensesByGroup; let i = index">
-                <td>Total Operating Expenses</td>
-                <td>${{expense.groupAmount}}</td>
+            <tr class="table-row">
+                <th>Total Operating Expenses</th>
+                <th>${{totalOperatingExpense}}</th>
             </tr>
 
-            <tr>
+            <tr class="heading">
                 <th>
-                    <div>Net Profit</div>
+                    <div class="boxer">Net Profit</div>
                     <span>
-                        <p> As a percentage of Total Income </p>
+                        <p class="boxer" style="margin-top: 0; font-size: .7em"> As a percentage of Sales </p>
                     </span>
                 </th>
                 <th>
-                    <div>
+                    <div class="boxer">
 <!--                        <div *ngIf="netProfit<0"> -</div>-->
                         $ {{netProfit}}
                     </div>
                     <span>
-                        <p>
-                            <map *ngIf="netProfit<0"> -</map>
-                            {{grossProfitPercent}} %
+                        <p class="boxer" style="margin-top: 0; font-size: .7em">
+<!--                            <map *ngIf="netProfit<0"> -</map>-->
+                            {{netProfitPercentage}} %
                         </p>
                     </span>
 
