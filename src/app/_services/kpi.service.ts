@@ -3,8 +3,8 @@ import {TokenStorageService} from './token-storage.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
-const API = 'https://storley.herokuapp.com/analytics';
-// const API = 'http://localhost:8080/analytics';
+// const API = 'https://storley.herokuapp.com/analytics';
+const API = 'http://localhost:8080/analytics';
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +26,16 @@ export class KpiService {
   }
   getIncomeBreakdown(startDate: string, endDate: string): Observable<any> {
     return this.http.get(API + '/income-breakdown?startDate=' + startDate + '&endDate=' + endDate, this.httpOptions);
+  }
+  getStoreKPI(startDate: string, endDate: string): Observable<any> {
+    return this.http.get(API + '/store?startDate=' + startDate + '&endDate=' + endDate, this.httpOptions);
+  }
+  getPageCategoryKPI(pageNumber: number, pageSize: number, startDate: string, endDate: string): Observable<any> {
+    return this.http.get(API + '/categories?pageNumber=' + pageNumber + '&pageSize=' + pageSize +
+      '&startDate=' + startDate + '&endDate=' + endDate, this.httpOptions);
+  }
+  getPageProductKPI(pageNumber: number, pageSize: number, startDate: string, endDate: string): Observable<any> {
+    return this.http.get(API + '/products?pageNumber=' + pageNumber + '&pageSize=' + pageSize +
+      '&startDate=' + startDate + '&endDate=' + endDate, this.httpOptions);
   }
 }

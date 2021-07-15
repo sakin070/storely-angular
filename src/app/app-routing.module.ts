@@ -21,6 +21,7 @@ import {ResetPasswordComponent} from './reset-password/reset-password.component'
 import {BalanceSheetReportComponent} from './balance-sheet-report/balance-sheet-report.component';
 import {ExpenseComponent} from './expense/expense.component';
 import {ExpenseCategoryComponent} from './expense-category/expense-category.component';
+import {StoreEvaluationComponent} from './store-evaluation/store-evaluation.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -44,6 +45,7 @@ const routes: Routes = [
   {path: 'balance-sheet', component: BalanceSheetReportComponent},
   {path: 'expense', component: ExpenseComponent},
   {path: 'expense-category', component: ExpenseCategoryComponent},
+  {path: 'evaluation', component: StoreEvaluationComponent},
   {path: 'home', component: HomeComponent}
   ];
 

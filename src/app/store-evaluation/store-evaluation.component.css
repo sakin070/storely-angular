@@ -1,0 +1,37 @@
+.right-menu{
+    flex-basis: 30%;
+    flex-grow: 1;
+    display: flex;
+    justify-content: right;
+    border: none;
+}
+a{
+    margin-left: 1em;
+    text-decoration: underline;
+    color: var(--passive-color);
+    cursor: pointer;
+}
+a:hover{
+    color: var(--primary-color);
+
+}
+p{
+    font-family: mulish, sans-serif;
+    padding-bottom: 0;
+    font-weight: 500;
+    margin-bottom: 0;
+    font-size: 1.5em;
+}
+.static-info{
+    margin: .8em 0;
+    padding-left: 7em;
+}
+h2{
+    margin-block-start: 0.35em;
+    margin-block-end: 1.3em;
+    margin-left: 1em;
+}
+.pagination{
+    margin: 0 0 2.5em 30%;
+    font-size: .8em;
+}

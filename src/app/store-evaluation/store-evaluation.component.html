@@ -1,1 +1,148 @@
-<p>store-evaluation works!</p>
+<app-nav-bar [itemId]=6></app-nav-bar>
+
+<div class="container" *ngIf="overview; else details">
+    <div class="header-div">
+        <h1>Store Evaluation</h1>
+        <div class="right-menu">
+            <a style="color: var(--primary-color)" (click)="showOverview()"><h3>Overview</h3></a>
+            <a (click)="clickShowCategories()"><h3>Categories</h3></a>
+            <a (click)="showProducts()"><h3>Products</h3></a>
+        </div>
+    </div>
+    <hr>
+    <div class="static-info" >
+        <div class="form-group inline right">
+            <label for="startDateS"><strong>Period Between</strong></label>
+            <input id="startDateS" name="startDate" type="date" [(ngModel)]="startDate" autocomplete="off">
+        </div>
+        <div class="form-group inline right">
+            <label for="endDateS"><strong>and</strong></label>
+            <input id="endDateS" name="endDate" type="date" [(ngModel)]="endDate" autocomplete="off">
+        </div>
+        <button style="font-size: 0.8em" (click)="getStoreData()">Update</button>
+    </div>
+    <div style="padding-left: 18em">
+        <div>
+            <p style="color: var(--passive-color);">Inventory Valuation</p>
+            <h2>${{homeAnalytics.inventoryValuation}}</h2>
+        </div>
+        <div>
+            <p style="color: var(--passive-color);">Profits</p>
+            <h2>${{homeAnalytics.profits}}</h2>
+        </div>
+        <div>
+            <p style="color: var(--passive-color);">Inventory Turnover</p>
+            <h2>{{homeAnalytics.inventoryTurnover}}</h2>
+        </div>
+        <div>
+            <p style="color: var(--passive-color);">Gross Margin Return on investment</p>
+            <h2>{{homeAnalytics.GMROI}}</h2>
+        </div>
+    </div>
+</div>
+<ng-template #details>
+    <div class="container" *ngIf="showCategories; else product">
+        <div class="header-div">
+            <h1>Store Evaluation</h1>
+            <div class="right-menu">
+                <a (click)="showOverview()"><h3>Overview</h3></a>
+                <a style="color: var(--primary-color)" (click)="clickShowCategories()"><h3>Categories</h3></a>
+                <a (click)="showProducts()"><h3>Products</h3></a>
+            </div>
+        </div>
+        <hr>
+        <div class="static-info" >
+            <div class="form-group inline right">
+                <label for="startDate"><strong>Period Between</strong></label>
+                <input id="startDate" name="startDate" type="date" [(ngModel)]="startDate" autocomplete="off">
+            </div>
+            <div class="form-group inline right">
+                <label for="endDate"><strong>and</strong></label>
+                <input id="endDate" name="endDate" type="date" [(ngModel)]="endDate" autocomplete="off">
+            </div>
+            <button style="font-size: 0.8em" (click)="getCategoryData()">Update</button>
+        </div>
+        <div class="table-div">
+            <table>
+                <colgroup>
+                    <col span="1" style="width: 30%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 20%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 20%;">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th>Category</th>
+                        <th>Inventory Valuation</th>
+                        <th>Profits</th>
+                        <th>Inventory Turnover</th>
+                        <th>GMROI</th>
+                    </tr>
+                    <tr class="table-row"  *ngFor="let category of categories; let i = index">
+                        <td>{{category.name}}</td>
+                        <td>{{category.inventoryValuation}}</td>
+                        <td>{{category.profits}}</td>
+                        <td>{{category.inventoryTurnover}}</td>
+                        <td>{{category.GMROI}}</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <app-pagination class="pagination" [$currentIndex]="currentPage" [$maxPage]="totalPages" [getPageFunction]="getPageOfCategories"></app-pagination>
+    </div>
+    <ng-template #product>
+        <div class="container">
+            <div class="header-div">
+                <h1>Store Evaluation</h1>
+                <div class="right-menu">
+                    <a (click)="showOverview()"><h3>Overview</h3></a>
+                    <a (click)="clickShowCategories()"><h3>Categories</h3></a>
+                    <a style="color: var(--primary-color)" (click)="showProducts()"><h3>Products</h3></a>
+                </div>
+            </div>
+            <hr>
+            <div class="static-info" >
+                <div class="form-group inline right">
+                    <label for="startDateP"><strong>Period Between</strong></label>
+                    <input id="startDateP" name="startDate" type="date" [(ngModel)]="startDate" autocomplete="off">
+                </div>
+                <div class="form-group inline right">
+                    <label for="endDateP"><strong>and</strong></label>
+                    <input id="endDateP" name="endDate" type="date" [(ngModel)]="endDate" autocomplete="off">
+                </div>
+                <button style="font-size: 0.8em" (click)="getProductData()">Update</button>
+            </div>
+            <div class="table-div">
+                <table>
+                    <colgroup>
+                        <col span="1" style="width: 30%;">
+                        <col span="1" style="width: 15%;">
+                        <col span="1" style="width: 20%;">
+                        <col span="1" style="width: 15%;">
+                        <col span="1" style="width: 20%;">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th>Category</th>
+                        <th>Inventory Valuation</th>
+                        <th>Profits</th>
+                        <th>Inventory Turnover</th>
+                        <th>GMROI</th>
+                    </tr>
+                    <tr class="table-row"  *ngFor="let product of products; let i = index">
+                        <td>{{product.name}}</td>
+                        <td>{{product.inventoryValuation}}</td>
+                        <td>{{product.profits}}</td>
+                        <td>{{product.inventoryTurnover}}</td>
+                        <td>{{product.GMROI}}</td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+            <app-pagination class="pagination" [$currentIndex]="currentPage" [$maxPage]="totalPages" [getPageFunction]="getPageOfProducts"></app-pagination>
+        </div>
+    </ng-template>
+</ng-template>
