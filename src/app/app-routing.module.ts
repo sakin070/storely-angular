@@ -22,6 +22,7 @@ import {BalanceSheetReportComponent} from './balance-sheet-report/balance-sheet-
 import {ExpenseComponent} from './expense/expense.component';
 import {ExpenseCategoryComponent} from './expense-category/expense-category.component';
 import {StoreEvaluationComponent} from './store-evaluation/store-evaluation.component';
+import {DiscountsComponent} from './discounts/discounts.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -46,6 +47,7 @@ const routes: Routes = [
   {path: 'expense', component: ExpenseComponent},
   {path: 'expense-category', component: ExpenseCategoryComponent},
   {path: 'evaluation', component: StoreEvaluationComponent},
+  {path: 'discounts', component: DiscountsComponent},
   {path: 'home', component: HomeComponent}
   ];
 

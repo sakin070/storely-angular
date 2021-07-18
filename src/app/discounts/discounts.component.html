@@ -1,0 +1,117 @@
+<app-nav-bar [itemId]=2></app-nav-bar>
+<div class="container" *ngIf="viewDiscounts; else discountInput">
+    <div class="header-div">
+        <h1>Discounts</h1>
+        <div class="right-menu">
+            <button (click)="showNewDiscount()">Add +</button>
+        </div>
+    </div>
+    <hr>
+<!--    <div class="static-info" >-->
+<!--        <div class="form-group inline right">-->
+<!--            <label for="startDateP"><strong> Between</strong></label>-->
+<!--            <input id="startDateP" name="startDate" type="date" [(ngModel)]="startDate" autocomplete="off">-->
+<!--        </div>-->
+<!--        <div class="form-group inline right">-->
+<!--            <label for="endDateP"><strong>and</strong></label>-->
+<!--            <input id="endDateP" name="endDate" type="date" [(ngModel)]="endDate" autocomplete="off">-->
+<!--        </div>-->
+<!--        <button style="font-size: 0.8em" (click)="getData()">Update</button>-->
+<!--    </div>-->
+    <div class="table-div">
+        <table>
+            <colgroup>
+                <col span="1" style="width: 25%;">
+                <col span="1" style="width: 17.5%;">
+                <col span="1" style="width: 18.75%;">
+                <col span="1" style="width: 18.75%;">
+                <col span="1" style="width: 10%;">
+                <col span="1" style="width: 10%;">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <th>Code</th>
+                    <th>Value</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Modify</th>
+                    <th>Delete</th>
+                </tr>
+                <tr class="table-row"  *ngFor="let discount of discounts; let i = index">
+                    <td>{{discount.code}}</td>
+                    <td><span *ngIf="discount.type === 'FLAT'; else per">$</span> {{discount.value}}</td>
+                    <td>{{discount.startDate}}</td>
+                    <td>{{discount.endDate}}</td>
+                    <td><button style=" height: 1em; border: none" (click)="edit(i)"> <img src="assets/pencil-line.svg"  alt="edit"> </button></td>
+                    <td><button style=" height: 1em; border: none" (click)="delete(i)"> <img src="assets/delete-bin-7-line.svg" alt="delete"> </button></td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <app-pagination class="pagination" [$currentIndex]="currentPage" [$maxPage]="totalPages" [getPageFunction]="getPage"></app-pagination>
+</div>
+
+<ng-template #per>
+    <span>%</span>
+</ng-template>
+
+<div *ngIf="showDeleteModal" class="delete-container">
+    <div class="modal" (click)="hideModal()"></div>
+    <div class="delete-content">
+        <h4>Delete Discount</h4>
+        <hr>
+        <p>Are you want to delete?</p>
+        <p>Once done this operation can not be undone</p>
+        <div class="button-containers">
+            <button (click)="deleteDiscount()" style="background-color: var(--danger-color)">Delete</button>
+            <button class="no-fill margin-3" (click)="hideModal()" >Cancel</button>
+        </div>
+    </div>
+</div>
+
+<ng-template #discountInput>
+    <div class="container mini">
+        <h2 *ngIf="newDiscount; else editDiscount"> New Discount</h2>
+        <ng-template #editDiscount>
+            <h2 > Edit Discount</h2>
+        </ng-template>
+        <hr>
+        <form #f>
+            <div class="form-group">
+                <label for="name">Code</label>
+                <input id="name" name="name" type="text" [(ngModel)]="discount.code" required #name="ngModel" autocomplete="off" [readOnly]="!newDiscount">
+                <div class="alert alert-danger" role="alert" *ngIf="name.errors && f.submitted">
+                    Code is required!
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="usedCode">
+                    Code already used!
+                </div>
+            </div>
+            <div class="form-group" >
+                <label>Type</label>
+                <select [(ngModel)]="discount.type">
+                    <option selected="selected">FLAT</option>
+                    <option>PERCENTAGE</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="change" >Value</label>
+                <input id="change" name="cash" type="number" [(ngModel)]="discount.value">
+            </div>
+            <div class="form-group ">
+                <label for="startDate"> Start Date</label>
+                <input id="startDate" name="startDate" type="date" [(ngModel)]="discount.startDate" autocomplete="off">
+            </div>
+            <div class="form-group ">
+                <label for="endDate"> End Date</label>
+                <input id="endDate" name="endDate" type="date" [(ngModel)]="discount.endDate" autocomplete="off">
+            </div>
+        </form>
+
+        <div class="button-containers">
+            <button (click)="save()" >Save</button>
+            <button class="no-fill margin-3" (click)="back()" >Cancel</button>
+        </div>
+    </div>
+</ng-template>

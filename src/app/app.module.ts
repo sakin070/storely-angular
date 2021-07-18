@@ -30,6 +30,7 @@ import { BalanceSheetReportComponent } from './balance-sheet-report/balance-shee
 import { ExpenseComponent } from './expense/expense.component';
 import { ExpenseCategoryComponent } from './expense-category/expense-category.component';
 import { StoreEvaluationComponent } from './store-evaluation/store-evaluation.component';
+import { DiscountsComponent } from './discounts/discounts.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { StoreEvaluationComponent } from './store-evaluation/store-evaluation.co
     BalanceSheetReportComponent,
     ExpenseComponent,
     ExpenseCategoryComponent,
-    StoreEvaluationComponent
+    StoreEvaluationComponent,
+    DiscountsComponent
   ],
     imports: [
         BrowserModule,
