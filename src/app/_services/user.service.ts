@@ -26,7 +26,9 @@ export class UserService {
   createUser(user: any): Observable<any>{
     return this.http.post(API, user, this.httpOptions);
   }
-
+  getAllUsers(): Observable<any>{
+    return this.http.get(API + '/all', this.httpOptions);
+  }
   verifyUsername(username: string): Observable<any>{
     return this.http.get(API + '/public/username?username=' + username);
   }

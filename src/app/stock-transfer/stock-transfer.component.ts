@@ -11,7 +11,7 @@ import {NgForm} from '@angular/forms';
 export class StockTransferComponent implements OnInit {
   amount = NaN;
   stock = {
-    stock_id: 0,
+    stockId: 0,
     sku: '',
     name: ''
   };
@@ -26,13 +26,13 @@ export class StockTransferComponent implements OnInit {
   }
   transferStock(form: NgForm): void {
     if (this.transferType === 'Shelf To Store'){
-      this.stockService.transferFromShelfToStore(this.stock.stock_id, this.amount).subscribe(
+      this.stockService.transferFromShelfToStore(this.stock.stockId, this.amount).subscribe(
           () => this.clearForm(form),
           () => this.stockTransferError = true
       );
     }
     else if (this.transferType === 'Store To Shelf'){
-      this.stockService.transferFromStoreToShelf(this.stock.stock_id, this.amount).subscribe(
+      this.stockService.transferFromStoreToShelf(this.stock.stockId, this.amount).subscribe(
           () =>  this.clearForm(form),
           () => this.stockTransferError = true
       );
@@ -50,7 +50,7 @@ export class StockTransferComponent implements OnInit {
   clearForm(form: NgForm): void{
     this.amount = NaN;
     this.stock = {
-      stock_id: 0,
+      stockId: 0,
       sku: '',
       name: ''
     };

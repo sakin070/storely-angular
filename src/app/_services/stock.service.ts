@@ -43,7 +43,7 @@ export class StockService {
     return this.http.get(API + '/download/stock-table', this.blobHttpOptions);
   }
   modifyStock(stock: any): Observable<any>{
-    return this.http.post(API + '/modify', stock, this.httpOptions);
+    return this.http.patch(API + '/modify', stock, this.httpOptions);
   }
   deleteStock(stockId: number): Observable<any>{
     return this.http.delete(API + '/' + stockId, this.textHttpOptions);
@@ -56,5 +56,10 @@ export class StockService {
   }
   transferFromStoreToShelf(stockId: number, amount: number): Observable<any> {
     return this.http.put(API + '/transfer/shelf/' + stockId + '/' + amount, {}, this.textHttpOptions);
+  }
+  getStockHistory(pageNumber: number, pageSize: number, startDate: string,
+                  endDate: string, stockId: number, userId: number, type: string ): Observable<any>{
+    return this.http.get(API + '/stock-history/page?page=' + pageNumber + '&size=' + pageSize + '&startDate=' + startDate
+      + '&endDate=' + endDate + '&stockId=' + stockId + '&userId=' + userId + '&type=' + type, this.httpOptions);
   }
 }

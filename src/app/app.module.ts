@@ -31,6 +31,7 @@ import { ExpenseComponent } from './expense/expense.component';
 import { ExpenseCategoryComponent } from './expense-category/expense-category.component';
 import { StoreEvaluationComponent } from './store-evaluation/store-evaluation.component';
 import { DiscountsComponent } from './discounts/discounts.component';
+import { StockHistoryComponent } from './stock-history/stock-history.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { DiscountsComponent } from './discounts/discounts.component';
     ExpenseComponent,
     ExpenseCategoryComponent,
     StoreEvaluationComponent,
-    DiscountsComponent
+    DiscountsComponent,
+    StockHistoryComponent
   ],
     imports: [
         BrowserModule,

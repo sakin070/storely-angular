@@ -15,16 +15,15 @@ export class StockTableComponent implements OnInit {
   currentPage = new BehaviorSubject(1);
   totalPages = new BehaviorSubject(1);
   stock = {
-    stock_id: 0,
+    stockId: 0,
     name: '',
     sku: '',
     category: {name: ''},
     shelfQuantity: 0,
     storeQuantity: 0,
     sellingPrice: 0,
-    reOrderLevel: 0
+    reorderLevel: 0
   };
-  reason = '';
   categories: any[] = [];
   stockTable = true;
   showDeleteModal = false;
@@ -61,7 +60,7 @@ export class StockTableComponent implements OnInit {
     this.index = index;
   }
   deleteStock(): void{
-    this.stockService.deleteStock(this.stock.stock_id).subscribe(() => {
+    this.stockService.deleteStock(this.stock.stockId).subscribe(() => {
       this.showDeleteModal = false;
       this.currentPage.subscribe(value => {
         this.getPage(value);
@@ -72,8 +71,10 @@ export class StockTableComponent implements OnInit {
     this.showDeleteModal = false;
   }
   save(): void{
-    this.stockService.modifyStock({stockBeingModified: this.stock, modificationReason: this.reason}).subscribe(
-        () => this.stockTable = true);
+    this.stockService.modifyStock(this.stock).subscribe(() => {
+      this.stockTable = true;
+      this.getPage(this.currentPage.value);
+    });
   }
   back(): void{
     this.stockTable = true;

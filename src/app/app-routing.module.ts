@@ -23,6 +23,7 @@ import {ExpenseComponent} from './expense/expense.component';
 import {ExpenseCategoryComponent} from './expense-category/expense-category.component';
 import {StoreEvaluationComponent} from './store-evaluation/store-evaluation.component';
 import {DiscountsComponent} from './discounts/discounts.component';
+import {StockHistoryComponent} from './stock-history/stock-history.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -48,6 +49,7 @@ const routes: Routes = [
   {path: 'expense-category', component: ExpenseCategoryComponent},
   {path: 'evaluation', component: StoreEvaluationComponent},
   {path: 'discounts', component: DiscountsComponent},
+  {path: 'history', component: StockHistoryComponent},
   {path: 'home', component: HomeComponent}
   ];
 

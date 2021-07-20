@@ -112,14 +112,10 @@
             </div>
             <div class="form-group">
                 <label for="reorderLevel">Re-Order Level</label>
-                <input id="reorderLevel" name="reorderLevel" type="number" [(ngModel)]="stock.reOrderLevel" required #reorderLevel="ngModel" autocomplete="off">
+                <input id="reorderLevel" name="reorderLevel" type="number" [(ngModel)]="stock.reorderLevel" required #reorderLevel="ngModel" autocomplete="off">
                 <div class="alert alert-danger" role="alert" *ngIf="reorderLevel.errors && f.submitted">
                     Re-Order Level is required!
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="reason">Reason for Modification</label>
-                <textarea id="reason" name="reason"  rows="3" [(ngModel)]="reason" required autocomplete="off"> </textarea>
             </div>
         </form>
 

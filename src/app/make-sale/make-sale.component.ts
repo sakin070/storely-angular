@@ -255,7 +255,7 @@ export class MakeSaleComponent implements OnInit {
         this.returns = [];
         // @ts-ignore
         this.receipt.saleItems.forEach((saleItem) => this.returns.push(
-          {stockId: saleItem.stock.stock_id, quantity: 0, salePrice: saleItem.unitSellPrice, quantitySold: saleItem.quantity} ));
+          {stockId: saleItem.stock.stockId, quantity: 0, salePrice: saleItem.unitSellPrice, quantitySold: saleItem.quantity} ));
       });
   }
   addStock(): void{

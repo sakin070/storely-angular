@@ -15,7 +15,7 @@ export class StockPurchaseComponent implements OnInit {
   purchases: any[] = [];
   date: string = formatDate(new Date() , 'yyyy-MM-dd', 'en-CA');
   stock = {
-    stock_id: 0,
+    stockId: 0,
     name: '',
     sku: '',
     shelfQuantity: NaN,
