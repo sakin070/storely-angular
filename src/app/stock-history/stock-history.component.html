@@ -2,27 +2,24 @@
 <div class="container" >
     <h1>Stock History</h1>
     <hr>
-    <div class="static-info" >
-        <div class="form-group inline">
-            <input style="width: 15em" id="stock" list="cards" name="stock" type="search" [(ngModel)]="stockName"  placeholder="Product" required autocomplete="off" (input)="getStocks()" >
-            <datalist id="cards">
-                <option *ngFor="let stock of stocks" [value]="stock.name">{{stock.name}}</option>
-            </datalist>
+    <div class="static-info" style="display: flex">
+        <div style="flex-grow: 1">
+            <a class="no-fill" style="font-size: 1.5em; font-family: mulish, sans-serif; cursor: pointer" (click)="showFilterDialogue()"> Filter <img src="assets/filter-3-line.svg" alt="filter" ></a>
         </div>
-        <div class="form-group inline" >
-            <input style="width: 15em" id="user" list="usersDataList" name="user" type="search" [(ngModel)]="username"  placeholder="User" required autocomplete="off" (input)="getUsers()" >
-            <datalist id="usersDataList">
-                <option *ngFor="let user of users" [value]="user.username">{{user.username}}</option>
-            </datalist>
+        <div style="display: flex;justify-content: flex-end">
+            <div class="form-group inline right">
+                <label for="startDate"><strong> Between</strong></label>
+                <input id="startDate" name="startDate" type="date" [(ngModel)]="startDate" autocomplete="off" (change)="getPage(1)">
+            </div>
+            <div class="form-group inline right">
+                <label for="endDate"><strong>and</strong></label>
+                <input id="endDate" name="endDate" type="date" [(ngModel)]="endDate" autocomplete="off" (change)="getPage(1)">
+            </div>
+            <div>
+                <button (click)="filter()" style="font-size: 0.8em;">Update</button>
+            </div>
         </div>
-        <div class="form-group inline right">
-            <label for="startDate"><strong> Between</strong></label>
-            <input id="startDate" name="startDate" type="date" [(ngModel)]="startDate" autocomplete="off" (change)="getPage(1)">
-        </div>
-        <div class="form-group inline right">
-            <label for="endDate"><strong>and</strong></label>
-            <input id="endDate" name="endDate" type="date" [(ngModel)]="endDate" autocomplete="off" (change)="getPage(1)">
-        </div>
+
     </div>
     <div class="table-div">
         <table>
@@ -53,4 +50,47 @@
         </table>
     </div>
     <app-pagination class="pagination" [$currentIndex]="currentPage" [$maxPage]="totalPages" [getPageFunction]="getPage"></app-pagination>
+</div>
+
+<div *ngIf="showFilter" class="delete-container">
+    <div class="modal" (click)="hideFilter()"></div>
+    <div class="delete-content">
+        <div>
+            <h4>Filter</h4>
+            <hr style="margin: 0.5em -1.5em .8em">
+            <form class="stock-form" novalidate>
+                <div class="form-group">
+                    <label for="stock">Stock Name</label>
+                    <input id="stock" list="cards" name="stock" type="search" [(ngModel)]="stockName"  placeholder="Product" required autocomplete="off" (input)="getStocks()" >
+                    <datalist id="cards">
+                        <option *ngFor="let stock of stocks" [value]="stock.name">{{stock.name}}</option>
+                    </datalist>
+                </div>
+                <div class="form-group" >
+                    <label for="user">Username</label>
+                    <input id="user" list="usersDataList" name="user" type="search" [(ngModel)]="username"  placeholder="User" required autocomplete="off" (input)="getUsers()" >
+                    <datalist id="usersDataList">
+                        <option *ngFor="let user of users" [value]="user.username">{{user.username}}</option>
+                    </datalist>
+                </div>
+                <div class="form-group">
+                    <label for="startDateF">Start Date</label>
+                    <input id="startDateF" name="startDate" type="date" [(ngModel)]="startDate" autocomplete="off" (change)="getPage(1)">
+                </div>
+                <div class="form-group">
+                    <label for="endDateF">End Date</label>
+                    <input id="endDateF" name="endDate" type="date" [(ngModel)]="endDate" autocomplete="off" (change)="getPage(1)">
+                </div>
+                <div class="form-group">
+                    <label for="type">Category</label>
+                    <input id="type" name="categoryInput" type="text" list="types" [(ngModel)]="type" placeholder="Select Type" autocomplete="off">
+                    <datalist id="types">
+                        <option  value="MODIFY">MODIFY</option>
+                        <option  value="PURCHASE">PURCHASE</option>
+                    </datalist>
+                </div>
+                <button (click)="search()" style="font-size: 0.8em; margin-left: 30%">Search</button>
+            </form>
+        </div>
+    </div>
 </div>

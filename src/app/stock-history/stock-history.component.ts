@@ -10,6 +10,7 @@ import {UserService} from '../_services/user.service';
   styleUrls: ['./stock-history.component.css']
 })
 export class StockHistoryComponent implements OnInit {
+  showFilter = false;
   timer: any;
   stock = {
     stockId: 0,
@@ -46,7 +47,6 @@ export class StockHistoryComponent implements OnInit {
   getPage = (currentPage: number): void => {
     this.stockService.getStockHistory(currentPage - 1, this.pageSize, this.startDate, this.endDate,
       this.stock.stockId, this.user.id, this.type).subscribe(data => {
-        console.log(data);
         this.histories = data.content;
         this.totalPages.next( data === [] ? 1 : data.totalPages);
     });
@@ -80,5 +80,18 @@ export class StockHistoryComponent implements OnInit {
           }
         });
     }, 400);
+  }
+  filter(): void{
+    this.getPage(1);
+  }
+  search(): void{
+    this.filter();
+    this.hideFilter();
+  }
+  hideFilter(): void{
+    this.showFilter = false;
+  }
+  showFilterDialogue(): void{
+    this.showFilter = true;
   }
 }
