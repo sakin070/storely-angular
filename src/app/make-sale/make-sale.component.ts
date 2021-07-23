@@ -57,6 +57,7 @@ export class MakeSaleComponent implements OnInit {
   cashTotal = 0;
   cashReturn = 0;
   showCustomerDialogue = false;
+  showDiscountDialogue = false;
   constructor(private makeSaleService: MakeSaleService, private stockService: StockService,
               private tokenService: TokenStorageService, private router: Router) {
     this.makeSaleService.clearSaleItems().subscribe();
@@ -79,7 +80,25 @@ export class MakeSaleComponent implements OnInit {
       input.select();
     }, 5);
   }
-  addCoupon(): void {}
+  addDiscount(): void {
+	this.showDiscountDialogue = true;
+    setTimeout(() => {
+      const input = document.getElementById('discountCode') as HTMLInputElement;
+      input.focus();
+      input.select();
+    }, 5);
+  }
+  hideDiscountDialogue(): void{
+    this.showDiscountDialogue = false;
+    this.selectSKUInput();
+  }
+  addDiscountCode(): void {
+    this.makeSaleService.applyDiscount(this.discountCode, this.sale.saleId).subscribe( data => {
+      this.sale = data;	  
+      this.hideDiscountDialogue();
+      this.discountCode = '';
+    });
+  }
   return(): void {
     this.returnStock = true;
     this.failedReturn = false;

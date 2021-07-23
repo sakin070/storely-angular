@@ -49,8 +49,8 @@
         </div>
     </div>
     <div class="buttons-grid">
-        <button (click)="addCustomer()" class="no-fill" style="grid-area: b1">Add Customer</button>
-        <button (click)="addCoupon()" class="no-fill" style="grid-area: b2">Add Coupon</button>
+        <button (click)="addCustomer()" class="no-fill" style="grid-area: b1">Loyalty Card</button>
+        <button (click)="addDiscount()" class="no-fill" style="grid-area: b2">Discount Code</button>
         <button (click)="return()" class="no-fill" style="grid-area: b3">Return</button>
         <button (click)="showStockAndPrice()" class="no-fill" style="grid-area: b4">Stock & Price</button>
         <button (click)="printLastReceipt()" class="no-fill" style="grid-area: b5">Last Receipt</button>
@@ -286,6 +286,19 @@
                 <input id="loyaltyCard" class="loyalty-input" name="loyaltyCard" type="text" [(ngModel)]="loyaltyCard" autocomplete="off" (keyup.enter)="addLoyaltyCard()">
             </div>
             <button class="add-button" (click)="addLoyaltyCard()"> Add </button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showDiscountDialogue" class="delete-container">
+    <div class="modal" (click)="hideDiscountDialogue()"></div>
+    <div class="delete-content">
+        <div class="payment-flex">
+            <div class="form-group " >
+                <label for="discountCode" >Discount Code</label>
+                <input id="discountCode" class="loyalty-input" name="discountCode" type="text" [(ngModel)]="discountCode" autocomplete="off" (keyup.enter)="addDiscountCode()">
+            </div>
+            <button class="add-button" (click)="addDiscountCode()"> Add </button>
         </div>
     </div>
 </div>

@@ -52,9 +52,10 @@ export class HomeComponent implements OnInit {
       this.drawChart();
     });
   }
-
-  clearToBuyItems(): void {
-    this.homeService.clearToBuyItems();
+  clearToBuyItems(): void{
+    this.homeService.clearToBuyItems().subscribe(() => {
+		this.homeService.getToBuyItems().subscribe(data => { this.toBuyItems = data; });
+	});
   }
 
   deleteToBuyItem(buyItemId: number): void {

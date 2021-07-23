@@ -27,7 +27,7 @@ export class ExpenseService {
   getAllExpensesByGroup(startDate: string, endDate: string): Observable<any> {
     return this.http.get(API + '/group-total?startDate=' + startDate + '&endDate=' + endDate, this.httpOptions);
   }
-
+  
   getExpensesByDescription(descriptionString: any, date: string, category: string, pageNumber: number, pageSize: number): Observable<any> {
     return this.http.get(API + '/description?page=' + pageNumber + '&size=' + pageSize +
       '&description=' + descriptionString  + '&date=' + date  + '&category=' + category , this.httpOptions);
