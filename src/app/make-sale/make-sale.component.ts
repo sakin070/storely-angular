@@ -55,6 +55,7 @@ export class MakeSaleComponent implements OnInit {
   failedReturn = false;
   posTotal = 0;
   cashTotal = 0;
+  saleTotal = 0;
   cashReturn = 0;
   showCustomerDialogue = false;
   showDiscountDialogue = false;
@@ -63,7 +64,7 @@ export class MakeSaleComponent implements OnInit {
     this.makeSaleService.clearSaleItems().subscribe();
     this.getLoyaltyManager();
     this.tokenService.getUser().roles.forEach( (role: { name: string; }) => {
-      if ( role.name !== 'SALE'){
+      if ( role.name !== 'SALES'){
         this.saleOnlyUser = false;
       }
     });
@@ -81,7 +82,7 @@ export class MakeSaleComponent implements OnInit {
     }, 5);
   }
   addDiscount(): void {
-	this.showDiscountDialogue = true;
+    this.showDiscountDialogue = true;
     setTimeout(() => {
       const input = document.getElementById('discountCode') as HTMLInputElement;
       input.focus();
@@ -94,7 +95,7 @@ export class MakeSaleComponent implements OnInit {
   }
   addDiscountCode(): void {
     this.makeSaleService.applyDiscount(this.discountCode, this.sale.saleId).subscribe( data => {
-      this.sale = data;	  
+      this.sale = data;
       this.hideDiscountDialogue();
       this.discountCode = '';
     });
@@ -149,7 +150,8 @@ export class MakeSaleComponent implements OnInit {
       profit: 0,
       saleId: 0,
       saleItems: [],
-      tax: 0
+      tax: 0,
+      discountValue: 0
     };
     this.suspended = true;
   }
@@ -160,7 +162,8 @@ export class MakeSaleComponent implements OnInit {
       profit: 0,
       saleId: 0,
       saleItems: [],
-      tax: 0
+      tax: 0,
+      discountValue: 0
     };
     this.suspended = false;
   }
@@ -172,7 +175,8 @@ export class MakeSaleComponent implements OnInit {
     this.router.navigateByUrl('/home');
   }
   pay(): void {
-    this.payments = [{amount: this.sale.price, type: 'CASH'}];
+    this.saleTotal  = this.sale.price - this.sale.discountValue;
+    this.payments = [{amount: this.saleTotal, type: 'CASH'}];
     this.showPaymentDialog = true;
   }
   hidePaymentDialog(): void{
@@ -287,7 +291,7 @@ export class MakeSaleComponent implements OnInit {
   calcChange(): void {
     let total = 0;
     this.payments.forEach( payment => total = total + payment.amount);
-    this.change = total - this.sale.price;
+    this.change = total - this.saleTotal;
   }
   split(): void{
     this.payments.push({amount: 0, type: 'CASH'});
@@ -337,7 +341,6 @@ export class MakeSaleComponent implements OnInit {
       this.sale = data;
       this.hideCustomerDialogue();
       this.loyaltyCard = '';
-      console.log( Math.min(this.loyaltyManager.maxRedeemablePointsPerTransaction, this.sale.loyaltyCard.points));
       this.usePoints = Math.min(this.loyaltyManager.maxRedeemablePointsPerTransaction, this.sale.loyaltyCard.points);
     });
   }
@@ -345,14 +348,18 @@ export class MakeSaleComponent implements OnInit {
     this.makeSaleService.usePoints(this.usePoints, this.sale.saleId).subscribe(data => {
       this.sale = data;
       this.addPoints = false;
-      this.payments[0].amount = this.payments[0].amount - this.sale.valueOfPointsRedeemed;
+      this.saleTotal = this.sale.price - this.sale.discountValue - this.sale.valueOfPointsRedeemed;
+      this.payments = [{amount: this.saleTotal, type: 'CASH'}];
+      this.calcChange();
     });
   }
   unRedeemPoints(): void {
     this.makeSaleService.unRedeemPoints(this.sale.saleId).subscribe(data => {
-      this.payments[0].amount = this.payments[0].amount + this.sale.valueOfPointsRedeemed;
       this.sale = data;
       this.addPoints = true;
+      this.saleTotal = this.sale.price - this.sale.discountValue;
+      this.payments = [{amount: this.saleTotal, type: 'CASH'}];
+      this.calcChange();
     });
   }
 }
