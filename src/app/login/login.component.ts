@@ -38,7 +38,13 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getUser().roles;
-        if (this.roles.length === 1 && this.roles[0].name === 'SALES'){
+        let goHome = false;
+        this.roles.forEach( (role: { name: string; }) => {
+          if ( role.name === 'ADMIN' || role.name === 'MANAGER'){
+            goHome = true;
+          }
+        });
+        if (!goHome){
           this.router.navigateByUrl('/make-sale');
         }else{
           this.router.navigateByUrl('/home');

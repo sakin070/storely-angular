@@ -64,7 +64,7 @@ export class MakeSaleComponent implements OnInit {
     this.makeSaleService.clearSaleItems().subscribe();
     this.getLoyaltyManager();
     this.tokenService.getUser().roles.forEach( (role: { name: string; }) => {
-      if ( role.name !== 'SALES'){
+      if ( role.name === 'ADMIN' || role.name === 'MANAGER'){
         this.saleOnlyUser = false;
       }
     });
