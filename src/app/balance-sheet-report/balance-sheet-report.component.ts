@@ -40,4 +40,15 @@ export class BalanceSheetReportComponent implements OnInit {
     });
   }
 
+  downloadBalanceSheet(): void {
+    this.kpiService.downloadBalanceSheet(this.startDate, this.endDate).subscribe(
+      data => {
+        const downloadURL = window.URL.createObjectURL(data);
+        const link = document.createElement('a');
+        link.href = downloadURL;
+        link.download = 'BalanceSheet.pdf';
+        link.click();
+      }
+    );
+  }
 }

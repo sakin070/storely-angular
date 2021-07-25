@@ -54,8 +54,8 @@ export class HomeComponent implements OnInit {
   }
   clearToBuyItems(): void{
     this.homeService.clearToBuyItems().subscribe(() => {
-		this.homeService.getToBuyItems().subscribe(data => { this.toBuyItems = data; });
-	});
+      this.homeService.getToBuyItems().subscribe(data => { this.toBuyItems = data; });
+    });
   }
 
   deleteToBuyItem(buyItemId: number): void {
@@ -126,5 +126,16 @@ export class HomeComponent implements OnInit {
         this.products = [];
         this.productData = {};
       });
+  }
+  downloadBuyItems(): void {
+    this.homeService.downloadBuyItems().subscribe(
+      data => {
+        const downloadURL = window.URL.createObjectURL(data);
+        const link = document.createElement('a');
+        link.href = downloadURL;
+        link.download = 'buyItems.pdf';
+        link.click();
+      }
+    );
   }
 }

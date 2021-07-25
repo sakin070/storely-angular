@@ -13,8 +13,10 @@
             <input id="endDate" name="endDate" type="date" [(ngModel)]="endDate" autocomplete="off">
         </div>
         <button style="font-size: 0.8em" (click)="getData()">Update</button>
+
+        <button style="font-size: 0.7em; margin-left: 7em" class="no-fill" (click)="downloadBalanceSheet()">Download</button>
     </div>
-    <div class="table-div">
+    <div class="table-div" style="max-height: initial">
         <table>
             <colgroup>
                 <col span="1" style="width: 80%;">

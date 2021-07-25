@@ -13,10 +13,15 @@ export class KpiService {
 
   httpOptions: any ;
   textHttpOptions: any;
+  blobHttpOptions: any;
   constructor(private tokenStorageService: TokenStorageService, private http: HttpClient) {
     if (tokenStorageService.getToken()){
       this.httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: tokenStorageService.getToken()as string })
+      };
+      this.blobHttpOptions = {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: tokenStorageService.getToken()as string }),
+        responseType: 'blob'
       };
       this.textHttpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: tokenStorageService.getToken()as string }),
@@ -37,5 +42,8 @@ export class KpiService {
   getPageProductKPI(pageNumber: number, pageSize: number, startDate: string, endDate: string): Observable<any> {
     return this.http.get(API + '/products?pageNumber=' + pageNumber + '&pageSize=' + pageSize +
       '&startDate=' + startDate + '&endDate=' + endDate, this.httpOptions);
+  }
+  downloadBalanceSheet(startDate: string, endDate: string): Observable<any>{
+    return this.http.get(API + '/download/balanceSheet?startDate=' + startDate + '&endDate=' + endDate, this.blobHttpOptions);
   }
 }

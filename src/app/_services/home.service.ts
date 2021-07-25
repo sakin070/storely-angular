@@ -12,10 +12,15 @@ const AUTH_API = 'https://storley.herokuapp.com';
 export class HomeService {
   httpOptions: any ;
   textHttpOptions: any;
+  blobHttpOptions: any;
   constructor(private tokenStorageService: TokenStorageService, private http: HttpClient) {
     if (tokenStorageService.getToken()){
       this.httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: tokenStorageService.getToken()as string })
+      };
+      this.blobHttpOptions = {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: tokenStorageService.getToken()as string }),
+        responseType: 'blob'
       };
       this.textHttpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: tokenStorageService.getToken()as string }),
@@ -49,5 +54,8 @@ export class HomeService {
   }
   addBuyItem(stock: any): Observable<any>{
     return this.http.post(AUTH_API + '/buy-item', stock, this.httpOptions);
+  }
+  downloadBuyItems(): Observable<any>{
+    return this.http.get(AUTH_API + '/buy-item/download', this.blobHttpOptions);
   }
 }
