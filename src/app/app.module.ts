@@ -32,6 +32,7 @@ import { ExpenseCategoryComponent } from './expense-category/expense-category.co
 import { StoreEvaluationComponent } from './store-evaluation/store-evaluation.component';
 import { DiscountsComponent } from './discounts/discounts.component';
 import { StockHistoryComponent } from './stock-history/stock-history.component';
+import { AuthorizeModalComponent } from './authorize-modal/authorize-modal.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { StockHistoryComponent } from './stock-history/stock-history.component';
     ExpenseCategoryComponent,
     StoreEvaluationComponent,
     DiscountsComponent,
-    StockHistoryComponent
+    StockHistoryComponent,
+    AuthorizeModalComponent
   ],
     imports: [
         BrowserModule,

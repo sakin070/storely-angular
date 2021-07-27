@@ -32,8 +32,8 @@
                 </colgroup>
                 <tr class="table-row" *ngFor="let saleItem of sale.saleItems; index as i ">
                     <td>{{saleItem.stock.name}}</td>
-                    <td>{{saleItem.quantity}} X ${{saleItem.stock.sellingPrice}}</td>
-                    <td>${{saleItem.quantity * saleItem.stock.sellingPrice}} </td>
+                    <td>{{saleItem.quantity}} X ₦{{saleItem.stock.sellingPrice}}</td>
+                    <td>₦{{saleItem.quantity * saleItem.stock.sellingPrice}} </td>
                     <td><button (click)="removeSaleItem(i)" style="border: none; height: 1em"><img style="border: none; height: 1em" src="assets/close-icon.png" alt="remove item"></button></td>
                 </tr>
             </table>
@@ -42,10 +42,14 @@
         <div class="pricing">
             <h5>Subtotal</h5>
             <h5>{{sale.price}}</h5>
+            <h5 *ngIf="sale.discountValue || sale.discountValue > 0">Cash Discount</h5>
+            <h5 *ngIf="sale.discountValue || sale.discountValue > 0" >-{{sale.discountValue}}</h5>
+            <h5 *ngIf="sale.valueOfPointsRedeemed || sale.valueOfPointsRedeemed > 0">Loyalty Discount</h5>
+            <h5 *ngIf="sale.valueOfPointsRedeemed || sale.valueOfPointsRedeemed > 0" >-{{sale.valueOfPointsRedeemed}}</h5>
             <h5>Tax</h5>
             <h5>{{sale.tax}}</h5>
             <h4>Total</h4>
-            <h4>${{sale.price + sale.tax}}</h4>
+            <h4>₦ {{saleTotal}}</h4>
         </div>
     </div>
     <div class="buttons-grid">
@@ -61,6 +65,7 @@
         <ng-template #home>
             <button (click)="goHome()" style="grid-area: b9">Home</button>
         </ng-template>
+        <button (click)="restoreSale()" class="no-fill" style="grid-area: b6">Clock Out</button>
         <button (click)="clearSaleItems()" class="no-fill clear-button" style="grid-area: b10; ">Clear</button>
 <!--        <button (click)="pay()" style="grid-area: pay; background-color: var(&#45;&#45;secondary-color)" [disabled]="sale.saleItems.length == 0">Pay</button>-->
         <button (click)="pay()" style="grid-area: pay; background-color: var(--secondary-color)">Pay</button>
@@ -82,14 +87,25 @@
                 <button id="usePointsRemove" class="no-fill clear-button" style="font-size: 0.8em; margin-top: 2em;" (click)="unRedeemPoints()"> Remove </button>
             </ng-template>
         </div>
-        <div style="margin: 1em 0; float:right">
-            <div class="form-group inline" >
-                <label for="total" ><strong>Total ($)</strong></label>
-                <input id="total" name="total" type="number" [(ngModel)]="saleTotal" readonly>
+        <div style="margin: 1em 0">
+            <div style="display: flex; flex-direction: column; align-items: flex-end">
+                <div class="form-group inline" *ngIf="sale.valueOfPointsRedeemed || sale.valueOfPointsRedeemed > 0">
+                    <label for="subtotal" >Subtotal(₦)</label>
+                    <input id="subtotal" name="subtotal" type="number" [(ngModel)]="saleTotal + sale.valueOfPointsRedeemed" readonly>
+                </div>
+                <div class="form-group inline" *ngIf="sale.valueOfPointsRedeemed || sale.valueOfPointsRedeemed > 0">
+                    <label for="loyaltyDiscount" >Loyalty Discount(₦)</label>
+                    <input id="loyaltyDiscount" name="subtotal" type="number" [(ngModel)]="sale.valueOfPointsRedeemed" readonly>
+                </div>
+                <div class="form-group inline" >
+                    <label for="total" ><strong>Total (₦)</strong></label>
+                    <input id="total" name="total" type="number" [(ngModel)]="saleTotal" readonly>
+                </div>
             </div>
+
         </div>
 
-        <div style="margin-top: 4em">
+        <div style="margin-top: 0.6em">
             <div *ngFor="let payment of payments" style="margin-bottom: 0.5em">
                 <div class="form-group inline" >
                     <label>Payment Type</label>
@@ -97,7 +113,7 @@
                         <option selected="selected">CASH</option>
                         <option>POS</option>
                     </select>
-                    <label>($)</label>
+                    <label>(₦)</label>
                     <input name="cash" type="number" [(ngModel)]="payment.amount" placeholder="amount" (input)="calcChange()">
                 </div>
             </div>
@@ -106,7 +122,7 @@
         </div>
         <div style="margin: 1em 0; float:right">
             <div class="form-group inline">
-                <label for="change" >Change ($)</label>
+                <label for="change" >Change (₦)</label>
                 <input id="change" name="cash" type="number" [(ngModel)]="change" readonly>
             </div>
         </div>
@@ -144,15 +160,15 @@
                     </tr>
                     <tr class="table-row no-border">
                         <td></td>
-                        <th colspan="2" class="total-row"> P.O.S Total($): {{posTotal}}</th>
+                        <th colspan="2" class="total-row"> P.O.S Total(₦): {{posTotal}}</th>
                     </tr>
                     <tr class="table-row no-border">
                         <td></td>
-                        <th colspan="2" class="total-row">  Cash Total($): {{cashTotal}}</th>
+                        <th colspan="2" class="total-row">  Cash Total(₦): {{cashTotal}}</th>
                     </tr>
                     <tr class="table-row no-border">
                         <td></td>
-                        <th colspan="2" class="total-row"> Total($): {{cashTotal + posTotal}}</th>
+                        <th colspan="2" class="total-row"> Total(₦): {{cashTotal + posTotal}}</th>
                     </tr>
                     </tbody>
 
@@ -183,7 +199,7 @@
                         </tr>
                         <tr class="table-row no-border">
                             <td></td>
-                            <th colspan="2" class="total-row"> Total($): {{sales[saleItemIndex].price}}</th>
+                            <th colspan="2" class="total-row"> Total(₦): {{sales[saleItemIndex].price}}</th>
                         </tr>
                         </tbody>
 
@@ -259,8 +275,8 @@
                 </colgroup>
                 <tr class="table-row" *ngFor="let saleItem of receipt.saleItems; index as i ">
                     <td>{{saleItem.stock.name}}</td>
-                    <td>{{saleItem.quantity}} X ${{saleItem.stock.sellingPrice}}</td>
-                    <td>${{saleItem.quantity * saleItem.stock.sellingPrice}} </td>
+                    <td>{{saleItem.quantity}} X ₦{{saleItem.stock.sellingPrice}}</td>
+                    <td>₦{{saleItem.quantity * saleItem.stock.sellingPrice}} </td>
                     <td>
                         <input type="number" [min]="0" [max]="saleItem.quantity" [(ngModel)]="returns[i].quantity" style="border: none; height: 1em;font-size: 1em;width: 3em;margin-right: 0.5em" (change)="calcReturn()">
                         <label>/{{saleItem.quantity}}</label>
@@ -299,6 +315,19 @@
                 <input id="discountCode" class="loyalty-input" name="discountCode" type="text" [(ngModel)]="discountCode" autocomplete="off" (keyup.enter)="addDiscountCode()">
             </div>
             <button class="add-button" (click)="addDiscountCode()"> Add </button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="newSessionDialogue" class="delete-container">
+    <div class="modal"></div>
+    <div class="delete-content">
+        <div>
+            <div class="form-group" style="font-size: 1.3em">
+                <label for="openingBalance" >Opening Balance (₦)</label>
+                <input id="openingBalance" class="loyalty-input" name="openingBalance" type="number" [(ngModel)]="openingBalance" autocomplete="off">
+            </div>
+            <button style="font-size: 0.85em; margin-left: 5.35em" (click)="createSaleSession()"> Create Session </button>
         </div>
     </div>
 </div>

@@ -39,7 +39,7 @@
                 </tr>
                 <tr class="table-row"  *ngFor="let discount of discounts; let i = index">
                     <td>{{discount.code}}</td>
-                    <td><span *ngIf="discount.type === 'FLAT'; else per">$</span> {{discount.value}}</td>
+                    <td><span *ngIf="discount.type === 'FLAT'; else per">₦</span> {{discount.value}}</td>
                     <td>{{discount.startDate}}</td>
                     <td>{{discount.endDate}}</td>
                     <td><button style=" height: 1em; border: none" (click)="edit(i)"> <img src="assets/pencil-line.svg"  alt="edit"> </button></td>

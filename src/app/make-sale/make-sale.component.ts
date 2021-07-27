@@ -4,6 +4,7 @@ import {StockService} from '../_services/stock.service';
 import {formatDate} from '@angular/common';
 import {TokenStorageService} from '../_services/token-storage.service';
 import {Router} from '@angular/router';
+import {SessionService} from '../_services/session.service';
 
 @Component({
   selector: 'app-make-sale',
@@ -28,14 +29,18 @@ export class MakeSaleComponent implements OnInit {
     profit: 0,
     saleId: 0,
     saleItems: [],
-    tax: 0
+    tax: 0,
+    discountValue: 0,
+    valueOfPointsRedeemed: 0
   };
   tempSale: any = {
     price: 0,
     profit: 0,
     saleId: 0,
     saleItems: [],
-    tax: 0
+    tax: 0,
+    discountValue: 0,
+    valueOfPointsRedeemed: 0
   };
   loyaltyCard = '';
   usePoints = 0;
@@ -59,8 +64,11 @@ export class MakeSaleComponent implements OnInit {
   cashReturn = 0;
   showCustomerDialogue = false;
   showDiscountDialogue = false;
+  openingBalance = 0;
+  newSessionDialogue = true;
+  saleSession: any;
   constructor(private makeSaleService: MakeSaleService, private stockService: StockService,
-              private tokenService: TokenStorageService, private router: Router) {
+              private tokenService: TokenStorageService, private router: Router, private sessionService: SessionService) {
     this.makeSaleService.clearSaleItems().subscribe();
     this.getLoyaltyManager();
     this.tokenService.getUser().roles.forEach( (role: { name: string; }) => {
@@ -71,6 +79,12 @@ export class MakeSaleComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.sessionService.getCurrentSession().subscribe(data => {
+      this.saleSession = data;
+      this.newSessionDialogue = false;
+    }, () => {
+      this.newSessionDialogue = true;
+    });
     this.selectSKUInput();
   }
   addCustomer(): void {
@@ -98,6 +112,7 @@ export class MakeSaleComponent implements OnInit {
       this.sale = data;
       this.hideDiscountDialogue();
       this.discountCode = '';
+      this.saleTotal  = this.sale.price - this.sale.discountValue + this.sale.tax;
     });
   }
   return(): void {
@@ -175,7 +190,7 @@ export class MakeSaleComponent implements OnInit {
     this.router.navigateByUrl('/home');
   }
   pay(): void {
-    this.saleTotal  = this.sale.price - this.sale.discountValue;
+    this.saleTotal  = this.sale.price - this.sale.discountValue - this.sale.valueOfPointsRedeemed + this.sale.tax ;
     this.payments = [{amount: this.saleTotal, type: 'CASH'}];
     this.showPaymentDialog = true;
   }
@@ -206,6 +221,7 @@ export class MakeSaleComponent implements OnInit {
         saleItems: [],
         tax: 0
       };
+      this.saleTotal = 0;
       this.hidePaymentDialog();
     });
   }
@@ -218,6 +234,7 @@ export class MakeSaleComponent implements OnInit {
         saleItems: [],
         tax: 0
       };
+      this.saleTotal = 0;
     });
   }
   printSale(): void{
@@ -348,7 +365,7 @@ export class MakeSaleComponent implements OnInit {
     this.makeSaleService.usePoints(this.usePoints, this.sale.saleId).subscribe(data => {
       this.sale = data;
       this.addPoints = false;
-      this.saleTotal = this.sale.price - this.sale.discountValue - this.sale.valueOfPointsRedeemed;
+      this.saleTotal = this.sale.price - this.sale.discountValue - this.sale.valueOfPointsRedeemed + this.sale.tax;
       this.payments = [{amount: this.saleTotal, type: 'CASH'}];
       this.calcChange();
     });
@@ -357,9 +374,16 @@ export class MakeSaleComponent implements OnInit {
     this.makeSaleService.unRedeemPoints(this.sale.saleId).subscribe(data => {
       this.sale = data;
       this.addPoints = true;
-      this.saleTotal = this.sale.price - this.sale.discountValue;
+      this.saleTotal = this.sale.price - this.sale.discountValue + this.sale.tax;
       this.payments = [{amount: this.saleTotal, type: 'CASH'}];
       this.calcChange();
+    });
+  }
+
+  createSaleSession(): void {
+    this.sessionService.createNewSession({openingBalance: this.openingBalance}).subscribe(data => {
+      this.saleSession = data;
+      this.newSessionDialogue = false;
     });
   }
 }

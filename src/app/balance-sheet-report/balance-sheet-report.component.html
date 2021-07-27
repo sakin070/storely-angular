@@ -35,7 +35,7 @@
                 </th>
                 <th>
                     <div class="boxer">
-                        $ {{incomeBreakdown.income}}
+                        ₦ {{incomeBreakdown.income}}
                     </div>
                 </th>
             </tr>
@@ -46,7 +46,7 @@
                         Cost of Goods Sold
                     </div>
                 </th>
-                <th><div class="boxer">$ {{incomeBreakdown.cogs}}</div></th>
+                <th><div class="boxer">₦ {{incomeBreakdown.cogs}}</div></th>
             </tr>
 
             <tr class="heading">
@@ -57,7 +57,7 @@
                     </span>
                 </th>
                 <th>
-                    <div class="boxer">$ {{incomeBreakdown.grossProfit}}</div>
+                    <div class="boxer">₦ {{incomeBreakdown.grossProfit}}</div>
                     <span>
                         <p class="boxer" style="margin-top: 0; font-size: .7em"> {{grossProfitPercent}} %</p>
                     </span>
@@ -71,11 +71,11 @@
             <tr class="table-row data"  *ngFor="let expense of expensesByGroup; let i = index">
 <!--                TODO: make expenses route to a report-->
                 <td>{{expense.categoryName}}</td>
-                <td>${{expense.groupAmount}}</td>
+                <td>₦{{expense.groupAmount}}</td>
             </tr>
             <tr class="table-row">
                 <th>Total Operating Expenses</th>
-                <th>${{totalOperatingExpense}}</th>
+                <th>₦{{totalOperatingExpense}}</th>
             </tr>
 
             <tr class="heading">
@@ -88,7 +88,7 @@
                 <th>
                     <div class="boxer">
 <!--                        <div *ngIf="netProfit<0"> -</div>-->
-                        $ {{netProfit}}
+                        ₦ {{netProfit}}
                     </div>
                     <span>
                         <p class="boxer" style="margin-top: 0; font-size: .7em">

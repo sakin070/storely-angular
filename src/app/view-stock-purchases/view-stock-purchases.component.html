@@ -34,7 +34,7 @@
                 <th>Supplier Name</th>
                 <th>Posted On</th>
                 <th>Posted By</th>
-                <th>Total Cost ($)</th>
+                <th>Total Cost (₦)</th>
                 <th>Purchase Items</th>
             </tr>
             <tr class="table-row"  *ngFor="let purchase of purchases; let i = index">
@@ -74,8 +74,8 @@
                     <th>Product Name</th>
                     <th>Shelf Quantity</th>
                     <th>Store Quantity</th>
-                    <th>Cost Price ($)</th>
-                    <th>Selling Price ($)</th>
+                    <th>Cost Price (₦)</th>
+                    <th>Selling Price (₦)</th>
                 </tr>
                 <tr class="table-row"  *ngFor="let purchaseItem of purchase.stockPurchaseItems">
                     <td>{{purchaseItem.stock.name}}</td>

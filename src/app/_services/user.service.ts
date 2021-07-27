@@ -44,4 +44,7 @@ export class UserService {
   updateUser(user: any): Observable<any>{
     return this.http.patch(API + '/public/update', user, this.httpOptions);
   }
+  getUserRoles(username: string, password: string): Observable<any> {
+    return this.http.get(API + '/authority?username=' + username + '&password=' + password, this.httpOptions);
+  }
 }

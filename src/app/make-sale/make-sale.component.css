@@ -26,7 +26,7 @@
     grid-template-columns: 1fr 1fr ;
     grid-template-rows: repeat(2, auto);
     column-gap: 1em;
-    row-gap: .8em;
+    row-gap: .5em;
     /*font-size: 0.8em;*/
     border-top-color: var(--passive-color);
     border-top-style: solid;
