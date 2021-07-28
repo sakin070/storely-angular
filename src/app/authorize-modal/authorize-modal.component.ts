@@ -11,6 +11,8 @@ export class AuthorizeModalComponent implements OnInit {
     username: null,
     password: null
   };
+  @Input()
+  roles: string[] = [];
   @Output() userAuthorized = new EventEmitter<boolean> ();
   authorizeFailed = false;
   constructor( private userService: UserService) { }
@@ -26,7 +28,7 @@ export class AuthorizeModalComponent implements OnInit {
         return;
       }
       data.forEach( (role: { name: string; }) => {
-        if ( role.name === 'ADMIN' || role.name === 'MANAGER'){
+        if (this.roles.includes(role.name )) {
           this.userAuthorized.emit(true);
           this.authorizeFailed = false;
         }

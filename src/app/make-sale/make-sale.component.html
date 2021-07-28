@@ -58,17 +58,20 @@
         <button (click)="return()" class="no-fill" style="grid-area: b3">Return</button>
         <button (click)="showStockAndPrice()" class="no-fill" style="grid-area: b4">Stock & Price</button>
         <button (click)="printLastReceipt()" class="no-fill" style="grid-area: b5">Last Receipt</button>
-        <button (click)="recentSales()" class="no-fill" style="grid-area: b6">Recent Sales</button>
+<!--        <button (click)="recentSales()" class="no-fill" style="grid-area: b6">Recent Sales</button>-->
         <button (click)="suspendSale()" class="no-fill orange" style="grid-area: b7">Suspend Sale</button>
         <button (click)="restoreSale()" class="no-fill" [ngClass]="suspended ? 'green':''" style="grid-area: b8">Restore Sale</button>
         <button *ngIf="saleOnlyUser; else home" (click)="logout()" style="grid-area: b9">Logout</button>
         <ng-template #home>
             <button (click)="goHome()" style="grid-area: b9">Home</button>
         </ng-template>
-        <button (click)="restoreSale()" class="no-fill" style="grid-area: b6">Clock Out</button>
+        <button (click)="clickClockOut()" class="no-fill clear-button" style="grid-area: b6">Clock Out</button>
         <button (click)="clearSaleItems()" class="no-fill clear-button" style="grid-area: b10; ">Clear</button>
 <!--        <button (click)="pay()" style="grid-area: pay; background-color: var(&#45;&#45;secondary-color)" [disabled]="sale.saleItems.length == 0">Pay</button>-->
         <button (click)="pay()" style="grid-area: pay; background-color: var(--secondary-color)">Pay</button>
+        <button (click)="printLastReceipt()" class="no-fill" style="grid-area: add-cash">Add Cash</button>
+        <button (click)="recentSales()" class="no-fill" style="grid-area: remit">Remit</button>
+
     </div>
 
 </div>
@@ -330,4 +333,79 @@
             <button style="font-size: 0.85em; margin-left: 5.35em" (click)="createSaleSession()"> Create Session </button>
         </div>
     </div>
+</div>
+
+<div *ngIf="showClockOutAuth">
+    <div class="modal" (click)="hideClockOut()"></div>
+    <app-authorize-modal [roles]="clockOutRoles" (userAuthorized)="handleValidateClockOutAuth($event)"></app-authorize-modal>
+</div>
+<div *ngIf="showSessionDetails" class="delete-container" id="sessionDetailsContainer">
+    <div class="modal"></div>
+    <div class="delete-content">
+        <h2>Session Details</h2>
+        <hr style="margin: 0.5em -1.5em 0.5em">
+
+        <div style="display: flex; flex-direction: column;">
+            <div class="form-group inline">
+                <label for="saleTotal" ><strong>Sale Total (₦)</strong></label>
+                <input id="saleTotal" name="subtotal" type="number" [(ngModel)]="sessionDetails.totalSale" readonly>
+            </div>
+            <div class="form-group inline">
+                <label for="totalReturns" ><strong>Returns Total (₦)</strong></label>
+                <input id="totalReturns" name="subtotal" type="number" [(ngModel)]="sessionDetails.totalReturn" readonly>
+            </div>
+            <div class="form-group inline">
+                <label for="cashDiscountTotal" ><strong>Cash Discount Total (₦)</strong></label>
+                <input id="cashDiscountTotal" name="subtotal" type="number" [(ngModel)]="sessionDetails.discountValue" readonly>
+            </div>
+            <div class="form-group inline">
+                <label for="loyaltyDiscountTotal" ><strong>Loyalty Discount Total (₦)</strong></label>
+                <input id="loyaltyDiscountTotal" name="subtotal" type="number" [(ngModel)]="sessionDetails.pointsRedeemedValue" readonly>
+            </div>
+        </div>
+
+        <h3>Cash</h3>
+        <div style="display: flex; flex-direction: column;">
+            <div class="form-group inline">
+                <label for="summaryOpeningBalance" >Opening Balance (₦)</label>
+                <input id="summaryOpeningBalance" name="subtotal" type="number" [(ngModel)]="sessionDetails.openingBalance" readonly>
+            </div>
+            <div class="form-group inline">
+                <label for="summaryAdditions" >Additions (₦)</label>
+                <input id="summaryAdditions" name="summaryAdditions" type="number" [(ngModel)]="sessionDetails.additions" readonly>
+            </div>
+            <div class="form-group inline">
+                <label for="summaryCashSale" >Cash Sale (₦)</label>
+                <input id="summaryCashSale" name="summaryCashSale" type="number" [(ngModel)]="sessionDetails.cashSale" readonly>
+            </div>
+            <div class="form-group inline">
+                <label for="summaryCashReturn" >Cash Return (₦) -</label>
+                <input id="summaryCashReturn" name="summaryCashSale" type="number" [(ngModel)]="sessionDetails.cashReturn" readonly>
+            </div>
+
+            <div class="form-group inline">
+                <label for="cashTotal" ><strong>Cash Total (₦)</strong></label>
+                <input id="cashTotal" name="subtotal" type="number" [(ngModel)]="sessionDetails.cashSale + sessionDetails.openingBalance + sessionDetails.additions - sessionDetails.cashReturn" readonly>
+            </div>
+        </div>
+
+        <h3>P.O.S</h3>
+        <div style="display: flex; flex-direction: column;">
+            <div class="form-group inline">
+                <label for="summaryPOSSale" >P.O.S Sale (₦)</label>
+                <input id="summaryPOSSale" name="subtotal" type="number" [(ngModel)]="sessionDetails.posSale" readonly>
+            </div>
+            <div class="form-group inline">
+                <label for="summaryPOSReturn" >P.O.S Return (₦)</label>
+                <input id="summaryPOSReturn" name="subtotal" type="number" [(ngModel)]="sessionDetails.posReturn" readonly>
+            </div>
+        </div>
+
+        <div class="button-containers">
+            <button (click)="closeSession()">Close Session</button>
+            <button class="no-fill margin-3" (click)="hideSessionDetails()" >Cancel</button>
+        </div>
+    </div>
+
+
 </div>

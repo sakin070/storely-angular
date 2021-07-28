@@ -31,4 +31,10 @@ export class SessionService {
   createNewSession(session: any): Observable<any>{
     return this.http.post(API, session, this.httpOptions);
   }
+  getSessionDetails(): Observable<any>{
+    return this.http.get(API + '/details', this.httpOptions);
+  }
+  closeNewSession(): Observable<any>{
+    return this.http.patch(API + '/close', {}, this.httpOptions);
+  }
 }

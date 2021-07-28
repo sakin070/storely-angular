@@ -12,6 +12,7 @@
     grid-template-areas: "b1 b2"
                        "b3 b4"
                        "b5 b6"
+                       "add-cash remit"
                        "b7 b8"
                        "b9 b10"
                        "pay pay";
@@ -104,4 +105,8 @@ button.clear-button {
 h4,h5,h6{
     margin: 0;
 }
-
+@media (min-width: 300px) and (max-width: 1300px) {
+    #sessionDetailsContainer {
+        font-size: 0.8em;
+    }
+}

@@ -23,6 +23,9 @@ export class MakeSaleComponent implements OnInit {
   receipt: any = {saleItems: []};
   returns: any[] = [];
   payments: any[] = [];
+  clockOutRoles: string[] = ['ADMIN', 'MANAGER'];
+  showClockOutAuth = false;
+  showSessionDetails = false;
   stock = {};
   sale: any = {
     price: 0,
@@ -41,6 +44,19 @@ export class MakeSaleComponent implements OnInit {
     tax: 0,
     discountValue: 0,
     valueOfPointsRedeemed: 0
+  };
+  sessionDetails = {
+    openingBalance: 0,
+    additions: 0,
+    remittanceSum: 0,
+    cashSale: 0,
+    posSale: 0,
+    cashReturn: 0,
+    totalReturn: 0,
+    posReturn: 0,
+    pointsRedeemedValue: 0,
+    totalSale: 0,
+    discountValue: 0
   };
   loyaltyCard = '';
   usePoints = 0;
@@ -384,6 +400,37 @@ export class MakeSaleComponent implements OnInit {
     this.sessionService.createNewSession({openingBalance: this.openingBalance}).subscribe(data => {
       this.saleSession = data;
       this.newSessionDialogue = false;
+    });
+  }
+  clickClockOut(): void{
+
+    this.showClockOutAuth = true;
+  }
+  hideClockOut(): void{
+    this.showClockOutAuth = false;
+  }
+  handleValidateClockOutAuth(response: boolean): void{
+    if (response){
+      this.sessionService.getSessionDetails().subscribe(data => {
+        this.sessionDetails = data;
+        this.showSessionDetails = response;
+        this.hideClockOut();
+      });
+    }else{
+      this.hideClockOut();
+    }
+  }
+  hideSessionDetails(): void{
+    this.showSessionDetails = false;
+  }
+  closeSession(): void{
+    this.sessionService.closeNewSession().subscribe(() => {
+      this.showSessionDetails = false;
+      if (this.saleOnlyUser){
+        this.logout();
+      }else{
+        this.goHome();
+      }
     });
   }
 }
