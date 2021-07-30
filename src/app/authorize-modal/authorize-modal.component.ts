@@ -21,14 +21,15 @@ export class AuthorizeModalComponent implements OnInit {
   }
 
   authorize(): void {
-    this.userService.getUserRoles(this.form.username, this.form.password).subscribe(data => {
-      if (data.length === 0){
+    this.userService.getUser(this.form.username, this.form.password).subscribe(data => {
+      if (data.roles.length === 0){
         this.authorizeFailed = true;
         this.userAuthorized.emit(false);
         return;
       }
-      data.forEach( (role: { name: string; }) => {
+      data.roles.forEach( (role: { name: string; }) => {
         if (this.roles.includes(role.name )) {
+          sessionStorage.setItem('authorizingUser', JSON.stringify(data));
           this.userAuthorized.emit(true);
           this.authorizeFailed = false;
         }

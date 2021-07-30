@@ -69,8 +69,8 @@
         <button (click)="clearSaleItems()" class="no-fill clear-button" style="grid-area: b10; ">Clear</button>
 <!--        <button (click)="pay()" style="grid-area: pay; background-color: var(&#45;&#45;secondary-color)" [disabled]="sale.saleItems.length == 0">Pay</button>-->
         <button (click)="pay()" style="grid-area: pay; background-color: var(--secondary-color)">Pay</button>
-        <button (click)="printLastReceipt()" class="no-fill" style="grid-area: add-cash">Add Cash</button>
-        <button (click)="recentSales()" class="no-fill" style="grid-area: remit">Remit</button>
+        <button (click)="showAddCashAuth()" class="no-fill" style="grid-area: add-cash">Add Cash</button>
+        <button (click)="showRemitCashAuth()" class="no-fill" style="grid-area: remit">Remit</button>
 
     </div>
 
@@ -382,10 +382,14 @@
                 <label for="summaryCashReturn" >Cash Return (₦) -</label>
                 <input id="summaryCashReturn" name="summaryCashSale" type="number" [(ngModel)]="sessionDetails.cashReturn" readonly>
             </div>
+            <div class="form-group inline">
+                <label for="summaryCashRemitted" >Cash Remitted (₦) -</label>
+                <input id="summaryCashRemitted" name="summaryCashRemitted" type="number" [(ngModel)]="sessionDetails.remittanceSum" readonly>
+            </div>
 
             <div class="form-group inline">
                 <label for="cashTotal" ><strong>Cash Total (₦)</strong></label>
-                <input id="cashTotal" name="subtotal" type="number" [(ngModel)]="sessionDetails.cashSale + sessionDetails.openingBalance + sessionDetails.additions - sessionDetails.cashReturn" readonly>
+                <input id="cashTotal" name="subtotal" type="number" [(ngModel)]="sessionDetails.cashSale + sessionDetails.openingBalance + sessionDetails.additions - sessionDetails.cashReturn - sessionDetails.remittanceSum" readonly>
             </div>
         </div>
 
@@ -408,4 +412,38 @@
     </div>
 
 
+</div>
+
+<div *ngIf="showAddCashAuthDialogue">
+    <div class="modal" (click)="hideAddCashAuth()"></div>
+    <app-authorize-modal [roles]="clockOutRoles" (userAuthorized)="handleValidateAddCashAuth($event)"></app-authorize-modal>
+</div>
+<div *ngIf="showAddCashDialogue" class="delete-container">
+    <div class="modal" (click)="hideAddCashDialogue()"></div>
+    <div class="delete-content">
+        <div>
+            <div class="form-group" style="font-size: 1.3em">
+                <label for="addCash" >Cash Amount (₦)</label>
+                <input id="addCash" class="loyalty-input" name="openingBalance" type="number" [(ngModel)]="addCashAmount" autocomplete="off">
+            </div>
+            <button style="font-size: 0.85em; margin-left: 5.35em" (click)="addCash()"> Add Cash </button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showRemitCashAuthDialogue">
+    <div class="modal" (click)="hideRemitCashAuth()"></div>
+    <app-authorize-modal [roles]="clockOutRoles" (userAuthorized)="handleValidateRemitCashAuth($event)"></app-authorize-modal>
+</div>
+<div *ngIf="showRemitCashDialogue" class="delete-container">
+    <div class="modal" (click)="hideRemitCash()"></div>
+    <div class="delete-content">
+        <div>
+            <div class="form-group" style="font-size: 1.3em">
+                <label for="remitCash" >Remit Amount (₦)</label>
+                <input id="remitCash" class="loyalty-input" name="openingBalance" type="number" [(ngModel)]="remitCashAmount" autocomplete="off">
+            </div>
+            <button style="font-size: 0.85em; margin-left: 5.35em" (click)="remitCash()"> Remit </button>
+        </div>
+    </div>
 </div>

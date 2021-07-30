@@ -64,6 +64,10 @@ export class MakeSaleComponent implements OnInit {
   loyaltyManager = {maxRedeemablePointsPerTransaction: 0};
   showCustomer = false;
   showPaymentDialog = false;
+  showAddCashDialogue = false;
+  showRemitCashDialogue = false;
+  addCashAmount = 0;
+  remitCashAmount = 0;
   addPoints = true;
   change = 0;
   saleItemIndex = 0;
@@ -80,6 +84,8 @@ export class MakeSaleComponent implements OnInit {
   cashReturn = 0;
   showCustomerDialogue = false;
   showDiscountDialogue = false;
+  showAddCashAuthDialogue = false;
+  showRemitCashAuthDialogue = false;
   openingBalance = 0;
   newSessionDialogue = true;
   saleSession: any;
@@ -336,7 +342,6 @@ export class MakeSaleComponent implements OnInit {
       this.cashReturn = this.cashReturn + (return1.salePrice * return1.quantity);
     }
   }
-
   makeReturn(): void {
     this.disableButtons = true;
     this.makeSaleService.addReturn(this.saleId, this.returns).subscribe(() => {
@@ -347,7 +352,6 @@ export class MakeSaleComponent implements OnInit {
       this.disableButtons = false;
     });
   }
-
   addStockBySKU(): void {
     this.makeSaleService.addStockBySKU(this.sku, this.sale.saleId).subscribe(data => {
       this.sale = data;
@@ -358,13 +362,11 @@ export class MakeSaleComponent implements OnInit {
       this.sku = '';
     });
   }
-
   selectSKUInput(): void {
     const input = document.getElementById('sku') as HTMLInputElement;
     input.focus();
     input.select();
   }
-
   hideCustomerDialogue(): void{
     this.showCustomerDialogue = false;
     this.selectSKUInput();
@@ -395,7 +397,6 @@ export class MakeSaleComponent implements OnInit {
       this.calcChange();
     });
   }
-
   createSaleSession(): void {
     this.sessionService.createNewSession({openingBalance: this.openingBalance}).subscribe(data => {
       this.saleSession = data;
@@ -413,7 +414,7 @@ export class MakeSaleComponent implements OnInit {
     if (response){
       this.sessionService.getSessionDetails().subscribe(data => {
         this.sessionDetails = data;
-        this.showSessionDetails = response;
+        this.showSessionDetails = true;
         this.hideClockOut();
       });
     }else{
@@ -431,6 +432,54 @@ export class MakeSaleComponent implements OnInit {
       }else{
         this.goHome();
       }
+    });
+  }
+  addCash(): void{
+    this.sessionService.addCash(this.addCashAmount).subscribe(() => {
+      this.addCashAmount = 0;
+      this.hideAddCashDialogue();
+    });
+  }
+  hideAddCashDialogue(): void{
+    this.showAddCashDialogue = false;
+  }
+  hideAddCashAuth(): void{
+    this.showAddCashAuthDialogue = false;
+  }
+  showAddCashAuth(): void{
+    this.showAddCashAuthDialogue = true;
+  }
+  handleValidateAddCashAuth(response: boolean): void{
+    if (response){
+      this.showAddCashDialogue = true;
+    }
+    this.hideAddCashAuth();
+  }
+  showRemitCashAuth(): void{
+    this.showRemitCashAuthDialogue = true;
+  }
+  hideRemitCashAuth(): void{
+    this.showRemitCashAuthDialogue = false;
+  }
+  hideRemitCash(): void{
+    this.showRemitCashDialogue = false;
+  }
+  handleValidateRemitCashAuth(response: boolean): void{
+    if (response){
+      this.showRemitCashDialogue = true;
+    }
+    this.hideRemitCashAuth();
+  }
+  remitCash(): void{
+    this.sessionService.remitCash({
+      session: this.saleSession,
+      amount: this.remitCashAmount,
+      collector: JSON.parse(sessionStorage.getItem('authorizingUser') as string)
+    })
+    .subscribe(data => {
+      this.saleSession = data;
+      this.remitCashAmount = 0;
+      this.hideRemitCash();
     });
   }
 }

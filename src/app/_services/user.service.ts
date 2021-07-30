@@ -3,8 +3,8 @@ import {TokenStorageService} from './token-storage.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
-// const API = 'http://localhost:8080/user';
-const API = 'https://storley.herokuapp.com/user';
+const API = 'http://localhost:8080/user';
+// const API = 'https://storley.herokuapp.com/user';
 @Injectable({
   providedIn: 'root'
 })
@@ -44,7 +44,7 @@ export class UserService {
   updateUser(user: any): Observable<any>{
     return this.http.patch(API + '/public/update', user, this.httpOptions);
   }
-  getUserRoles(username: string, password: string): Observable<any> {
+  getUser(username: string, password: string): Observable<any> {
     return this.http.get(API + '/authority?username=' + username + '&password=' + password, this.httpOptions);
   }
 }
