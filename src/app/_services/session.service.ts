@@ -3,8 +3,8 @@ import {TokenStorageService} from './token-storage.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
-// const API = 'http://localhost:8080/session';
-const API = 'https://storley.herokuapp.com/category';
+const API = 'http://localhost:8080/api/session';
+// const API = 'https://storley.herokuapp.com/session';
 
 @Injectable({
   providedIn: 'root'
@@ -27,11 +27,18 @@ export class SessionService {
   getCurrentSession(): Observable<any>{
     return this.http.get(API + '/current', this.httpOptions);
   }
+
+  getSessionByDate(date: any): Observable<any>{
+    return this.http.get(API + '?startDate=' + date, this.httpOptions);
+  }
   createNewSession(session: any): Observable<any>{
     return this.http.post(API, session, this.httpOptions);
   }
   getSessionDetails(): Observable<any>{
     return this.http.get(API + '/details', this.httpOptions);
+  }
+  getSessionDetailById(id: number): Observable<any>{
+    return this.http.get(API + '/details/id?id=' + id, this.httpOptions);
   }
   closeNewSession(): Observable<any>{
     return this.http.patch(API + '/close', {}, this.httpOptions);

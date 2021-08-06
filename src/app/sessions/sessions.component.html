@@ -1,0 +1,140 @@
+<app-nav-bar [itemId]=2></app-nav-bar>
+<div class="container" *ngIf="showSessionList; else viewSession">
+    <div class="header-div">
+        <h1>Sessions</h1>
+
+    </div>
+    <hr>
+    <div class="form-container"  style="margin-top: 1em; margin-left: 0.5em">
+        <div class="form-group inline right">
+            <label for="soldOn">Date</label>
+            <input id="soldOn" [(ngModel)]="date" type="date" (change)="getSessionByDate()">
+        </div>
+    </div>
+
+    <div class="table-div" style="max-height: initial;">
+        <table>
+            <colgroup>
+                <col span="1" style="width: 36%;">
+                <col span="1" style="width: 23%;">
+                <col span="1" style="width: 23%;">
+                <col span="1" style="width: 18%;">
+            </colgroup>
+            <tbody>
+            <tr >
+                <th>Username</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>View</th>
+            </tr>
+            <tr class="table-row"  *ngFor="let session of sessions; let i = index">
+                <td>{{session.user.username}}</td>
+                <td>{{session.startTime}}</td>
+                <td *ngIf="session.endTime; else inProgress">{{session.endTime}}</td>
+                <ng-template #inProgress>
+                    <td>In Progress</td>
+                </ng-template>
+                <td><button style=" height: 1em; border: none" (click)="view(i)"> <img style=" height: 1em;" src="assets/greater-than-solid.svg" alt="view"> </button></td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+<ng-template #viewSession>
+    <div class="container mini" >
+        <h2>Session Details</h2>
+        <hr style="margin: 0.5em -1.5em 0.5em">
+
+        <div style="display: flex; flex-direction: column; align-items: flex-end">
+            <div class="form-group inline">
+                <label for="saleTotal" ><strong>Sale Total (₦)</strong></label>
+                <input id="saleTotal" name="subtotal" type="number" [(ngModel)]="sessionDetails.totalSale" readonly>
+            </div>
+            <div class="form-group inline">
+                <label for="totalReturns" ><strong>Returns Total (₦)</strong></label>
+                <input id="totalReturns" name="subtotal" type="number" [(ngModel)]="sessionDetails.totalReturn" readonly>
+            </div>
+            <div class="form-group inline">
+                <label for="cashDiscountTotal" ><strong>Cash Discount Total (₦)</strong></label>
+                <input id="cashDiscountTotal" name="subtotal" type="number" [(ngModel)]="sessionDetails.discountValue" readonly>
+            </div>
+            <div class="form-group inline">
+                <label for="loyaltyDiscountTotal" ><strong>Loyalty Discount Total (₦)</strong></label>
+                <input id="loyaltyDiscountTotal" name="subtotal" type="number" [(ngModel)]="sessionDetails.pointsRedeemedValue" readonly>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: flex-end">
+            <h3 style="margin-right: 2em;">Cash</h3>
+            <div class="form-group inline">
+                <label for="summaryOpeningBalance" >Opening Balance (₦)</label>
+                <input id="summaryOpeningBalance" name="subtotal" type="number" [(ngModel)]="sessionDetails.openingBalance" readonly>
+            </div>
+            <div class="form-group inline">
+                <label for="summaryAdditions" >Additions (₦)</label>
+                <input id="summaryAdditions" name="summaryAdditions" type="number" [(ngModel)]="sessionDetails.additions" readonly>
+            </div>
+            <div class="form-group inline">
+                <label for="summaryCashSale" >Cash Sale (₦)</label>
+                <input id="summaryCashSale" name="summaryCashSale" type="number" [(ngModel)]="sessionDetails.cashSale" readonly>
+            </div>
+            <div class="form-group inline">
+                <label for="summaryCashReturn" >Cash Return (₦) -</label>
+                <input id="summaryCashReturn" name="summaryCashSale" type="number" [(ngModel)]="sessionDetails.cashReturn" readonly>
+            </div>
+
+            <div class="form-group inline">
+                <label for="summaryCashRemitted" >Cash Remitted (₦) -</label>
+                <input id="summaryCashRemitted" name="summaryCashRemitted" type="number" [(ngModel)]="sessionDetails.remittanceSum" readonly>
+            </div>
+
+            <div class="form-group inline">
+                <label for="cashTotal" ><strong>Cash Total (₦)</strong></label>
+                <input id="cashTotal" name="subtotal" type="number" [(ngModel)]="sessionDetails.cashSale + sessionDetails.openingBalance + sessionDetails.additions - sessionDetails.cashReturn - sessionDetails.remittanceSum" readonly>
+            </div>
+        </div>
+
+
+
+        <div style="display: flex; flex-direction: column;align-items: flex-end">
+            <h3 style="margin-right: 2em;">P.O.S</h3>
+            <div class="form-group inline">
+                <label for="summaryPOSSale" >P.O.S Sale (₦)</label>
+                <input id="summaryPOSSale" name="subtotal" type="number" [(ngModel)]="sessionDetails.posSale" readonly>
+            </div>
+            <div class="form-group inline">
+                <label for="summaryPOSReturn" >P.O.S Return (₦)</label>
+                <input id="summaryPOSReturn" name="subtotal" type="number" [(ngModel)]="sessionDetails.posReturn" readonly>
+            </div>
+        </div>
+
+        <div *ngIf="session.remittanceList.length > 0">
+            <h3>Remittance </h3>
+            <div class="table-div">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Collecting User</th>
+                            <th>Amount</th>
+                            <th>Timestamp</th>
+                        </tr>
+                        <tr class="table-row"  *ngFor="let remittance of session.remittanceList; let i = index">
+                            <td>{{remittance.collector.username}}</td>
+                            <td>{{remittance.amount}}</td>
+                            <td>{{remittance.timestamp}}</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+        <div class="button-containers">
+            <button class="margin-3" (click)="back()" >Back</button>
+        </div>
+
+    </div>
+</ng-template>
+

@@ -89,6 +89,7 @@ export class MakeSaleComponent implements OnInit {
   openingBalance = 0;
   newSessionDialogue = true;
   saleSession: any;
+  returnPaymentType = 'CASH';
   constructor(private makeSaleService: MakeSaleService, private stockService: StockService,
               private tokenService: TokenStorageService, private router: Router, private sessionService: SessionService) {
     this.makeSaleService.clearSaleItems().subscribe();
@@ -305,7 +306,7 @@ export class MakeSaleComponent implements OnInit {
           this.stocks = data.content;
           if (this.stocks.length === 1){
             this.stock = this.stocks[0];
-            this.stocks = [];
+            // this.stocks = [];
           }
         });
     }, 400);
@@ -344,12 +345,17 @@ export class MakeSaleComponent implements OnInit {
   }
   makeReturn(): void {
     this.disableButtons = true;
-    this.makeSaleService.addReturn(this.saleId, this.returns).subscribe(() => {
-      this.disableButtons = false;
-      this.hideReturn();
-    }, () => {
-      this.failedReturn = true;
-      this.disableButtons = false;
+    const saleReturn = {
+      returnItems: this.returns,
+      payment: {amount: this.cashReturn, type: this.returnPaymentType },
+      saleSession: this.saleSession
+    };
+    this.makeSaleService.addReturn(this.saleId, saleReturn).subscribe(() => {
+        this.disableButtons = false;
+        this.hideReturn();
+      }, () => {
+        this.failedReturn = true;
+        this.disableButtons = false;
     });
   }
   addStockBySKU(): void {

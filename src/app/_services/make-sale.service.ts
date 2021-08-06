@@ -3,8 +3,8 @@ import {Observable} from 'rxjs';
 import {TokenStorageService} from './token-storage.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-const AUTH_API = 'https://storley.herokuapp.com';
-// const AUTH_API = 'http://localhost:8080';
+// const AUTH_API = 'https://storley.herokuapp.com';
+const AUTH_API = 'http://localhost:8080/api';
 @Injectable({
   providedIn: 'root'
 })
@@ -84,7 +84,7 @@ export class MakeSaleService {
   getSale(saleId: number): Observable<any>{
     return this.http.get(AUTH_API + '/sale/' + saleId,  this.httpOptions);
   }
-  addReturn(saleId: number, returns: any[]): Observable<any>{
-    return this.http.patch(AUTH_API + '/sale/return?saleId=' + saleId, returns, this.httpOptions);
+  addReturn(saleId: number, saleReturn: any): Observable<any>{
+    return this.http.patch(AUTH_API + '/sale/return?saleId=' + saleId, saleReturn, this.httpOptions);
   }
 }

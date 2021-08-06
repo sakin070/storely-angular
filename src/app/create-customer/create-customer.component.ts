@@ -28,6 +28,9 @@ export class CreateCustomerComponent implements OnInit {
   ngOnInit(): void {
   }
   createCustomer(form: NgForm): void{
+    if (!form.valid){
+      return;
+    }
     this.customerService.createCustomer(this.customer).subscribe(
         () => {
           form.resetForm();
@@ -42,7 +45,7 @@ export class CreateCustomerComponent implements OnInit {
       clearTimeout(this.timer);
     }
     this.timer = setTimeout(() => {
-      this.loyaltyCardService.getLoyaltyCardsByCardNumber(this.loyaltyCard, 0, 20)
+      this.loyaltyCardService.getLoyaltyCardsByCardNumberActivated(this.loyaltyCard, 0, 20, false)
           .subscribe(data => {
             this.loyaltyCards = data.content;
             if (this.loyaltyCards.length === 1){

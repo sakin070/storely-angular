@@ -34,6 +34,9 @@ export class AuthorizeModalComponent implements OnInit {
           this.authorizeFailed = false;
         }
       });
-    });
+    },
+      () => {
+        this.authorizeFailed = true;
+      });
   }
 }

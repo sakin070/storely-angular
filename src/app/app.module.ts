@@ -33,6 +33,7 @@ import { StoreEvaluationComponent } from './store-evaluation/store-evaluation.co
 import { DiscountsComponent } from './discounts/discounts.component';
 import { StockHistoryComponent } from './stock-history/stock-history.component';
 import { AuthorizeModalComponent } from './authorize-modal/authorize-modal.component';
+import { SessionsComponent } from './sessions/sessions.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { AuthorizeModalComponent } from './authorize-modal/authorize-modal.compo
     StoreEvaluationComponent,
     DiscountsComponent,
     StockHistoryComponent,
-    AuthorizeModalComponent
+    AuthorizeModalComponent,
+    SessionsComponent
   ],
     imports: [
         BrowserModule,

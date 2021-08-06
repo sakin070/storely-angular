@@ -24,6 +24,8 @@ export class StoreEvaluationComponent implements OnInit {
   pageSize = 9;
   currentPage = new BehaviorSubject(1);
   totalPages = new BehaviorSubject(1);
+  currentPageProduct = new BehaviorSubject(1);
+  totalPagesProduct = new BehaviorSubject(1);
 
   constructor(private kpiService: KpiService) { }
 
@@ -40,7 +42,7 @@ export class StoreEvaluationComponent implements OnInit {
   getPageOfProducts = (currentPage: number): void => {
     this.kpiService.getPageProductKPI(currentPage - 1, this.pageSize, this.startDate, this.endDate).subscribe(data => {
       this.products = data.content;
-      this.totalPages.next( data === [] ? 1 : data.totalPages);
+      this.totalPagesProduct.next( data === [] ? 1 : data.totalPages);
     });
   }
   getStoreData(): void{

@@ -24,6 +24,7 @@ import {ExpenseCategoryComponent} from './expense-category/expense-category.comp
 import {StoreEvaluationComponent} from './store-evaluation/store-evaluation.component';
 import {DiscountsComponent} from './discounts/discounts.component';
 import {StockHistoryComponent} from './stock-history/stock-history.component';
+import {SessionsComponent} from './sessions/sessions.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -50,6 +51,7 @@ const routes: Routes = [
   {path: 'evaluation', component: StoreEvaluationComponent},
   {path: 'discounts', component: DiscountsComponent},
   {path: 'history', component: StockHistoryComponent},
+  {path: 'sessions', component: SessionsComponent},
   {path: 'home', component: HomeComponent}
   ];
 

@@ -281,7 +281,7 @@
                     <td>{{saleItem.quantity}} X ₦{{saleItem.stock.sellingPrice}}</td>
                     <td>₦{{saleItem.quantity * saleItem.stock.sellingPrice}} </td>
                     <td>
-                        <input type="number" [min]="0" [max]="saleItem.quantity" [(ngModel)]="returns[i].quantity" style="border: none; height: 1em;font-size: 1em;width: 3em;margin-right: 0.5em" (change)="calcReturn()">
+                        <input type="number" [min]="0" [max]="saleItem.quantity" [(ngModel)]=" returns[i].quantity" style="border: none; height: 1em;font-size: 1em;width: 3em;margin-right: 0.5em" (change)="calcReturn()">
                         <label>/{{saleItem.quantity}}</label>
                     </td>
                 </tr>
@@ -289,8 +289,15 @@
         </div>
 
         <div class="pricing">
-            <h5>Return</h5>
-            <h5>{{cashReturn}}</h5>
+            <h5>Return Amount</h5>
+            <h5>Payment Method</h5>
+            <h5>₦ {{cashReturn}}</h5>
+            <div class="form-group inline" >
+                <select [(ngModel)]="returnPaymentType">
+                    <option selected="selected">CASH</option>
+                    <option>POS</option>
+                </select>
+            </div>
         </div>
         <button [disabled]="disableButtons" (click)="makeReturn()" style="margin-left: 40%">Return</button>
     </div>
@@ -345,7 +352,7 @@
         <h2>Session Details</h2>
         <hr style="margin: 0.5em -1.5em 0.5em">
 
-        <div style="display: flex; flex-direction: column;">
+        <div style="display: flex; flex-direction: column; align-items: flex-end">
             <div class="form-group inline">
                 <label for="saleTotal" ><strong>Sale Total (₦)</strong></label>
                 <input id="saleTotal" name="subtotal" type="number" [(ngModel)]="sessionDetails.totalSale" readonly>
@@ -364,8 +371,8 @@
             </div>
         </div>
 
-        <h3>Cash</h3>
-        <div style="display: flex; flex-direction: column;">
+        <div style="display: flex; flex-direction: column;align-items: flex-end">
+            <h3 style="margin-right: 2em;">Cash</h3>
             <div class="form-group inline">
                 <label for="summaryOpeningBalance" >Opening Balance (₦)</label>
                 <input id="summaryOpeningBalance" name="subtotal" type="number" [(ngModel)]="sessionDetails.openingBalance" readonly>
@@ -393,8 +400,8 @@
             </div>
         </div>
 
-        <h3>P.O.S</h3>
-        <div style="display: flex; flex-direction: column;">
+        <div style="display: flex; flex-direction: column;align-items: flex-end">
+            <h3 style="margin-right: 2em;">P.O.S</h3>
             <div class="form-group inline">
                 <label for="summaryPOSSale" >P.O.S Sale (₦)</label>
                 <input id="summaryPOSSale" name="subtotal" type="number" [(ngModel)]="sessionDetails.posSale" readonly>
